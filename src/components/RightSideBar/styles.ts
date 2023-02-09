@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const RightSideBar = styled.div`
   margin: 0 0 0 30px;
-
+  width: 348px;
   .search {
     display: flex;
     align-items: center;
@@ -36,35 +36,49 @@ export const RightSideBar = styled.div`
     top: 0;
     .trends {
       font-size: 20px;
-      width: 316px;
-      background-color: rgb(247, 249, 249);
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 12px 0 0 0;
-      font-size: ${({ theme }) => theme.fontSize.xl};
 
+      background-color: rgb(247, 249, 249);
+      margin: 16px 0px;
+      padding: 0 0 16px 0;
+      border-radius: 12px;
+
+      font-size: ${({ theme }) => theme.fontSize.xl};
       position: sticky;
       top: 0;
+      .trends-title {
+        padding: 16px 16px;
+      }
       .trends-item {
+        margin: 2px 0 0 0;
+        padding: 8px 16px;
         font-size: 13px;
-        margin-top: 24px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #ccc;
+        }
         .trends-item-name {
           color: ${({ theme }) => theme.textSecondaryColor};
         }
         .trends-item-tag {
           font-size: ${({ theme }) => theme.secondaryFontSize};
-          margin: 2px 0 0 0;
+          padding: 3px 0 3px 0;
         }
         .trends-item-tweets-amount {
           color: ${({ theme }) => theme.textSecondaryColor};
-          margin: 2px 0 0 0;
         }
       }
       .show-more {
+        padding: 0 16px;
         margin-top: 24px;
         color: ${({ theme }) => theme.secondaryColor};
         font-size: ${({ theme }) => theme.secondaryFontSize};
       }
+    }
+    .policy-text {
+      font-size: ${({ theme }) => theme.fontSize.xs};
+      color: ${({ theme }) => theme.textSecondaryColor};
+      line-height: 16px;
     }
   }
 `;
