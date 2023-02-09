@@ -9,12 +9,15 @@ import { ReactComponent as BookMarksSVG } from "../../img/leftSideBar/bookmarks.
 import { ReactComponent as ListsSVG } from "../../img/leftSideBar/lists.svg";
 import { ReactComponent as ProfileSVG } from "../../img/leftSideBar/profile.svg";
 import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
+import { useDispatch } from "react-redux";
+import { userPublishedModalToggle } from "../../reducers/controller";
 
 interface HomeProps {
   name: string;
 }
 
 const LeftSideBar = ({ name }: HomeProps) => {
+  const dispatch = useDispatch();
   const LinkData = [
     {
       text: "Home",
@@ -72,7 +75,14 @@ const LeftSideBar = ({ name }: HomeProps) => {
             );
           })}
         </div>
-        <div className="tweet">Tweet</div>
+        <div
+          className="tweet"
+          onClick={() => {
+            dispatch(userPublishedModalToggle(true));
+          }}
+        >
+          Tweet
+        </div>
       </div>
       <div className="client-data">
         <div className="client-data-img"></div>
