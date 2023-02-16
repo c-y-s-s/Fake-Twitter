@@ -39,6 +39,7 @@ export const Home = styled.div`
 
         &:hover {
           background-color: rgba(15, 20, 25, 0.1);
+          transition: 0.3s;
         }
         .tab-list-item-text {
           display: flex;
@@ -62,7 +63,6 @@ export const Home = styled.div`
       }
     }
     .client-textarea-container {
-
     }
   }
 `;
@@ -71,8 +71,13 @@ export const OtherUser = styled.div`
   .other-user-content {
     border-bottom: 1px solid rgb(239, 243, 244);
     font-size: ${({ theme }) => theme.secondaryFontSize};
-    margin: 10px 0 0 0;
-    padding: 0 0 12px 16px;
+    cursor: pointer;
+    padding: 12px 0 12px 16px;
+
+    &:hover {
+      background-color: rgba(15, 20, 25, 0.02);
+      transition: 0.3s;
+    }
     .client-data-img {
       width: 50px;
       height: 50px;
@@ -120,11 +125,56 @@ export const OtherUser = styled.div`
 
         .other-user-icon-item {
           display: flex;
-          align-items: flex-end;
+          align-items: center;
+
           svg {
+            padding: 5px;
             width: 18.75px;
             margin: 0 12px 0 0;
             fill: ${({ theme }) => theme.textSecondaryColor};
+          }
+
+          :hover {
+            color: ${({ theme }) => theme.primaryColor};
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: ${({ theme }) => theme.primaryColor};
+              background-color: rgba(29, 155, 240, 0.1);
+            }
+          }
+        }
+
+        .transfer {
+          :hover {
+            color: rgb(0, 186, 124);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(0, 186, 124);
+              background-color: rgba(0, 186, 124, 0.2);
+            }
+          }
+        }
+        .like {
+          transition: all 0.2s;
+          :hover {
+            color: rgb(249, 24, 128);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(249, 24, 128);
+              background-color: rgba(249, 24, 128, 0.2);
+            }
+          }
+          &.active {
+            color: rgb(249, 24, 128);
+            svg {
+              fill: rgb(249, 24, 128);
+            }
           }
         }
       }

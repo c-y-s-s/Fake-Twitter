@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const RightSideBar = styled.div`
   margin: 0 0 0 30px;
   width: 348px;
+
+  @media (max-width: 1020px) {
+    display: none;
+  }
   .search {
     display: flex;
     align-items: center;
@@ -30,7 +34,22 @@ export const RightSideBar = styled.div`
       }
     }
   }
-
+  .search-list {
+    margin: 2px 0 0 0;
+    height: 90px;
+    width: 360px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #ccc;
+    position: absolute;
+    top: 45px;
+    background-color: #fff;
+    .search-list-text {
+      text-align: center;
+      padding: 16px 12px;
+      font-size: ${({ theme }) => theme.fontSize.sm};
+      color: ${({ theme }) => theme.textSecondaryColor};
+    }
+  }
   .trends-container {
     position: sticky;
     top: 0;
@@ -50,12 +69,13 @@ export const RightSideBar = styled.div`
       }
       .trends-item {
         margin: 2px 0 0 0;
-        padding: 8px 16px;
+        padding: 12px 16px;
         font-size: 13px;
         cursor: pointer;
 
         &:hover {
-          background-color: #ccc;
+          background-color: rgba(15, 20, 25, 0.05);
+          transition: 0.4s;
         }
         .trends-item-name {
           color: ${({ theme }) => theme.textSecondaryColor};

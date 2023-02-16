@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import { ReactComponent as AddEmoji } from "../../img/home/addEmoji.svg";
 import { ReactComponent as AddGif } from "../../img/home/addGif.svg";
@@ -6,13 +6,16 @@ import { ReactComponent as AddLocation } from "../../img/home/addLocation.svg";
 import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
 import { ReactComponent as AddPoll } from "../../img/home/addPoll.svg";
 import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
-
+import { userPublishedModalToggle } from "../../reducers/controller";
+import { useDispatch, useSelector } from "react-redux";
 import * as Styles from "./styles";
 interface UserPublishedProps {
   userImg: string;
   setInputValue: (value: string) => void;
   inputValue: string;
   handleTweet: () => void;
+  setModalLineSwitch?: (value: boolean) => void;
+  modalLineSwitch?: boolean;
 }
 
 const UserPublished: FC<UserPublishedProps> = ({
@@ -20,7 +23,29 @@ const UserPublished: FC<UserPublishedProps> = ({
   setInputValue,
   inputValue,
   handleTweet,
+  setModalLineSwitch,
+  modalLineSwitch,
 }) => {
+  const dispatch = useDispatch();
+  const handleTweetClick = () => {
+    if (inputValue) {
+      setTimeout(() => {
+        handleTweet();
+        dispatch(userPublishedModalToggle(false));
+      }, 650);
+      if (setModalLineSwitch) {
+        setModalLineSwitch(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (setModalLineSwitch) {
+        setModalLineSwitch(false);
+      }
+    };
+  }, []);
   return (
     <Styles.UserPublished>
       <div className="client-content-block">
@@ -59,7 +84,12 @@ const UserPublished: FC<UserPublishedProps> = ({
               <AddLocation />
             </div>
           </div>
-          <div className="client-textarea-tweet" onClick={handleTweet}>
+          <div
+            className={`client-textarea-tweet ${
+              !inputValue ? "stop-click" : ""
+            }`}
+            onClick={handleTweetClick}
+          >
             Tweet
           </div>
         </div>

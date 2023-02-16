@@ -8,6 +8,10 @@ export const LeftSideBar = styled.div`
   justify-content: space-between;
   position: sticky;
   top: 0;
+  @media (max-width: 1300px) {
+    width: 50px;
+  }
+
   .top-container {
     .twitter-logo {
       width: 38px;
@@ -43,6 +47,10 @@ export const LeftSideBar = styled.div`
           width: 100%;
           display: flex;
           align-items: center;
+
+          @media (max-width: 1300px) {
+            display: none;
+          }
         }
       }
     }
@@ -59,6 +67,9 @@ export const LeftSideBar = styled.div`
       margin: 16px 0 0 0;
       letter-spacing: 0.25px;
       font-weight: ${({ theme }) => theme.primaryFontWeight};
+      @media (max-width: 1300px) {
+        max-width: 100%;
+      }
     }
   }
   .client-data {

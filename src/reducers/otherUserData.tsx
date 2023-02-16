@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { compose, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface otherUserDataStateProps {
   otherUserData: Array<otherUserDataProps>;
@@ -14,7 +14,7 @@ interface otherUserDataProps {
   message: number;
   transfer: number;
   view: number;
-  like: number;
+  like: { number: number; userClick: boolean };
 }
 const initialState: otherUserDataStateProps = {
   otherUserData: [
@@ -28,7 +28,10 @@ const initialState: otherUserDataStateProps = {
       message: 22,
       transfer: 2,
       view: 1,
-      like: 2,
+      like: {
+        number: 212,
+        userClick: false,
+      },
     },
     {
       id: "2",
@@ -40,7 +43,10 @@ const initialState: otherUserDataStateProps = {
       message: 12,
       transfer: 2,
       view: 1,
-      like: 2,
+      like: {
+        number: 212,
+        userClick: false,
+      },
     },
     {
       id: "3",
@@ -52,7 +58,10 @@ const initialState: otherUserDataStateProps = {
       message: 262,
       transfer: 26,
       view: 451,
-      like: 25,
+      like: {
+        number: 212,
+        userClick: false,
+      },
     },
     {
       id: "4",
@@ -64,7 +73,10 @@ const initialState: otherUserDataStateProps = {
       message: 22,
       transfer: 2,
       view: 1,
-      like: 2,
+      like: {
+        number: 212,
+        userClick: false,
+      },
     },
     {
       id: "5",
@@ -76,7 +88,10 @@ const initialState: otherUserDataStateProps = {
       message: 212,
       transfer: 23,
       view: 144,
-      like: 212,
+      like: {
+        number: 212,
+        userClick: false,
+      },
     },
   ],
 };
@@ -85,16 +100,31 @@ export const otherUserDataSlice = createSlice({
   name: "otherUserData",
   initialState,
   reducers: {
-    otherUserDataChange: (state, action) => {
-      state.otherUserData = action.payload;
+    otherUserDataChange: (state, { payload }) => {
+      state.otherUserData = payload;
     },
-    addArticle: (state, action: PayloadAction<otherUserDataProps>) => {
-      state.otherUserData = [...state.otherUserData, action.payload];
+    addArticle: (state, { payload }: PayloadAction<otherUserDataProps>) => {
+      state.otherUserData = [...state.otherUserData, payload];
+    },
+    AddOtherUserDataLike: (state, { payload }: PayloadAction<string>) => {
+      // eslint-disable-next-line array-callback-return
+      state.otherUserData.map((item) => {
+        if (item.id === payload) {
+          if (item.like.userClick) {
+            item.like.userClick = false;
+            item.like.number -= 1;
+          } else {
+            item.like.userClick = true;
+            item.like.number += 1;
+          }
+        }
+      });
     },
   },
 });
 
-export const { otherUserDataChange, addArticle } = otherUserDataSlice.actions;
+export const { otherUserDataChange, addArticle, AddOtherUserDataLike } =
+  otherUserDataSlice.actions;
 
 const otherUserDataSliceReducer = otherUserDataSlice.reducer;
 
