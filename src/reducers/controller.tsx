@@ -4,11 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface controllerState {
   tabList: string;
   userPublishedModal: boolean;
+  rightSideBarSearchExpand: boolean;
 }
 
 const initialState: controllerState = {
   tabList: "For You",
   userPublishedModal: false,
+  rightSideBarSearchExpand: false,
 };
 
 export const controllerSlice = createSlice({
@@ -21,11 +23,17 @@ export const controllerSlice = createSlice({
     userPublishedModalToggle: (state, action) => {
       state.userPublishedModal = action.payload;
     },
+    rightSideBarSearchExpandToggle: (state, action) => {
+      state.rightSideBarSearchExpand = action.payload;
+    },
   },
 });
 
-export const { tabListToggle, userPublishedModalToggle } =
-  controllerSlice.actions;
+export const {
+  tabListToggle,
+  userPublishedModalToggle,
+  rightSideBarSearchExpandToggle,
+} = controllerSlice.actions;
 
 const controllerSliceReducer = controllerSlice.reducer;
 

@@ -1,7 +1,11 @@
 import React from "react";
+import Search from "./Search";
 import * as Styles from "./styles";
-import { ReactComponent as Search } from "../../img/search.svg";
-const RightSideBar = () => {
+
+
+const RightSideBar: React.FC = () => {
+
+
   const tendingData = [
     {
       name: "$500 Binance",
@@ -44,15 +48,10 @@ const RightSideBar = () => {
       tweetsAmount: "172K",
     },
   ];
-  return (
-    <Styles.RightSideBar>
-      <form className="search">
-        <div className="search-icon">
-          <Search />
-        </div>
-        <input type="text" placeholder="Search Twitter" />
-      </form>
 
+  return (
+    <Styles.RightSideBar className="search-container">
+      <Search />
       <div className="trends-container">
         <div className="trends ">
           <div className="font-bold trends-title"> Trends for you</div>

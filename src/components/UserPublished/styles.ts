@@ -7,11 +7,7 @@ export const UserPublished = styled.div`
     padding: 10px 16px;
     .client-textarea-block {
       display: flex;
-      .client-data-img {
-        min-width: 48px;
-        height: 48px;
-        object-fit: cover;
-      }
+
       .textarea {
         padding: 0 0 0 10px;
         align-items: center;
@@ -45,16 +41,22 @@ export const UserPublished = styled.div`
         .icon-item {
           width: 20px;
           height: 20px;
-
+          padding: 8px;
+          border-radius: 50%;
+          transition: 0.3s;
+          cursor: pointer;
+          :hover {
+            background-color: rgba(29, 155, 240, 0.1);
+          }
           svg {
             fill: ${({ theme }) => theme.secondaryColor};
           }
 
           &:nth-child(1) {
-            margin: 0 6px 0 0;
+            margin: 0 0px 0 0;
           }
           &:nth-child(n + 2) {
-            margin: 0px 6px;
+            margin: 0px 0px;
           }
         }
       }
@@ -67,6 +69,10 @@ export const UserPublished = styled.div`
         align-items: center;
         padding: 8px 16px;
         cursor: pointer;
+      }
+      .stop-click {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
   }

@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const RightSideBar = styled.div`
   margin: 0 0 0 30px;
   width: 348px;
+
+  @media (max-width: 1020px) {
+    display: none;
+  }
   .search {
     display: flex;
     align-items: center;
@@ -30,7 +34,64 @@ export const RightSideBar = styled.div`
       }
     }
   }
+  .search-list {
+    margin: 2px 0 0 0;
+    width: 360px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #ccc;
+    position: absolute;
+    top: 45px;
+    background-color: #fff;
+    .search-result-container {
+      text-align: center;
+      padding: 10px 0px;
+      height: 100%;
+      font-size: ${({ theme }) => theme.fontSize.sm};
+      color: ${({ theme }) => theme.textSecondaryColor};
 
+      .search-result-empty {
+        height: 90px;
+      }
+
+      .search-result-list-item {
+        padding: 12px 16px;
+        display: flex;
+        text-align: left;
+        transition: 0.3s;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(15, 20, 25, 0.02);
+        }
+
+        .search-result-content {
+          margin-left: 12px;
+          font-size: ${({ theme }) => theme.secondaryFontSize};
+          .search-result-name {
+            color: ${({ theme }) => theme.textColor};
+          }
+          .search-result-email,
+          .search-result-follower {
+            padding: 2px 0;
+            color: ${({ theme }) => theme.textSecondaryColor};
+          }
+        }
+      }
+
+      .search-list-empty {
+        text-align: left;
+        color: ${({ theme }) => theme.textColor};
+        font-size: ${({ theme }) => theme.fontSize.sm};
+        transition: 0.3s;
+        div {
+          padding: 16px;
+          &:hover {
+            background-color: rgba(15, 20, 25, 0.02);
+          }
+        }
+      }
+    }
+  }
   .trends-container {
     position: sticky;
     top: 0;
@@ -50,12 +111,13 @@ export const RightSideBar = styled.div`
       }
       .trends-item {
         margin: 2px 0 0 0;
-        padding: 8px 16px;
+        padding: 12px 16px;
         font-size: 13px;
         cursor: pointer;
 
         &:hover {
-          background-color: #ccc;
+          background-color: rgba(15, 20, 25, 0.05);
+          transition: 0.4s;
         }
         .trends-item-name {
           color: ${({ theme }) => theme.textSecondaryColor};

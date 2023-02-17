@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 const theme = {
   fontSize: {
     xs: "12px",
@@ -13,5 +15,11 @@ const theme = {
   textSecondaryColor: "#536471",
   primaryFontWeight: "900",
 };
+
+export const clientDataImg = css`
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+`;
 
 export default theme;

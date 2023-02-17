@@ -1,35 +1,36 @@
 import styled from "styled-components";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
 
+export const ClientImg = styled(GlobalClientImg)`
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+`;
 export const Home = styled.div`
   display: flex;
   justify-content: center;
-
-  .client-data-img {
-    min-width: 40px;
-    min-height: 40px;
-    border-radius: 50%;
-  }
 
   .home-content {
     border: 1px solid rgb(239, 243, 244);
     padding: 16px 0px;
 
     .home-content-top {
-      background-color: rgba(255, 255, 255, 0.85);
       position: sticky;
-      top: 0;
+      top: 0px;
+      background-color: rgba(255, 255, 255, 0.85);
     }
     .link-title {
       font-size: ${({ theme }) => theme.fontSize.xl};
       font-weight: ${({ theme }) => theme.primaryFontWeight};
-      padding-left: 16px;
+      padding: 0 0px 16px 16px;
+      position: sticky;
+      top: 16px;
     }
     .tab-list {
       display: flex;
       align-items: center;
       font-size: ${({ theme }) => theme.secondaryFontSize};
-      margin-top: 32px;
-
+      margin-top: 16px;
       .tab-list-item {
         width: 292px;
         display: flex;
@@ -39,6 +40,7 @@ export const Home = styled.div`
 
         &:hover {
           background-color: rgba(15, 20, 25, 0.1);
+          transition: 0.3s;
         }
         .tab-list-item-text {
           display: flex;
@@ -62,7 +64,6 @@ export const Home = styled.div`
       }
     }
     .client-textarea-container {
-
     }
   }
 `;
@@ -71,13 +72,15 @@ export const OtherUser = styled.div`
   .other-user-content {
     border-bottom: 1px solid rgb(239, 243, 244);
     font-size: ${({ theme }) => theme.secondaryFontSize};
-    margin: 10px 0 0 0;
-    padding: 0 0 12px 16px;
-    .client-data-img {
-      width: 50px;
-      height: 50px;
-    }
     display: flex;
+    cursor: pointer;
+    padding: 12px 0 12px 16px;
+
+    &:hover {
+      background-color: rgba(15, 20, 25, 0.02);
+      transition: 0.3s;
+    }
+ 
 
     .other-data-container {
       padding: 0 0 0 10px;
@@ -120,11 +123,56 @@ export const OtherUser = styled.div`
 
         .other-user-icon-item {
           display: flex;
-          align-items: flex-end;
+          align-items: center;
+
           svg {
+            padding: 5px;
             width: 18.75px;
             margin: 0 12px 0 0;
             fill: ${({ theme }) => theme.textSecondaryColor};
+          }
+
+          :hover {
+            color: ${({ theme }) => theme.primaryColor};
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: ${({ theme }) => theme.primaryColor};
+              background-color: rgba(29, 155, 240, 0.1);
+            }
+          }
+        }
+
+        .transfer {
+          :hover {
+            color: rgb(0, 186, 124);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(0, 186, 124);
+              background-color: rgba(0, 186, 124, 0.2);
+            }
+          }
+        }
+        .like {
+          transition: all 0.2s;
+          :hover {
+            color: rgb(249, 24, 128);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(249, 24, 128);
+              background-color: rgba(249, 24, 128, 0.2);
+            }
+          }
+          &.active {
+            color: rgb(249, 24, 128);
+            svg {
+              fill: rgb(249, 24, 128);
+            }
           }
         }
       }
