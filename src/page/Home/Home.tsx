@@ -41,6 +41,7 @@ const Home: FC<HomeProps> = ({ name }) => {
     },
   ];
 
+  // 送發表文章的物件
   const handleTweet = () => {
     dispatch(
       addArticle({
@@ -58,6 +59,8 @@ const Home: FC<HomeProps> = ({ name }) => {
     setInputValue("");
   };
 
+  // search list 透過 className 判斷要不要關閉視窗
+  // 篩選出點到不關閉的 className 去做判斷
   const globalClassNameDetection = (
     e: React.MouseEvent<HTMLDivElement>
   ): void => {
@@ -69,6 +72,13 @@ const Home: FC<HomeProps> = ({ name }) => {
       target.className !== "search-icon" &&
       target.className !== "search" &&
       target.className !== "search-input" &&
+      target.className !== "search-result-email" &&
+      target.className !== "search-result-name font-bold" &&
+      target.className !== "search-result-follower" &&
+      target.className !== "search-result-list-item" &&
+      target.className !== "search-result-img" &&
+      target.className !== "search-result-container" &&
+      target.className !== "search-result-follower" &&
       target.nodeName !== "svg"
     ) {
       dispatch(rightSideBarSearchExpandToggle(false));

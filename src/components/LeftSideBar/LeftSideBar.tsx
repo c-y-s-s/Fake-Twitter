@@ -1,60 +1,19 @@
 import React from "react";
 import * as Styles from "./styles";
 
-import { ReactComponent as HomeSVG } from "../../img/leftSideBar/home.svg";
-import { ReactComponent as NotificationsSVG } from "../../img/leftSideBar/notifications.svg";
-import { ReactComponent as Explore } from "../../img/leftSideBar/explore.svg";
-import { ReactComponent as MessagesSVG } from "../../img/leftSideBar/messages.svg";
-import { ReactComponent as BookMarksSVG } from "../../img/leftSideBar/bookmarks.svg";
-import { ReactComponent as ListsSVG } from "../../img/leftSideBar/lists.svg";
-import { ReactComponent as ProfileSVG } from "../../img/leftSideBar/profile.svg";
+import { ReactComponent as TweetRWDSVG } from "../../img/leftSideBar/tweetRWD.svg";
 import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
 import { useDispatch } from "react-redux";
 import { userPublishedModalToggle } from "../../reducers/controller";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
+import { LinkBar } from "./LinkBar";
 
-interface HomeProps {
+interface LeftSideBarProps {
   name: string;
 }
 
-const LeftSideBar = ({ name }: HomeProps) => {
+const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const dispatch = useDispatch();
-  const LinkData = [
-    {
-      text: "Home",
-      svg: <HomeSVG />,
-      link: "/",
-    },
-    {
-      text: "Explore",
-      svg: <Explore />,
-      link: "explore",
-    },
-    {
-      text: "Notifications",
-      svg: <NotificationsSVG />,
-      link: "notifications",
-    },
-    {
-      text: "Messages",
-      svg: <MessagesSVG />,
-      link: "messages",
-    },
-    {
-      text: "Bookmarks",
-      svg: <BookMarksSVG />,
-      link: "bookmarks",
-    },
-    {
-      text: "ListsSVG",
-      svg: <ListsSVG />,
-      link: "lists",
-    },
-    {
-      text: "ProfileSVG",
-      svg: <ProfileSVG />,
-      link: "profileSVG",
-    },
-  ];
 
   return (
     <Styles.LeftSideBar>
@@ -63,17 +22,7 @@ const LeftSideBar = ({ name }: HomeProps) => {
           <TwitterSVG />
         </div>
         <div className="link-container">
-          {LinkData.map((item, index) => {
-            return (
-              <div
-                className={`link-item ${name === item.text ? "font-bold" : ""}`}
-                key={index}
-              >
-                {item.svg}
-                <a href={item.link}>{item.text}</a>
-              </div>
-            );
-          })}
+          <LinkBar name={name} />
         </div>
         <div
           className="tweet"
@@ -81,11 +30,19 @@ const LeftSideBar = ({ name }: HomeProps) => {
             dispatch(userPublishedModalToggle(true));
           }}
         >
-          Tweet
+          <div className="tweet-text"> Tweet</div>
+          <div className="tweet-rwd-svg">
+            <TweetRWDSVG />
+          </div>
         </div>
       </div>
       <div className="client-data">
-        <div className="client-data-img"></div>
+        <GlobalClientImg
+          src="/static/media/userImg.e01a53f21b11b7147abf.jpg"
+          alt=""
+          Location="leftSideBar"
+        ></GlobalClientImg>
+
         <div className="client-data-container">
           <div className="client-data-name">Leo Chang</div>
           <div className="client-data-serial-number">@fcdc102d9f60407</div>

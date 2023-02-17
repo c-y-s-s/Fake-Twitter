@@ -1,29 +1,6 @@
 // scr/features/api/todoApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface SearchItem {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-}
+import { SearchItem } from "../types/search";
 
 export const searchApi = createApi({
   reducerPath: "searchApi",
@@ -35,7 +12,10 @@ export const searchApi = createApi({
     getSearchData: builder.query<SearchItem[], void>({
       query: () => `users`,
     }),
+    getSearchUserData: builder.query<SearchItem, string>({
+      query: (id) => `users/${id}`,
+    }),
   }),
 });
 
-export const { useGetSearchDataQuery } = searchApi;
+export const { useGetSearchDataQuery, useGetSearchUserDataQuery } = searchApi;

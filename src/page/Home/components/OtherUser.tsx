@@ -8,6 +8,7 @@ import * as Styles from "../styles";
 import { RootState } from "../../../reducers";
 import { useEffect, useRef, useState } from "react";
 import { AddOtherUserDataLike } from "../../../reducers/otherUserData";
+import { GlobalClientImg } from "../../../styles/GlobalStyle";
 
 interface otherUserDataProps {
   id: string;
@@ -47,10 +48,11 @@ const OtherUser = () => {
       {sortIdOtherUserData?.map((item) => {
         return (
           <div className="other-user-content" key={item.id}>
-            <img
+            <GlobalClientImg
               src="https://picsum.photos/50/50?grayscale"
               alt=""
               className="client-data-img"
+              Location={"otherUser"}
             />
 
             <div className="other-data-container">

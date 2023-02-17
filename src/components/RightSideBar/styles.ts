@@ -36,18 +36,60 @@ export const RightSideBar = styled.div`
   }
   .search-list {
     margin: 2px 0 0 0;
-    height: 90px;
     width: 360px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px #ccc;
     position: absolute;
     top: 45px;
     background-color: #fff;
-    .search-list-text {
+    .search-result-container {
       text-align: center;
-      padding: 16px 12px;
+      padding: 10px 0px;
+      height: 100%;
       font-size: ${({ theme }) => theme.fontSize.sm};
       color: ${({ theme }) => theme.textSecondaryColor};
+
+      .search-result-empty {
+        height: 90px;
+      }
+
+      .search-result-list-item {
+        padding: 12px 16px;
+        display: flex;
+        text-align: left;
+        transition: 0.3s;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(15, 20, 25, 0.02);
+        }
+
+        .search-result-content {
+          margin-left: 12px;
+          font-size: ${({ theme }) => theme.secondaryFontSize};
+          .search-result-name {
+            color: ${({ theme }) => theme.textColor};
+          }
+          .search-result-email,
+          .search-result-follower {
+            padding: 2px 0;
+            color: ${({ theme }) => theme.textSecondaryColor};
+          }
+        }
+      }
+
+      .search-list-empty {
+        text-align: left;
+        color: ${({ theme }) => theme.textColor};
+        font-size: ${({ theme }) => theme.fontSize.sm};
+        transition: 0.3s;
+        div {
+          padding: 16px;
+          &:hover {
+            background-color: rgba(15, 20, 25, 0.02);
+          }
+        }
+      }
     }
   }
   .trends-container {

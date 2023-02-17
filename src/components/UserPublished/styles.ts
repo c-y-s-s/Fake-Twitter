@@ -7,11 +7,7 @@ export const UserPublished = styled.div`
     padding: 10px 16px;
     .client-textarea-block {
       display: flex;
-      .client-data-img {
-        min-width: 48px;
-        height: 48px;
-        object-fit: cover;
-      }
+
       .textarea {
         padding: 0 0 0 10px;
         align-items: center;

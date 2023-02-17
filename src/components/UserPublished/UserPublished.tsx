@@ -9,6 +9,8 @@ import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
 import { useDispatch, useSelector } from "react-redux";
 import * as Styles from "./styles";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
+
 interface UserPublishedProps {
   userImg: string;
   setInputValue: (value: string) => void;
@@ -50,7 +52,7 @@ const UserPublished: FC<UserPublishedProps> = ({
     <Styles.UserPublished>
       <div className="client-content-block">
         <div className="client-textarea-block">
-          <img className="client-data-img" src={userImg} alt="user" />
+          <GlobalClientImg src={userImg} alt="user" Location="userPublished" />
           <div className="textarea">
             <textarea
               placeholder="What's happening?"

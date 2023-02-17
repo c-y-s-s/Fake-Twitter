@@ -1,35 +1,36 @@
 import styled from "styled-components";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
 
+export const ClientImg = styled(GlobalClientImg)`
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+`;
 export const Home = styled.div`
   display: flex;
   justify-content: center;
-
-  .client-data-img {
-    min-width: 40px;
-    min-height: 40px;
-    border-radius: 50%;
-  }
 
   .home-content {
     border: 1px solid rgb(239, 243, 244);
     padding: 16px 0px;
 
     .home-content-top {
-      background-color: rgba(255, 255, 255, 0.85);
       position: sticky;
-      top: 0;
+      top: 0px;
+      background-color: rgba(255, 255, 255, 0.85);
     }
     .link-title {
       font-size: ${({ theme }) => theme.fontSize.xl};
       font-weight: ${({ theme }) => theme.primaryFontWeight};
-      padding-left: 16px;
+      padding: 0 0px 16px 16px;
+      position: sticky;
+      top: 16px;
     }
     .tab-list {
       display: flex;
       align-items: center;
       font-size: ${({ theme }) => theme.secondaryFontSize};
-      margin-top: 32px;
-
+      margin-top: 16px;
       .tab-list-item {
         width: 292px;
         display: flex;
@@ -71,6 +72,7 @@ export const OtherUser = styled.div`
   .other-user-content {
     border-bottom: 1px solid rgb(239, 243, 244);
     font-size: ${({ theme }) => theme.secondaryFontSize};
+    display: flex;
     cursor: pointer;
     padding: 12px 0 12px 16px;
 
@@ -78,11 +80,7 @@ export const OtherUser = styled.div`
       background-color: rgba(15, 20, 25, 0.02);
       transition: 0.3s;
     }
-    .client-data-img {
-      width: 50px;
-      height: 50px;
-    }
-    display: flex;
+ 
 
     .other-data-container {
       padding: 0 0 0 10px;
