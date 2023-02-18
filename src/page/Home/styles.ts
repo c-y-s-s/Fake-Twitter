@@ -12,7 +12,7 @@ export const Home = styled.div`
 
   .home-content {
     border: 1px solid rgb(239, 243, 244);
-    padding: 16px 0px;
+    padding: 16px 0px 0 0;
 
     .home-content-top {
       position: sticky;
@@ -69,6 +69,12 @@ export const Home = styled.div`
 `;
 export const OtherUser = styled.div`
   padding: 0 0 8px 0;
+
+  .infinite-scroll-component__outerdiv {
+    .infinite-scroll-component {
+      overflow: hidden;
+    }
+  }
   .other-user-content {
     border-bottom: 1px solid rgb(239, 243, 244);
     font-size: ${({ theme }) => theme.secondaryFontSize};
@@ -80,7 +86,6 @@ export const OtherUser = styled.div`
       background-color: rgba(15, 20, 25, 0.02);
       transition: 0.3s;
     }
- 
 
     .other-data-container {
       padding: 0 0 0 10px;
