@@ -1,28 +1,35 @@
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import * as Styles from "./styles";
-
-import { ReactComponent as AddEmoji } from "../../img/home/addEmoji.svg";
-import { ReactComponent as AddGif } from "../../img/home/addGif.svg";
-import { ReactComponent as AddLocation } from "../../img/home/addLocation.svg";
-import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
-import { ReactComponent as AddPoll } from "../../img/home/addPoll.svg";
-import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
 import userImg from "../../img/userImg.jpg";
 import OtherUser from "./components/OtherUser";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import { RootState } from "../../reducers";
-import { tabListToggle } from "../../reducers/controller";
+import {
+  rightSideBarSearchExpandToggle,
+  tabListToggle,
+} from "../../reducers/controller";
 import { useSelector, useDispatch } from "react-redux";
+import { FC, useState } from "react";
+import { addArticle } from "../../reducers/otherUserData";
+import UserPublished from "../../components/UserPublished/UserPublished";
+import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
 
 interface HomeProps {
   name: string;
 }
-const Home = ({ name }: HomeProps) => {
+const Home: FC<HomeProps> = ({ name }) => {
   const dispatch = useDispatch();
   const tabList = useSelector(
     (state: RootState) => state.controllerSliceReducer.tabList
   );
 
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const otherUserData = useSelector(
+    (state: RootState) => state.otherUserDataSliceReducer.otherUserData
+  );
+
+  let articleId = Number(otherUserData[otherUserData.length - 1].id);
   const tabListData = [
     {
       text: "For You",
@@ -33,20 +40,65 @@ const Home = ({ name }: HomeProps) => {
       active: tabList === "Following" ? true : false,
     },
   ];
+
+  // 送發表文章的物件
+  const handleTweet = () => {
+    dispatch(
+      addArticle({
+        id: (articleId += 1).toString(),
+        userName: "user01",
+        userSerialNumber: "@fcdc102d9f60407",
+        postingTime: "31m",
+        text: inputValue,
+        message: 0,
+        transfer: 0,
+        view: 1,
+        like: { number: 0, userClick: false },
+      })
+    );
+    setInputValue("");
+  };
+
+  // search list 透過 className 判斷要不要關閉視窗
+  // 篩選出點到不關閉的 className 去做判斷
+  const globalClassNameDetection = (
+    e: React.MouseEvent<HTMLDivElement>
+  ): void => {
+    const target = e.target as Element;
+
+    if (
+      target.className !== "search-list" &&
+      target.className !== "search-list-text" &&
+      target.className !== "search-icon" &&
+      target.className !== "search" &&
+      target.className !== "search-input" &&
+      target.className !== "search-result-email" &&
+      target.className !== "search-result-name font-bold" &&
+      target.className !== "search-result-follower" &&
+      target.className !== "search-result-list-item" &&
+      target.className !== "search-result-img" &&
+      target.className !== "search-result-container" &&
+      target.className !== "search-result-follower" &&
+      target.nodeName !== "svg"
+    ) {
+      dispatch(rightSideBarSearchExpandToggle(false));
+    }
+  };
   return (
-    <Styles.Home>
+    <Styles.Home onClick={globalClassNameDetection}>
       <LeftSideBar name={name} />
       <div className="home-content">
         <div className="home-content-top">
           <div className="link-title">Home</div>
           <div className="tab-list">
-            {tabListData.map((item) => {
+            {tabListData.map((item, index) => {
               return (
                 <div
                   className="tab-list-item"
                   onClick={() => {
                     dispatch(tabListToggle(item.text));
                   }}
+                  key={index}
                 >
                   <div
                     className={`tab-list-item-text ${
@@ -65,47 +117,24 @@ const Home = ({ name }: HomeProps) => {
         </div>
 
         <div className="client-textarea-container">
-          <div className="client-content-block">
-            <div className="client-textarea-block">
-              <img className="client-data-img" src={userImg} alt="user" />
-              <div className="textarea">
-                <textarea placeholder="What's happening?" />
-              </div>
-            </div>
-            <div className="client-textarea-bottom">
-              <div className="client-textarea-icon">
-                <div className="icon-item">
-                  <AddMedia />
-                </div>
+          <UserPublished
+            userImg={userImg}
+            setInputValue={setInputValue}
+            inputValue={inputValue}
+            handleTweet={handleTweet}
+          />
 
-                <div className="icon-item">
-                  <AddGif />
-                </div>
-                <div className="icon-item">
-                  <AddPoll />
-                </div>
-                <div className="icon-item">
-                  <AddEmoji />
-                </div>
-
-                <div className="icon-item">
-                  <AddSchedule />
-                </div>
-                <div className="icon-item">
-                  <AddLocation />
-                </div>
-              </div>
-              <div className="client-textarea-tweet">Tweet</div>
-            </div>
-          </div>
-          <OtherUser />
-          <OtherUser />
-          <OtherUser />
-          <OtherUser />
           <OtherUser />
         </div>
       </div>
+
       <RightSideBar />
+      <UserPublishedModal
+        userImg={userImg}
+        setInputValue={setInputValue}
+        inputValue={inputValue}
+        handleTweet={handleTweet}
+      />
     </Styles.Home>
   );
 };

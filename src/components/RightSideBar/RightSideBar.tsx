@@ -1,18 +1,22 @@
 import React from "react";
+import Search from "./Search";
 import * as Styles from "./styles";
-import { ReactComponent as Search } from "../../img/search.svg";
-const RightSideBar = () => {
+
+
+const RightSideBar: React.FC = () => {
+
+
   const tendingData = [
     {
-      name: "#Test",
+      name: "$500 Binance",
       tweetsAmount: "172K",
     },
     {
-      name: "#Test",
+      name: "Turkey",
       tweetsAmount: "172K",
     },
     {
-      name: "#Test",
+      name: "Russian",
       tweetsAmount: "172K",
     },
     {
@@ -44,23 +48,18 @@ const RightSideBar = () => {
       tweetsAmount: "172K",
     },
   ];
-  return (
-    <Styles.RightSideBar>
-      <form className="search">
-        <div className="search-icon">
-          <Search />
-        </div>
-        <input type="text" placeholder="Search Twitter" />
-      </form>
 
+  return (
+    <Styles.RightSideBar className="search-container">
+      <Search />
       <div className="trends-container">
-        <div className="trends">
-          Trends for you
+        <div className="trends ">
+          <div className="font-bold trends-title"> Trends for you</div>
           {tendingData.map((item, index) => {
             return (
               <div className="trends-item" key={index}>
                 <div className="trends-item-name">News.Tending</div>
-                <div className="trends-item-tag">{item.name}</div>
+                <div className="trends-item-tag font-bold">{item.name}</div>
                 <div className="trends-item-tweets-amount">
                   {item.tweetsAmount} Tweets
                 </div>
@@ -69,10 +68,7 @@ const RightSideBar = () => {
           })}
           <div className="show-more">Show more</div>
         </div>
-        <div>
-          <br />
-          <br />
-          <br />
+        <div className="policy-text">
           Terms of Service Privacy Policy Cookie Policy
           <br />
           Accessibility Ads info

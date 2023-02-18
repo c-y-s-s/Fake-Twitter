@@ -1,35 +1,36 @@
 import styled from "styled-components";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
 
+export const ClientImg = styled(GlobalClientImg)`
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+`;
 export const Home = styled.div`
   display: flex;
   justify-content: center;
 
-  .client-data-img {
-    min-width: 40px;
-    min-height: 40px;
-    border-radius: 50%;
-  }
-
   .home-content {
     border: 1px solid rgb(239, 243, 244);
-    padding: 16px 0px;
+    padding: 16px 0px 0 0;
 
     .home-content-top {
-      background-color: rgba(255, 255, 255, 0.85);
       position: sticky;
-      top: 0;
+      top: 0px;
+      background-color: rgba(255, 255, 255, 0.85);
     }
     .link-title {
       font-size: ${({ theme }) => theme.fontSize.xl};
       font-weight: ${({ theme }) => theme.primaryFontWeight};
-      padding-left: 16px;
+      padding: 0 0px 16px 16px;
+      position: sticky;
+      top: 16px;
     }
     .tab-list {
       display: flex;
       align-items: center;
       font-size: ${({ theme }) => theme.secondaryFontSize};
-      margin-top: 32px;
-
+      margin-top: 16px;
       .tab-list-item {
         width: 292px;
         display: flex;
@@ -39,6 +40,7 @@ export const Home = styled.div`
 
         &:hover {
           background-color: rgba(15, 20, 25, 0.1);
+          transition: 0.3s;
         }
         .tab-list-item-text {
           display: flex;
@@ -62,127 +64,119 @@ export const Home = styled.div`
       }
     }
     .client-textarea-container {
-      border-left: none;
-      border-right: none;
-      padding: 0px 16px;
+    }
+  }
+`;
+export const OtherUser = styled.div`
+  padding: 0 0 8px 0;
 
-      .client-content-block {
-        border-top: 1px solid rgb(239, 243, 244);
-        border-bottom: 1px solid rgb(239, 243, 244);
-        padding: 10px 0px;
-        .client-textarea-block {
-          display: flex;
-          .client-data-img {
-            min-width: 48px;
-            height: 48px;
-            object-fit: cover;
-          }
-          .textarea {
-            padding: 0 0 0 10px;
-            align-items: center;
-            width: 100%;
+  .infinite-scroll-component__outerdiv {
+    .infinite-scroll-component {
+      overflow: hidden;
+    }
+  }
+  .other-user-content {
+    border-bottom: 1px solid rgb(239, 243, 244);
+    font-size: ${({ theme }) => theme.secondaryFontSize};
+    display: flex;
+    cursor: pointer;
+    padding: 12px 0 12px 16px;
 
-            textarea {
-              resize: none;
-              width: 98%;
-              border: none;
-              height: 100%;
-              &:focus {
-                outline: none;
-              }
-            }
-          }
-        }
-
-        .client-textarea-bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          min-height: 48px;
-          .client-textarea-icon {
-            display: flex;
-            padding-left: 60px;
-
-            .icon-item {
-              width: 20px;
-              height: 20px;
-
-              svg {
-                fill: ${({ theme }) => theme.secondaryColor};
-              }
-
-              &:nth-child(1) {
-                margin: 0 6px 0 0;
-              }
-              &:nth-child(n + 2) {
-                margin: 0px 6px;
-              }
-            }
-          }
-          .client-textarea-tweet {
-            font-size: ${({ theme }) => theme.secondaryFontSize};
-            border-radius: 18px;
-            color: #fff;
-            background-color: ${({ theme }) => theme.primaryColor};
-            display: flex;
-            align-items: center;
-            padding: 8px 16px;
-          }
-        }
-      }
+    &:hover {
+      background-color: rgba(15, 20, 25, 0.02);
+      transition: 0.3s;
     }
 
-    .other-user-content {
-      font-size: ${({ theme }) => theme.secondaryFontSize};
-      margin: 10px 0 0 0;
-      .client-data-img {
-        width: 50px;
-        height: 50px;
+    .other-data-container {
+      padding: 0 0 0 10px;
+      .other-user-block {
+        color: ${({ theme }) => theme.textSecondaryColor};
+        display: flex;
+
+        .other-user-name {
+          color: ${({ theme }) => theme.textColor};
+        }
+        .other-user-account {
+          margin: 0 3px 0 8px;
+        }
+        .other-user-date {
+          margin: 0 0 0 3px;
+        }
       }
-      display: flex;
+      .other-user-text {
+        width: 506px;
+        word-wrap: break-word;
+        margin: 5px 0 0 0;
+        line-height: 20px;
+      }
+      .other-user-image {
+        margin: 14px 0 0 0;
+        padding: 0 12px 0 0;
+        img {
+          width: 100%;
+          height: 370px;
+          border-radius: 16px;
+        }
+      }
+      .other-user-icon {
+        color: ${({ theme }) => theme.textSecondaryColor};
+        font-size: 13px;
+        margin: 12px 0 0 0;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
 
-      .other-data-container {
-        padding: 0 0 0 10px;
-        .other-user-block {
-          color: ${({ theme }) => theme.textSecondaryColor};
+        .other-user-icon-item {
           display: flex;
+          align-items: center;
 
-          .other-user-name {
-            color: ${({ theme }) => theme.textColor};
+          svg {
+            padding: 5px;
+            width: 18.75px;
+            margin: 0 12px 0 0;
+            fill: ${({ theme }) => theme.textSecondaryColor};
           }
-          .other-user-account {
-            margin: 0 3px 0 8px;
-          }
-          .other-user-date {
-            margin: 0 0 0 3px;
-          }
-        }
-        .other-user-text {
-          margin: 5px 0 0 0;
-        }
-        .other-user-image {
-          margin: 8px 0 0 0;
-          img {
-            width: 100%;
-            height: 370px;
-            border-radius: 16px;
-          }
-        }
-        .other-user-icon {
-          color: ${({ theme }) => theme.textSecondaryColor};
-          font-size: 13px;
-          margin: 12px 0 0 0;
-          width: 80%;
-          display: flex;
-          justify-content: space-between;
 
-          .other-user-icon-item {
-            display: flex;
-            align-items: flex-end;
+          :hover {
+            color: ${({ theme }) => theme.primaryColor};
+            transition: 0.3s;
             svg {
-              width: 18.75px;
-              margin: 0 12px 0 0;
-              fill: ${({ theme }) => theme.textSecondaryColor};
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: ${({ theme }) => theme.primaryColor};
+              background-color: rgba(29, 155, 240, 0.1);
+            }
+          }
+        }
+
+        .transfer {
+          :hover {
+            color: rgb(0, 186, 124);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(0, 186, 124);
+              background-color: rgba(0, 186, 124, 0.2);
+            }
+          }
+        }
+        .like {
+          transition: all 0.2s;
+          :hover {
+            color: rgb(249, 24, 128);
+            transition: 0.3s;
+            svg {
+              border-radius: 50%;
+              transition: 0.3s;
+              fill: rgb(249, 24, 128);
+              background-color: rgba(249, 24, 128, 0.2);
+            }
+          }
+          &.active {
+            color: rgb(249, 24, 128);
+            svg {
+              fill: rgb(249, 24, 128);
             }
           }
         }
