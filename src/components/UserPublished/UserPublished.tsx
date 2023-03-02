@@ -7,7 +7,7 @@ import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
 import { ReactComponent as AddPoll } from "../../img/home/addPoll.svg";
 import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as Styles from "./styles";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
 

@@ -9,7 +9,6 @@ const GlobalStyle = createGlobalStyle`
 *{
 font-family: 'Open Sans', sans-serif;
 
-
 }
 
 .font-bold{
@@ -56,7 +55,6 @@ export const GlobalClientImg = styled.img<StyledClientImg>`
       max-width: 55px;
       max-height: 55px;
       border-radius: 50%;
-
     `}
 `;
 export default GlobalStyle;
