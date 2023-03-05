@@ -5,12 +5,14 @@ export interface controllerState {
   tabList: string;
   userPublishedModal: boolean;
   rightSideBarSearchExpand: boolean;
+  userLogin: any;
 }
 
 const initialState: controllerState = {
   tabList: "For You",
   userPublishedModal: false,
   rightSideBarSearchExpand: false,
+  userLogin: null,
 };
 
 export const controllerSlice = createSlice({
@@ -26,6 +28,9 @@ export const controllerSlice = createSlice({
     rightSideBarSearchExpandToggle: (state, action) => {
       state.rightSideBarSearchExpand = action.payload;
     },
+    userLogin: (state, action) => {
+      state.userLogin = action.payload;
+    },
   },
 });
 
@@ -33,6 +38,7 @@ export const {
   tabListToggle,
   userPublishedModalToggle,
   rightSideBarSearchExpandToggle,
+  userLogin,
 } = controllerSlice.actions;
 
 const controllerSliceReducer = controllerSlice.reducer;

@@ -15,6 +15,18 @@ export const Register = styled.div`
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .close-button {
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+    }
   }
 `;
 
@@ -29,6 +41,7 @@ export const BuildMethod = styled.div`
     margin: auto;
     .register-title {
       margin-top: 30px;
+      font-size: 31px;
     }
     .second-text {
       display: flex;
@@ -46,10 +59,10 @@ export const BuildMethod = styled.div`
 
     .register-button {
       width: 100%;
-      padding: 8px;
+      padding: 6px;
       text-align: center;
       border-radius: 16px;
-      margin: 26px 0;
+      margin: 40px 0;
       cursor: pointer;
     }
     .next-step-button {
@@ -85,6 +98,11 @@ export const Step1 = styled.div`
     height: 56px;
     margin-top: 24px;
   }
+  .second-text {
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    margin-top: -10px;
+    color: ${({ theme }) => theme.textSecondaryColor};
+  }
   .date-container {
     padding: 16px 0 0 0;
     .day-select {
@@ -107,7 +125,11 @@ export const Step1 = styled.div`
     background-color: ${({ theme }) => theme.primaryColor};
     color: #fff;
     border-radius: 32px;
-    margin-top: 18px;
+    margin-top: 90px;
     cursor: pointer;
+  }
+  .register-button.false {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
 `;

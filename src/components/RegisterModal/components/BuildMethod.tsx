@@ -8,14 +8,13 @@ interface BuildMethodProps {
 const BuildMethod: FC<BuildMethodProps> = ({ setStep }) => {
   return (
     <Styles.BuildMethod>
-
       <div className="center">
         <h2 className="register-title">立即加入Twitter</h2>
         {/* <div>使用 Google 帳戶登入</div> */}
         <div className="second-text">
-          <div className="second-text-line"></div>
+          {/* <div className="second-text-line"></div>
           <div className="text">或</div>
-          <div className="second-text-line"></div>
+          <div className="second-text-line"></div> */}
         </div>
 
         <div

@@ -10,20 +10,20 @@ import * as Styles from "../style";
 import firebase from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
-
-
+import "firebase/compat/firestore";
 const Step1: FC = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState<string>("");
   const [mail, setMail] = useState<string>("");
+  const [mailErrorMsg, setMailErrorMsg] = useState<boolean>(false);
   const [year, setYear] = useState<string>("");
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
-
+  const [registerValid, setRegisterValid] = useState<boolean>(false);
   const yearOption = (): string[] => {
     let yearData = [];
-    for (let i = 1983; i <= 2023; i++) {
+    for (let i = 1923; i <= 2023; i++) {
       yearData.push(i.toString());
     }
 
@@ -66,43 +66,116 @@ const Step1: FC = () => {
     return dayData;
   };
 
+  const handleChangeMail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    let value = e.target.value;
+
+    if (
+      !/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+        value
+      ) &&
+      value !== ""
+    ) {
+      setMail(value);
+      setMailErrorMsg(true);
+    } else {
+      setMail(value);
+      setMailErrorMsg(false);
+    }
+  };
+
+  const mailJSX = () => {
+    switch (mailErrorMsg) {
+      case true:
+        return (
+          <TextField
+            error
+            type="text"
+            className="mail"
+            value={mail}
+            onChange={handleChangeMail}
+            id="outlined-error"
+            label="mail"
+            helperText="請輸入有效的電子郵件。"
+          />
+        );
+      case false:
+        return (
+          <TextField
+            type="text"
+            className="mail"
+            value={mail}
+            onChange={handleChangeMail}
+            id={mailErrorMsg ? "outlined-error" : ""}
+            label="mail"
+          />
+        );
+      default:
+        return <></>;
+    }
+  };
   const handlePostRegister = (): void => {
+    if (!registerValid) return;
+    // 取到寫入資料必要物件
+    const documentRef = firebase?.firestore()?.collection("users")?.doc();
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(mail, "aaaaaa")
-      .then((item) => {
-        navigate("/");
+      .then(() => {
+        //傳入寫入資料的物件
+        documentRef
+          .set({
+            mail: mail,
+            name: name,
+            birthday: `${year}-${month}-${day}`,
+            // firebase 提供 time-stamp 函式可用
+            created_time: firebase.firestore.Timestamp.now(),
+          })
+          .then(() => {
+            //註冊成功資料有寫入資料庫導回首頁
+            navigate("/");
+          })
+          .catch(() => {
+            console.log("寫入資料庫失敗");
+          });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
+
+  // 監聽每個 input 是否都有填入正確值
+  // 才可點擊註冊
+  useEffect(() => {
+    if (name && mail && year && month && day && !mailErrorMsg) {
+      setRegisterValid(true);
+    } else {
+      setRegisterValid(false);
+    }
+  }, [day, mail, mailErrorMsg, month, name, year]);
   return (
     <Styles.Step1>
-      <div>步驟1/5</div>
+      {/* <div>步驟1/5</div> */}
       <h1>建立你的帳戶</h1>
 
       <div>
         <TextField
+          label="name"
           type="text"
           className="name"
-          label="name"
           value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
-        <TextField
-          type="text"
-          className="mail"
-          label="mail"
-          value={mail}
-          onChange={(e) => {
-            setMail(e.target.value);
-          }}
-        />
+        {mailJSX()}
+        <div>
+          <h4>出生日期</h4>
+          <p className="second-text">
+            此資訊將不會公開顯示。請確認你自己的年齡，即使此帳戶是用於公司、寵物或其他用途。
+          </p>
+        </div>
 
-        <p>出生日期</p>
-        <p>
-          此資訊將不會公開顯示。請確認你自己的年齡，即使此帳戶是用於公司、寵物或其他用途。
-        </p>
         <div className="date-container">
           <FormControl>
             <InputLabel id="month-select-label">Month</InputLabel>
@@ -141,7 +214,7 @@ const Step1: FC = () => {
               {dayOption().map((item) => {
                 return (
                   <MenuItem value={item} key={item}>
-                    {item}日
+                    {item}
                   </MenuItem>
                 );
               })}
@@ -162,7 +235,7 @@ const Step1: FC = () => {
               {yearOption().map((item) => {
                 return (
                   <MenuItem value={item} key={item}>
-                    {item}年
+                    {item}
                   </MenuItem>
                 );
               })}
@@ -170,7 +243,10 @@ const Step1: FC = () => {
           </FormControl>
         </div>
       </div>
-      <div className="register-button" onClick={handlePostRegister}>
+      <div
+        className={registerValid ? "register-button " : "register-button false"}
+        onClick={handlePostRegister}
+      >
         註冊
       </div>
     </Styles.Step1>

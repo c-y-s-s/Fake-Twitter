@@ -18,6 +18,14 @@ export const SignInModal = styled.div`
     .top {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      .close-button {
+        border: none;
+        background-color: rgba(0, 0, 0, 0);
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
     }
     .center {
       width: 300px;
@@ -25,6 +33,7 @@ export const SignInModal = styled.div`
       margin: auto;
       .sign-in-title {
         margin-top: 30px;
+        font-size: 31px;
       }
       .second-text {
         display: flex;
@@ -41,15 +50,18 @@ export const SignInModal = styled.div`
       }
       .sign-in-input {
         border: 1px solid rgb(207, 217, 222);
-        padding: 12px 6px;
+        padding: 16px 0px;
         width: 100%;
       }
       .sign-in-button {
         width: 100%;
-        padding: 8px;
+        height: 34px;
         text-align: center;
         border-radius: 16px;
         margin: 26px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .next-step-button {
         background-color: black;
@@ -70,5 +82,24 @@ export const SignInModal = styled.div`
         }
       }
     }
+  }
+`;
+
+export const SignInStep1 = styled.div`
+  padding: 0 90px;
+  .step1-mail {
+    width: 100%;
+  }
+  .step1-password {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .step1-sign-in {
+    width: 100%;
+    padding: 16px 0px;
+    text-align: center;
+    border-radius: 24px;
+    margin: 26px 0;
+    background-color: #ccc;
   }
 `;
