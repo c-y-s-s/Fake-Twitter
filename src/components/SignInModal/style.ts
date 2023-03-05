@@ -49,8 +49,6 @@ export const SignInModal = styled.div`
         }
       }
       .sign-in-input {
-        border: 1px solid rgb(207, 217, 222);
-        padding: 16px 0px;
         width: 100%;
       }
       .sign-in-button {

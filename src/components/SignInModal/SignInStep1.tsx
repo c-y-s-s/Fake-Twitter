@@ -4,14 +4,17 @@ import * as Styles from "./style";
 import firebase from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 
-const SignInStep1 = () => {
+interface SignStep1Props {
+  mailValue: string;
+}
+const SignInStep1 = ({ mailValue }: SignStep1Props) => {
   const navigate = useNavigate();
   const [passwordValue, setPasswordValue] = useState<string>("");
 
   const handleSignIn = (): void => {
     firebase
       .auth()
-      .signInWithEmailAndPassword("asfasf@test.com", passwordValue)
+      .signInWithEmailAndPassword(mailValue, passwordValue)
       .then(() => {
         navigate("/");
       });
@@ -19,7 +22,7 @@ const SignInStep1 = () => {
   return (
     <Styles.SignInStep1>
       <h1>輸入你的密碼</h1>
-      <TextField disabled className="step1-mail" value={"asfasf@test.com"} />
+      <TextField disabled className="step1-mail" value={mailValue} />
       <TextField
         label="password"
         autoComplete="current-password"
