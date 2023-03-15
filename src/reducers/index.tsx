@@ -10,7 +10,9 @@ export const store = configureStore({
     otherUserDataSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(searchApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      searchApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

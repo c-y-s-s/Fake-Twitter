@@ -1,16 +1,25 @@
 import styled from "styled-components";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
 
+interface HomeProps {
+  loginModalOpen: boolean;
+  registerModalOpen: boolean;
+}
+
 export const ClientImg = styled(GlobalClientImg)`
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
 `;
-export const Home = styled.div`
+export const Home = styled.div<HomeProps>`
   display: flex;
   justify-content: center;
 
   .home-content {
+    height: ${({ loginModalOpen, registerModalOpen }) =>
+      loginModalOpen || registerModalOpen ? "100vh" : "100%"};
+    overflow: ${({ loginModalOpen, registerModalOpen }) =>
+      loginModalOpen || registerModalOpen ? "hidden" : "auto"};
     border: 1px solid rgb(239, 243, 244);
     padding: 16px 0px 0 0;
 
@@ -64,6 +73,43 @@ export const Home = styled.div`
       }
     }
     .client-textarea-container {
+    }
+  }
+
+  .login-prompt {
+    background: ${({ theme }) => theme.primaryColor};
+    position: fixed;
+    bottom: 0px;
+    height: 70px;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0 0 200px;
+    .login-prompt-text {
+      color: #fff;
+      font-size: ${({ theme }) => theme.fontSize.sm};
+      .big-text {
+        font-size: 22px;
+      }
+    }
+    .login-prompt-button {
+      display: flex;
+      color: #fff;
+      font-size: ${({ theme }) => theme.fontSize.sm};
+      .login {
+        padding: 8px 14px;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        margin-right: 12px;
+      }
+      .register {
+        padding: 8px 14px;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        color: black;
+        background-color: #fff;
+      }
     }
   }
 `;
