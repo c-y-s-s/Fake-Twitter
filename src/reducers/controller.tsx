@@ -6,6 +6,8 @@ export interface controllerState {
   userPublishedModal: boolean;
   rightSideBarSearchExpand: boolean;
   userLogin: any;
+  loginModalOpen: boolean;
+  registerModalOpen: boolean;
 }
 
 const initialState: controllerState = {
@@ -13,6 +15,8 @@ const initialState: controllerState = {
   userPublishedModal: false,
   rightSideBarSearchExpand: false,
   userLogin: null,
+  loginModalOpen: false,
+  registerModalOpen: false,
 };
 
 export const controllerSlice = createSlice({
@@ -31,6 +35,12 @@ export const controllerSlice = createSlice({
     userLogin: (state, action) => {
       state.userLogin = action.payload;
     },
+    setLoginModalOpen: (state, action) => {
+      state.loginModalOpen = action.payload;
+    },
+    setRegisterModalOpen: (state, action) => {
+      state.registerModalOpen = action.payload;
+    },
   },
 });
 
@@ -39,6 +49,8 @@ export const {
   userPublishedModalToggle,
   rightSideBarSearchExpandToggle,
   userLogin,
+  setLoginModalOpen,
+  setRegisterModalOpen,
 } = controllerSlice.actions;
 
 const controllerSliceReducer = controllerSlice.reducer;

@@ -6,6 +6,8 @@ import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import { RootState } from "../../reducers";
 import {
   rightSideBarSearchExpandToggle,
+  setLoginModalOpen,
+  setRegisterModalOpen,
   tabListToggle,
 } from "../../reducers/controller";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,21 +15,34 @@ import { FC, useState } from "react";
 import { addArticle } from "../../reducers/otherUserData";
 import UserPublished from "../../components/UserPublished/UserPublished";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
+import { useNavigate } from "react-router-dom";
+import SignInModal from "../../components/SignInModal/SignInModal";
+import RegisterModal from "../../components/RegisterModal/RegisterModal";
 
 interface HomeProps {
   name: string;
 }
 const Home: FC<HomeProps> = ({ name }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginModalOpen = useSelector(
+    (state: RootState) => state.controllerSliceReducer.loginModalOpen
+  );
+  const registerModalOpen = useSelector(
+    (state: RootState) => state.controllerSliceReducer.registerModalOpen
+  );
   const tabList = useSelector(
     (state: RootState) => state.controllerSliceReducer.tabList
   );
 
-  const [inputValue, setInputValue] = useState<string>("");
-
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
   const otherUserData = useSelector(
     (state: RootState) => state.otherUserDataSliceReducer.otherUserData
   );
+  const [inputValue, setInputValue] = useState<string>("");
+  // const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
   let articleId = Number(otherUserData[otherUserData.length - 1].id);
   const tabListData = [
@@ -84,57 +99,155 @@ const Home: FC<HomeProps> = ({ name }) => {
       dispatch(rightSideBarSearchExpandToggle(false));
     }
   };
-  return (
-    <Styles.Home onClick={globalClassNameDetection}>
-      <LeftSideBar name={name} />
-      <div className="home-content">
-        <div className="home-content-top">
-          <div className="link-title">Home</div>
-          <div className="tab-list">
-            {tabListData.map((item, index) => {
-              return (
-                <div
-                  className="tab-list-item"
-                  onClick={() => {
-                    dispatch(tabListToggle(item.text));
-                  }}
-                  key={index}
-                >
-                  <div
-                    className={`tab-list-item-text ${
-                      item.active ? "font-bold active" : ""
-                    }`}
-                  >
-                    {item.text}
-                    <div
-                      className={`line ${item.active ? "active" : ""}`}
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
 
-        <div className="client-textarea-container">
-          <UserPublished
+  const handleOpenModal = (type: string) => {
+    if (type === "login") {
+      dispatch(setLoginModalOpen(true));
+      dispatch(setRegisterModalOpen(false));
+    } else if (type === "register") {
+      dispatch(setLoginModalOpen(false));
+      dispatch(setRegisterModalOpen(true));
+    }
+  };
+
+  return (
+    <Styles.Home
+      onClick={globalClassNameDetection}
+      loginModalOpen={loginModalOpen}
+      registerModalOpen={registerModalOpen}
+    >
+      <LeftSideBar name={name} />
+      {userLogin ? (
+        <>
+          <div className="home-content">
+            <div className="home-content-top">
+              <div className="link-title">Home</div>
+              <div className="tab-list">
+                {tabListData.map((item, index) => {
+                  return (
+                    <div
+                      className="tab-list-item"
+                      onClick={() => {
+                        dispatch(tabListToggle(item.text));
+                      }}
+                      key={index}
+                    >
+                      <div
+                        className={`tab-list-item-text ${
+                          item.active ? "font-bold active" : ""
+                        }`}
+                      >
+                        {item.text}
+                        <div
+                          className={`line ${item.active ? "active" : ""}`}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="client-textarea-container">
+              <UserPublished
+                userImg={userImg}
+                setInputValue={setInputValue}
+                inputValue={inputValue}
+                handleTweet={handleTweet}
+              />
+
+              <OtherUser />
+            </div>
+          </div>
+          <RightSideBar />
+          <UserPublishedModal
             userImg={userImg}
             setInputValue={setInputValue}
             inputValue={inputValue}
             handleTweet={handleTweet}
           />
+        </>
+      ) : (
+        <>
+          <div className="home-content">
+            <div className="home-content-top">
+              <div className="link-title">Home</div>
+              <div className="tab-list">
+                {tabListData.map((item, index) => {
+                  return (
+                    <div
+                      className="tab-list-item"
+                      onClick={() => {
+                        dispatch(tabListToggle(item.text));
+                      }}
+                      key={index}
+                    >
+                      <div
+                        className={`tab-list-item-text ${
+                          item.active ? "font-bold active" : ""
+                        }`}
+                      >
+                        {item.text}
+                        <div
+                          className={`line ${item.active ? "active" : ""}`}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-          <OtherUser />
+            <div className="client-textarea-container">
+              <UserPublished
+                userImg={userImg}
+                setInputValue={setInputValue}
+                inputValue={inputValue}
+                handleTweet={handleTweet}
+              />
+
+              <OtherUser />
+            </div>
+          </div>
+          <RightSideBar />
+          <UserPublishedModal
+            userImg={userImg}
+            setInputValue={setInputValue}
+            inputValue={inputValue}
+            handleTweet={handleTweet}
+          />
+        </>
+      )}
+
+      {userLogin === null && (
+        <div className="login-prompt">
+          <div className="login-prompt-text">
+            <div className="big-text font-bold">別錯過正在發生的新鮮事</div>
+            <div>Twitter 使用者總是搶先掌握新知。</div>
+          </div>
+          <div className="login-prompt-button">
+            <div
+              className="login font-bold"
+              onClick={() => {
+                handleOpenModal("login");
+              }}
+            >
+              登入
+            </div>
+            <div
+              className="register font-bold"
+              onClick={() => {
+                handleOpenModal("register");
+              }}
+            >
+              註冊
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <RightSideBar />
-      <UserPublishedModal
-        userImg={userImg}
-        setInputValue={setInputValue}
-        inputValue={inputValue}
-        handleTweet={handleTweet}
-      />
+      {loginModalOpen && <SignInModal />}
+      {registerModalOpen && <RegisterModal />}
     </Styles.Home>
   );
 };

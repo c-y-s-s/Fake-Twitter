@@ -3,11 +3,15 @@ import styled from "styled-components";
 export const Register = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #bbb;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
   .modal-container {
     box-sizing: border-box;
     width: 600px;

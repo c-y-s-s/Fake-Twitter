@@ -6,14 +6,23 @@ import SignInStep1 from "./SignInStep1";
 import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
 import { ReactComponent as CrossSVG } from "../../img/cross.svg";
 import { TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../reducers";
+import { setLoginModalOpen } from "../../reducers/controller";
 
+interface SignInModalPropsType {
+  setLoginModalOpen?: boolean;
+}
 const SignInModal: FC = () => {
+  const loginModalOpen = useSelector(
+    (state: RootState) => state.controllerSliceReducer.loginModalOpen
+  );
   // 判斷切換哪個元件
   const [signInComponent, setSignInComponent] = useState("0");
   const [mailValue, setMail] = useState<string>("");
   const [noUser, setNoUser] = useState<boolean>(false);
   const navigator = useNavigate();
-
+  const dispatch = useDispatch();
   const handleMailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setMail(e.target.value);
   };
@@ -31,14 +40,19 @@ const SignInModal: FC = () => {
 
         if (data.length !== 0) {
           setNoUser(false);
-
           setSignInComponent("1");
         } else {
           setNoUser(true);
+
+          // 3秒後讓提示字消失
+          setTimeout(() => {
+            setNoUser(false);
+          }, 3000);
         }
       })
       .catch((error) => {});
   };
+
   const signInComponentJSX = (): JSX.Element => {
     switch (signInComponent) {
       case "0":
@@ -61,7 +75,11 @@ const SignInModal: FC = () => {
                 label="電話、電子郵件或使用者名稱"
                 placeholder="電話、電子郵件或使用者名稱"
               />
-              {noUser && <div>抱歉，我們找不到你的帳戶</div>}
+              {noUser && (
+                <div className="nothing-account-text">
+                  抱歉，我們找不到你的帳戶
+                </div>
+              )}
               <div
                 className="sign-in-button next-step-button"
                 onClick={handleConfirmMail}
@@ -86,16 +104,16 @@ const SignInModal: FC = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    dispatch(setLoginModalOpen(false));
+    navigator("/");
+  };
+
   return (
     <Styles.SignInModal>
       <div className="modal-container">
         <div className="top">
-          <button
-            className="close-button"
-            onClick={() => {
-              navigator("/");
-            }}
-          >
+          <button className="close-button" onClick={handleCloseModal}>
             <CrossSVG />
           </button>
           <TwitterSVG />

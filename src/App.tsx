@@ -13,7 +13,7 @@ import { userLogin } from "./reducers/controller";
 function App() {
   const dispatch = useDispatch();
 
-  // 監聽登入 || 登出
+  // 監聽登入中 || 登出
   useEffect(() => {
     firebase.auth().onAuthStateChanged((currentUser) => {
       dispatch(userLogin(currentUser));

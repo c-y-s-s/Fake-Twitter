@@ -8,6 +8,8 @@ interface StyledClientImg {
 const GlobalStyle = createGlobalStyle`
 *{
 font-family: 'Open Sans', sans-serif;
+/* overflow-y:hidden; */
+/* overflow-x:hidden; */
 
 }
 

@@ -5,11 +5,18 @@ import Step1 from "./components/Step1";
 import * as Styles from "./style";
 import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
 import { ReactComponent as CrossSVG } from "../../img/cross.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../reducers";
+import { setRegisterModalOpen } from "../../reducers/controller";
+
 const RegisterModal: FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [step, setStep] = useState<Number>(0);
 
-  const navigate = useNavigate();
-
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
   return (
     <Styles.Register>
       <div className="modal-container">
@@ -18,6 +25,7 @@ const RegisterModal: FC = () => {
             className="close-button"
             onClick={() => {
               navigate("/");
+              dispatch(setRegisterModalOpen(false))
             }}
           >
             <CrossSVG />

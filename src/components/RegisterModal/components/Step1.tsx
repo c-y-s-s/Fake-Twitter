@@ -11,9 +11,12 @@ import firebase from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { useDispatch } from "react-redux";
+import { setRegisterModalOpen } from "../../../reducers/controller";
+
 const Step1: FC = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
   const [mail, setMail] = useState<string>("");
   const [mailErrorMsg, setMailErrorMsg] = useState<boolean>(false);
@@ -134,6 +137,7 @@ const Step1: FC = () => {
           .then(() => {
             //註冊成功資料有寫入資料庫導回首頁
             navigate("/");
+            dispatch(setRegisterModalOpen(false));
           })
           .catch(() => {
             console.log("寫入資料庫失敗");
@@ -155,9 +159,7 @@ const Step1: FC = () => {
   }, [day, mail, mailErrorMsg, month, name, year]);
   return (
     <Styles.Step1>
-      {/* <div>步驟1/5</div> */}
       <h1>建立你的帳戶</h1>
-
       <div>
         <TextField
           label="name"
