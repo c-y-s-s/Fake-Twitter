@@ -8,61 +8,76 @@ import { ReactComponent as ListsSVG } from "../../img/leftSideBar/lists.svg";
 import { ReactComponent as ProfileSVG } from "../../img/leftSideBar/profile.svg";
 
 import { ReactComponent as SearchSVG } from "../../img/leftSideBar/search.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducers";
 
 interface LinkBarBarProps {
   name: string;
 }
 export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
-  const LinkData = [
-    {
-      text: "Home",
-      svg: <HomeSVG />,
-      link: "/",
-      className: "home",
-    },
-    {
-      text: "Search",
-      svg: <SearchSVG />,
-      link: "/",
-      className: "search",
-    },
-    {
-      text: "Explore",
-      svg: <Explore />,
-      link: "explore",
-      className: "explore",
-    },
-    {
-      text: "Notifications",
-      svg: <NotificationsSVG />,
-      link: "notifications",
-      className: "notifications",
-    },
-    {
-      text: "Messages",
-      svg: <MessagesSVG />,
-      link: "messages",
-      className: "messages",
-    },
-    {
-      text: "Bookmarks",
-      svg: <BookMarksSVG />,
-      link: "bookmarks",
-      className: "bookmarks",
-    },
-    {
-      text: "Lists",
-      svg: <ListsSVG />,
-      link: "lists",
-      className: "lists",
-    },
-    {
-      text: "Profile",
-      svg: <ProfileSVG />,
-      link: "profile",
-      className: "profile",
-    },
-  ];
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
+
+  const LinkData = userLogin
+    ? [
+        {
+          text: "Home",
+          svg: <HomeSVG />,
+          link: "/",
+          className: "home",
+        },
+        {
+          text: "Search",
+          svg: <SearchSVG />,
+          link: "/",
+          className: "search",
+        },
+        {
+          text: "Explore",
+          svg: <Explore />,
+          link: "explore",
+          className: "explore",
+        },
+        {
+          text: "Notifications",
+          svg: <NotificationsSVG />,
+          link: "notifications",
+          className: "notifications",
+        },
+        {
+          text: "Messages",
+          svg: <MessagesSVG />,
+          link: "messages",
+          className: "messages",
+        },
+        {
+          text: "Bookmarks",
+          svg: <BookMarksSVG />,
+          link: "bookmarks",
+          className: "bookmarks",
+        },
+        {
+          text: "Lists",
+          svg: <ListsSVG />,
+          link: "lists",
+          className: "lists",
+        },
+        {
+          text: "Profile",
+          svg: <ProfileSVG />,
+          link: "profile",
+          className: "profile",
+        },
+      ]
+    : [
+        {
+          text: "Explore",
+          svg: <Explore />,
+          link: "explore",
+          className: "explore",
+        },
+      ];
 
   return (
     <div className="link-container">
