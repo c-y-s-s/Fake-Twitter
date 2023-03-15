@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import * as Styles from "./styles";
 
 import { ReactComponent as TweetRWDSVG } from "../../img/leftSideBar/tweetRWD.svg";
@@ -8,7 +8,7 @@ import { userPublishedModalToggle } from "../../reducers/controller";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
 import { LinkBar } from "./LinkBar";
 import { RootState } from "../../reducers";
-
+import firebase from "../../utils/firebase";
 interface LeftSideBarProps {
   name: string;
 }
@@ -16,6 +16,7 @@ interface LeftSideBarProps {
 const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const dispatch = useDispatch();
 
+  const [toggleModalOpen, setToggleModalOpen] = useState<boolean>(false);
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
@@ -44,7 +45,26 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
         )}
       </div>
       {userLogin && (
-        <div className="client-data">
+        <div
+          className="client-data"
+          onClick={() => {
+            setToggleModalOpen(!toggleModalOpen);
+          }}
+        >
+          {toggleModalOpen && (
+         
+              <div className="client-data-modal">
+                <div
+                  className="modal-item font-bold"
+                  onClick={() => {
+                    firebase.auth().signOut();
+                  }}
+                >
+                  Log out
+                </div>
+              </div>
+           
+          )}
           <GlobalClientImg
             src="/static/media/userImg.e01a53f21b11b7147abf.jpg"
             alt=""

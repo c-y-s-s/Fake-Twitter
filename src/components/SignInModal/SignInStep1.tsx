@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import * as Styles from "./style";
 import firebase from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { setLoginModalOpen } from "../../reducers/controller";
+import { useDispatch } from "react-redux";
 
 interface SignStep1Props {
   mailValue: string;
 }
 const SignInStep1 = ({ mailValue }: SignStep1Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [passwordValue, setPasswordValue] = useState<string>("");
 
   const [errorText, setErrorText] = useState<string>("");
@@ -20,6 +23,7 @@ const SignInStep1 = ({ mailValue }: SignStep1Props) => {
       .signInWithEmailAndPassword(mailValue, passwordValue)
       .then(() => {
         navigate("/");
+        dispatch(setLoginModalOpen(false));
       })
       .catch((error) => {
         if (error.code === "auth/wrong-password") {

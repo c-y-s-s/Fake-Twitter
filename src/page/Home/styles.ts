@@ -14,11 +14,12 @@ export const ClientImg = styled(GlobalClientImg)`
 export const Home = styled.div<HomeProps>`
   display: flex;
   justify-content: center;
-  height: ${({ loginModalOpen, registerModalOpen }) =>
-    loginModalOpen || registerModalOpen ? "100vh" : "100%"};
-  overflow: ${({ loginModalOpen, registerModalOpen }) =>
-    loginModalOpen || registerModalOpen ? "hidden" : "auto"};
+
   .home-content {
+    height: ${({ loginModalOpen, registerModalOpen }) =>
+      loginModalOpen || registerModalOpen ? "100vh" : "100%"};
+    overflow: ${({ loginModalOpen, registerModalOpen }) =>
+      loginModalOpen || registerModalOpen ? "hidden" : "auto"};
     border: 1px solid rgb(239, 243, 244);
     padding: 16px 0px 0 0;
 

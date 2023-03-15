@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-
 export const LeftSideBar = styled.div`
   width: 251px;
   height: 100vh;
@@ -10,6 +8,7 @@ export const LeftSideBar = styled.div`
   justify-content: space-between;
   position: sticky;
   top: 0;
+  left: 0;
   @media (max-width: 1300px) {
     width: 50px;
     padding: 0px 16px;
@@ -120,6 +119,21 @@ export const LeftSideBar = styled.div`
     padding: 12px;
     font-size: 15px;
 
+    .client-data-modal {
+      position: absolute;
+      bottom: 75px;
+      width: 290px;
+      border-radius: 12px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px #ccc;
+      .modal-item {
+        padding: 6px 18px;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
     @media (max-width: 1300px) {
       padding: 0;
       justify-content: center;
