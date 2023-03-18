@@ -116,6 +116,22 @@ const Step1: FC = () => {
         return <></>;
     }
   };
+
+  function generateRandomString() {
+    const length = 10;
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    return result;
+  }
+
   const handlePostRegister = (): void => {
     if (!registerValid) return;
     // 取到寫入資料必要物件
@@ -128,8 +144,9 @@ const Step1: FC = () => {
         //傳入寫入資料的物件
         documentRef
           .set({
-            mail: mail,
+            mail: mail, 
             name: name,
+            membershipNumber: generateRandomString(),
             birthday: `${year}-${month}-${day}`,
             // firebase 提供 time-stamp 函式可用
             created_time: firebase.firestore.Timestamp.now(),

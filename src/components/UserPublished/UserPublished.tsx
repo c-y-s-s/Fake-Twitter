@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { ReactComponent as AddEmoji } from "../../img/home/addEmoji.svg";
 import { ReactComponent as AddGif } from "../../img/home/addGif.svg";
@@ -18,6 +18,8 @@ interface UserPublishedProps {
   handleTweet: () => void;
   setModalLineSwitch?: (value: boolean) => void;
   modalLineSwitch?: boolean;
+  setImgFile?: any;
+  imgFile?: any;
 }
 
 const UserPublished: FC<UserPublishedProps> = ({
@@ -27,8 +29,11 @@ const UserPublished: FC<UserPublishedProps> = ({
   handleTweet,
   setModalLineSwitch,
   modalLineSwitch,
+  setImgFile,
+  imgFile,
 }) => {
   const dispatch = useDispatch();
+
   const handleTweetClick = () => {
     if (inputValue) {
       setTimeout(() => {
@@ -48,6 +53,9 @@ const UserPublished: FC<UserPublishedProps> = ({
       }
     };
   }, []);
+
+  // 取得上傳圖片的路徑
+  const previewUrl = imgFile ? URL.createObjectURL(imgFile) : "";
   return (
     <Styles.UserPublished>
       <div className="client-content-block">
@@ -63,10 +71,30 @@ const UserPublished: FC<UserPublishedProps> = ({
             />
           </div>
         </div>
+        <div>
+          {imgFile && (
+            <img
+              src={previewUrl}
+              alt=""
+              style={{ width: "200px", height: "200px" }}
+            />
+          )}
+        </div>
         <div className="client-textarea-bottom">
           <div className="client-textarea-icon">
             <div className="icon-item">
-              <AddMedia />
+              <input
+                type="file"
+                id="post-image"
+                style={{ display: "none" }}
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  setImgFile((e.target as HTMLInputElement)?.files?.[0]);
+                }}
+              />
+
+              <label htmlFor="post-image">
+                <AddMedia />
+              </label>
             </div>
 
             <div className="icon-item">

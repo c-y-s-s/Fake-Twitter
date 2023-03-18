@@ -11,14 +11,15 @@ import {
   tabListToggle,
 } from "../../reducers/controller";
 import { useSelector, useDispatch } from "react-redux";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { addArticle } from "../../reducers/otherUserData";
 import UserPublished from "../../components/UserPublished/UserPublished";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
 import { useNavigate } from "react-router-dom";
 import SignInModal from "../../components/SignInModal/SignInModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
-
+import firebase from "../../utils/firebase";
+import "firebase/compat/storage";
 interface HomeProps {
   name: string;
 }
@@ -42,6 +43,7 @@ const Home: FC<HomeProps> = ({ name }) => {
     (state: RootState) => state.otherUserDataSliceReducer.otherUserData
   );
   const [inputValue, setInputValue] = useState<string>("");
+  const [imgFile, setImgFile] = useState<any>(null);
   // const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
   let articleId = Number(otherUserData[otherUserData.length - 1].id);
@@ -56,22 +58,56 @@ const Home: FC<HomeProps> = ({ name }) => {
     },
   ];
 
-  // 送發表文章的物件
+  // 送發表文章的物件 , 因發文功能有兩個部分,所以邏輯寫在這層
+  // 之後可以考慮寫到 reducer 裡面
   const handleTweet = () => {
-    dispatch(
-      addArticle({
-        id: (articleId += 1).toString(),
-        userName: "user01",
-        userSerialNumber: "@fcdc102d9f60407",
-        postingTime: "31m",
-        text: inputValue,
-        message: 0,
-        transfer: 0,
-        view: 1,
-        like: { number: 0, userClick: false },
-      })
-    );
-    setInputValue("");
+    // dispatch(
+    //   addArticle({
+    //     id: (articleId += 1).toString(),
+    //     userName: "user01",
+    //     userSerialNumber: "@fcdc102d9f60407",
+    //     postingTime: "31m",
+    //     text: inputValue,
+    //     message: 0,
+    //     transfer: 0,
+    //     view: 1,
+    //     like: { number: 0, userClick: false },
+    //   })
+    // );
+    // setInputValue("");
+
+    //! 先存圖片 取到圖片網址後 , 資料整包寫進 database
+    // 取道寫入資料庫所需物件
+    const documentRef = firebase.firestore().collection("posts_article").doc();
+
+    // storage 物件
+    // 傳入資料夾名稱,檔名
+    const fireRef = firebase?.storage()?.ref("posts-image/" + documentRef.id);
+    // 上傳
+    const metadata = {
+      contentType: imgFile?.type,
+    };
+    fireRef.put(imgFile, metadata).then(() => {
+      fireRef.getDownloadURL().then((imageUrl) => {
+        //使用物件方法 set 寫進 firestore dataBase
+        documentRef
+          .set({
+            imageUrl: imgFile ? imageUrl : "",
+            text: inputValue,
+            createdAt: firebase.firestore.Timestamp.now(),
+            author: {
+              userName: firebase?.auth()?.currentUser?.displayName || "",
+              photoURL: firebase?.auth()?.currentUser?.photoURL || "",
+              uid: firebase?.auth()?.currentUser?.uid || "",
+              email: firebase?.auth()?.currentUser?.email || "",
+            },
+          })
+          .then(() => {
+            setInputValue("");
+            setImgFile("");
+          });
+      });
+    });
   };
 
   // search list 透過 className 判斷要不要關閉視窗
@@ -154,6 +190,8 @@ const Home: FC<HomeProps> = ({ name }) => {
                 setInputValue={setInputValue}
                 inputValue={inputValue}
                 handleTweet={handleTweet}
+                setImgFile={setImgFile}
+                imgFile={imgFile}
               />
 
               <OtherUser />
@@ -204,6 +242,8 @@ const Home: FC<HomeProps> = ({ name }) => {
                 setInputValue={setInputValue}
                 inputValue={inputValue}
                 handleTweet={handleTweet}
+                setImgFile={setImgFile}
+                imgFile={imgFile}
               />
 
               <OtherUser />

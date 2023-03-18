@@ -7,17 +7,18 @@ import { useGetSearchDataQuery } from "../../api/searchApi";
 import { Link } from "react-router-dom";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
 import { SearchItem } from "../../types/search";
+import algolia from "../../utils/algolia";
 
 const Search = () => {
   const dispatch = useDispatch();
 
   const { data } = useGetSearchDataQuery();
-  const [searchValue, setSearchValue] = useState<string>("");
   const rightSideBarSearchExpand = useSelector(
     (state: RootState) => state.controllerSliceReducer.rightSideBarSearchExpand
   );
 
-  let [searchDataResult, setSearchDataResult] = useState<SearchItem[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchDataResult, setSearchDataResult] = useState<any[]>([]);
 
   let searchListJSX = (): JSX.Element => {
     switch (searchValue.length > 0) {
@@ -34,11 +35,11 @@ const Search = () => {
         return (
           <div className="search-result-container">
             {searchDataResult?.length > 0 ? (
-              searchDataResult?.map((item) => {
+              searchDataResult?.map((item, index) => {
                 return (
                   <Link
-                    to={`user/${item.id}`}
-                    key={item.id}
+                    to={`user/${item.objectID}`}
+                    key={index}
                     className="search-result-list-item"
                   >
                     <GlobalClientImg
@@ -51,7 +52,7 @@ const Search = () => {
                         {item.name}
                       </div>
                       <div className="search-result-email">
-                        @{item.username}
+                        @{item.membershipNumber}
                       </div>
                       <div className="search-result-follower">用戶動態文字</div>
                     </div>
@@ -75,6 +76,9 @@ const Search = () => {
 
   const handleSearchValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);
+    algolia.search(e.target.value).then((result) => {
+      setSearchDataResult(result.hits);
+    });
   };
 
   // 搜尋邏輯
