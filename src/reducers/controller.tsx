@@ -32,7 +32,7 @@ export const controllerSlice = createSlice({
     rightSideBarSearchExpandToggle: (state, action) => {
       state.rightSideBarSearchExpand = action.payload;
     },
-    userLogin: (state, action) => {
+    setUserLogin: (state, action) => {
       state.userLogin = action.payload;
     },
     setLoginModalOpen: (state, action) => {
@@ -48,7 +48,7 @@ export const {
   tabListToggle,
   userPublishedModalToggle,
   rightSideBarSearchExpandToggle,
-  userLogin,
+  setUserLogin,
   setLoginModalOpen,
   setRegisterModalOpen,
 } = controllerSlice.actions;

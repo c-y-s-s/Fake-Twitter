@@ -18,14 +18,14 @@ export const Home = styled.div<HomeProps>`
   .home-content {
     height: ${({ loginModalOpen, registerModalOpen }) =>
       loginModalOpen || registerModalOpen ? "100vh" : "100%"};
-    overflow: ${({ loginModalOpen, registerModalOpen }) =>
-      loginModalOpen || registerModalOpen ? "hidden" : "auto"};
+
     border: 1px solid rgb(239, 243, 244);
-    padding: 16px 0px 0 0;
+    padding: 0px 0px 0 0;
 
     .home-content-top {
       position: sticky;
-      top: 0px;
+      top: 0;
+
       background-color: rgba(255, 255, 255, 0.85);
     }
     .link-title {

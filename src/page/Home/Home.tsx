@@ -20,6 +20,7 @@ import SignInModal from "../../components/SignInModal/SignInModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
 import firebase from "../../utils/firebase";
 import "firebase/compat/storage";
+import Explore from "../Explore/Explore";
 interface HomeProps {
   name: string;
 }
@@ -44,7 +45,6 @@ const Home: FC<HomeProps> = ({ name }) => {
   );
   const [inputValue, setInputValue] = useState<string>("");
   const [imgFile, setImgFile] = useState<any>(null);
-  // const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
   let articleId = Number(otherUserData[otherUserData.length - 1].id);
   const tabListData = [
@@ -61,24 +61,23 @@ const Home: FC<HomeProps> = ({ name }) => {
   // 送發表文章的物件 , 因發文功能有兩個部分,所以邏輯寫在這層
   // 之後可以考慮寫到 reducer 裡面
   const handleTweet = () => {
-    // dispatch(
-    //   addArticle({
-    //     id: (articleId += 1).toString(),
-    //     userName: "user01",
-    //     userSerialNumber: "@fcdc102d9f60407",
-    //     postingTime: "31m",
-    //     text: inputValue,
-    //     message: 0,
-    //     transfer: 0,
-    //     view: 1,
-    //     like: { number: 0, userClick: false },
-    //   })
-    // );
-    // setInputValue("");
-
     //! 先存圖片 取到圖片網址後 , 資料整包寫進 database
     // 取道寫入資料庫所需物件
-    const documentRef = firebase.firestore().collection("posts_article").doc();
+    const documentRef = firebase
+      ?.firestore()
+      ?.collection("posts_article")
+      ?.doc();
+    const usersDocumentRef = firebase?.firestore()?.collection("users");
+
+    let userData: firebase.firestore.DocumentData[] = [];
+    usersDocumentRef
+      .where("mail", "==", firebase?.auth()?.currentUser?.email)
+      .get()
+      .then((collectionSnapshot) => {
+        userData = collectionSnapshot.docs.map((userItem) => {
+          return userItem?.data();
+        });
+      });
 
     // storage 物件
     // 傳入資料夾名稱,檔名
@@ -87,6 +86,7 @@ const Home: FC<HomeProps> = ({ name }) => {
     const metadata = {
       contentType: imgFile?.type,
     };
+
     fireRef.put(imgFile, metadata).then(() => {
       fireRef.getDownloadURL().then((imageUrl) => {
         //使用物件方法 set 寫進 firestore dataBase
@@ -94,12 +94,14 @@ const Home: FC<HomeProps> = ({ name }) => {
           .set({
             imageUrl: imgFile ? imageUrl : "",
             text: inputValue,
-            createdAt: firebase.firestore.Timestamp.now(),
+            createdAt: firebase?.firestore?.Timestamp?.now(),
             author: {
-              userName: firebase?.auth()?.currentUser?.displayName || "",
+              userName:
+                firebase?.auth()?.currentUser?.displayName || userData[0].name,
               photoURL: firebase?.auth()?.currentUser?.photoURL || "",
               uid: firebase?.auth()?.currentUser?.uid || "",
               email: firebase?.auth()?.currentUser?.email || "",
+              membershipNumber: userData[0].membershipNumber,
             },
           })
           .then(() => {
@@ -208,54 +210,9 @@ const Home: FC<HomeProps> = ({ name }) => {
       ) : (
         <>
           <div className="home-content">
-            <div className="home-content-top">
-              <div className="link-title">Home</div>
-              <div className="tab-list">
-                {tabListData.map((item, index) => {
-                  return (
-                    <div
-                      className="tab-list-item"
-                      onClick={() => {
-                        dispatch(tabListToggle(item.text));
-                      }}
-                      key={index}
-                    >
-                      <div
-                        className={`tab-list-item-text ${
-                          item.active ? "font-bold active" : ""
-                        }`}
-                      >
-                        {item.text}
-                        <div
-                          className={`line ${item.active ? "active" : ""}`}
-                        ></div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="client-textarea-container">
-              <UserPublished
-                userImg={userImg}
-                setInputValue={setInputValue}
-                inputValue={inputValue}
-                handleTweet={handleTweet}
-                setImgFile={setImgFile}
-                imgFile={imgFile}
-              />
-
-              <OtherUser />
-            </div>
+            <Explore />
           </div>
           <RightSideBar />
-          <UserPublishedModal
-            userImg={userImg}
-            setInputValue={setInputValue}
-            inputValue={inputValue}
-            handleTweet={handleTweet}
-          />
         </>
       )}
 

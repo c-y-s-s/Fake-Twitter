@@ -7,16 +7,21 @@ import SignInModal from "./components/SignInModal/SignInModal";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
 import firebase from "./utils/firebase";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { userLogin } from "./reducers/controller";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserLogin } from "./reducers/controller";
+import { RootState } from "./reducers";
 
 function App() {
   const dispatch = useDispatch();
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
+
 
   // 監聽登入中 || 登出
   useEffect(() => {
     firebase.auth().onAuthStateChanged((currentUser) => {
-      dispatch(userLogin(currentUser));
+      dispatch(setUserLogin(currentUser));
     });
   });
   return (

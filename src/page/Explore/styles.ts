@@ -1,12 +1,16 @@
 import styled from "styled-components";
+import { GlobalClientImg } from "../../styles/GlobalStyle";
 
-export const RightSideBar = styled.div`
-  margin: 0 0 0 30px;
-  width: 348px;
-
-  @media (max-width: 1020px) {
-    display: none;
+const Explore = styled.div`
+  width: 552px;
+  padding: 0 12px;
+  .explore-item {
+    color: ${({ theme }) => theme.textSecondaryColor};
+    font-size: 13px;
+    line-height: 20px;
+    margin: 18px 0px;
   }
+
   .search {
     display: flex;
     align-items: center;
@@ -36,7 +40,8 @@ export const RightSideBar = styled.div`
   }
   .search-list {
     margin: 2px 0 0 0;
-    width: 360px;
+    width: 100%;
+
     border-radius: 10px;
     box-shadow: 0px 0px 10px #ccc;
     position: absolute;
@@ -92,76 +97,6 @@ export const RightSideBar = styled.div`
       }
     }
   }
-  .trends-container {
-    position: sticky;
-    top: 0;
-    .trends {
-      font-size: 20px;
-
-      background-color: rgb(247, 249, 249);
-      margin: 16px 0px;
-      padding: 0 0 16px 0;
-      border-radius: 12px;
-
-      font-size: ${({ theme }) => theme.fontSize.xl};
-      position: sticky;
-      top: 0;
-      .trends-title {
-        padding: 16px 16px;
-      }
-      .trends-item {
-        margin: 2px 0 0 0;
-        padding: 12px 16px;
-        font-size: 13px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: rgba(15, 20, 25, 0.05);
-          transition: 0.4s;
-        }
-        .trends-item-name {
-          color: ${({ theme }) => theme.textSecondaryColor};
-        }
-        .trends-item-tag {
-          font-size: ${({ theme }) => theme.secondaryFontSize};
-          padding: 3px 0 3px 0;
-        }
-        .trends-item-tweets-amount {
-          color: ${({ theme }) => theme.textSecondaryColor};
-        }
-      }
-      .show-more {
-        padding: 0 16px;
-        margin-top: 24px;
-        color: ${({ theme }) => theme.secondaryColor};
-        font-size: ${({ theme }) => theme.secondaryFontSize};
-      }
-    }
-    .policy-text {
-      font-size: ${({ theme }) => theme.fontSize.xs};
-      color: ${({ theme }) => theme.textSecondaryColor};
-      line-height: 16px;
-    }
-  }
-
-  .no-login-style {
-    border: 1px solid rgb(239, 243, 244);
-    padding: 20px;
-    border-radius: 12px;
-    margin: 10px 0 0 0;
-    .title {
-      font-size: ${({ theme }) => theme.fontSize.xl};
-    }
-    .add-account {
-      cursor: pointer;
-      text-align: center;
-      padding: 10px 0;
-      border-radius: 24px;
-      border: 1px solid #ccc;
-    }
-    .text {
-      color: ${({ theme }) => theme.textSecondaryColor};
-      font-size: 13px;
-    }
-  }
 `;
+
+export { Explore };

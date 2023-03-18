@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import * as Styles from "./style";
 import firebase from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { setLoginModalOpen } from "../../reducers/controller";
+import {
+  setLoginModalOpen,
+  setRegisterModalOpen,
+} from "../../reducers/controller";
 import { useDispatch } from "react-redux";
 
 interface SignStep1Props {
@@ -24,6 +27,7 @@ const SignInStep1 = ({ mailValue }: SignStep1Props) => {
       .then(() => {
         navigate("/");
         dispatch(setLoginModalOpen(false));
+        dispatch(setRegisterModalOpen(false));
       })
       .catch((error) => {
         if (error.code === "auth/wrong-password") {
