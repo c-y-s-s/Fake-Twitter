@@ -52,18 +52,21 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
           }}
         >
           {toggleModalOpen && (
-         
-              <div className="client-data-modal">
-                <div
-                  className="modal-item font-bold"
-                  onClick={() => {
-                    firebase.auth().signOut();
-                  }}
-                >
-                  Log out
-                </div>
+            <div className="client-data-modal">
+              <div
+                className="modal-item font-bold"
+                onClick={() => {
+                  firebase
+                    .auth()
+                    .signOut()
+                    .then(() => {
+                      window.location.reload();
+                    });
+                }}
+              >
+                Log out
               </div>
-           
+            </div>
           )}
           <GlobalClientImg
             src="/static/media/userImg.e01a53f21b11b7147abf.jpg"

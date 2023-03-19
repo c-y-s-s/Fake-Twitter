@@ -9,20 +9,25 @@ import theme from "./styles/theme";
 import GlobalStyle from "./styles/GlobalStyle";
 import { Provider } from "react-redux";
 import { store } from "./reducers";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-root.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Normalize />
-        <GlobalStyle />
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  </Provider>
-);
+onAuthStateChanged(auth, (user) => {
+  root.render(
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Normalize />
+          <GlobalStyle />
+          <App user={user} />
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
+  );
+});
 
 reportWebVitals();

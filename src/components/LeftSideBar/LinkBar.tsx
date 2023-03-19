@@ -19,65 +19,66 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
 
-  const LinkData = userLogin
-    ? [
-        {
-          text: "Home",
-          svg: <HomeSVG />,
-          link: "/",
-          className: "home",
-        },
-        {
-          text: "Search",
-          svg: <SearchSVG />,
-          link: "/",
-          className: "search",
-        },
-        {
-          text: "Explore",
-          svg: <Explore />,
-          link: "explore",
-          className: "explore",
-        },
-        {
-          text: "Notifications",
-          svg: <NotificationsSVG />,
-          link: "notifications",
-          className: "notifications",
-        },
-        {
-          text: "Messages",
-          svg: <MessagesSVG />,
-          link: "messages",
-          className: "messages",
-        },
-        {
-          text: "Bookmarks",
-          svg: <BookMarksSVG />,
-          link: "bookmarks",
-          className: "bookmarks",
-        },
-        {
-          text: "Lists",
-          svg: <ListsSVG />,
-          link: "lists",
-          className: "lists",
-        },
-        {
-          text: "Profile",
-          svg: <ProfileSVG />,
-          link: "profile",
-          className: "profile",
-        },
-      ]
-    : [
-        {
-          text: "Explore",
-          svg: <Explore />,
-          link: "explore",
-          className: "explore",
-        },
-      ];
+  const LinkData =
+    userLogin !== null
+      ? [
+          {
+            text: "Home",
+            svg: <HomeSVG />,
+            link: "/",
+            className: "home",
+          },
+          {
+            text: "Search",
+            svg: <SearchSVG />,
+            link: "/",
+            className: "search",
+          },
+          {
+            text: "Explore",
+            svg: <Explore />,
+            link: "explore",
+            className: "explore",
+          },
+          {
+            text: "Notifications",
+            svg: <NotificationsSVG />,
+            link: "notifications",
+            className: "notifications",
+          },
+          {
+            text: "Messages",
+            svg: <MessagesSVG />,
+            link: "messages",
+            className: "messages",
+          },
+          {
+            text: "Bookmarks",
+            svg: <BookMarksSVG />,
+            link: "bookmarks",
+            className: "bookmarks",
+          },
+          {
+            text: "Lists",
+            svg: <ListsSVG />,
+            link: "lists",
+            className: "lists",
+          },
+          {
+            text: "Profile",
+            svg: <ProfileSVG />,
+            link: "profile",
+            className: "profile",
+          },
+        ]
+      : [
+          {
+            text: "Explore",
+            svg: <Explore />,
+            link: "explore",
+            className: "explore",
+          },
+        ];
 
   return (
     <div className="link-container">

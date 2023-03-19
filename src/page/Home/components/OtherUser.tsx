@@ -38,6 +38,7 @@ interface articleDataProps {
     photoURL: string;
     uid: string;
     userName: string;
+    membershipNumber: string;
   };
   createAt: {
     seconds: number;
@@ -211,9 +212,13 @@ const OtherUser = () => {
               />
               <div className="other-data-container">
                 <div className="other-user-block">
-                  <div className="other-user-name">{item.author.userName}</div>
-                  <div className="other-user-account">{item.author.email}</div>·
-                  <div className="other-user-date">31m</div>
+                  <div className="other-user-name">
+                    {item?.author?.userName}
+                  </div>
+                  <div className="other-user-account">
+                    .@{item?.author?.membershipNumber}
+                  </div>
+                  ·<div className="other-user-date">31m</div>
                 </div>
 
                 <div className="other-user-text">{item.text}</div>

@@ -9,8 +9,11 @@
 /coverage
 
 # production
-/build
+algolia.ts
+firebase.ts
+.env
 
+/utils
 # misc
 .DS_Store
 .env.local

@@ -8,9 +8,9 @@ const User: FC = () => {
   const getUserData = useGetSearchUserDataQuery(userId ?? "");
   const userData = getUserData.data;
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
 
   return (
     <div style={{ textAlign: "center", padding: "16px 0 0 0" }}>
