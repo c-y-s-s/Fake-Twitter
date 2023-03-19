@@ -137,3 +137,91 @@ export const Step1 = styled.div`
     cursor: not-allowed;
   }
 `;
+
+export const Step2 = styled.div`
+  padding: 12px 80px 0 80px;
+
+  .step2-title {
+    font-size: 32px;
+  }
+  .mail-code-input {
+    width: 100%;
+    margin-top: 20px;
+  }
+  p {
+    color: ${({ theme }) => theme.textSecondaryColor};
+    font-size: ${({ theme }) => theme.fontSize.sm};
+  }
+
+  .register-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: ${({ theme }) => theme.primaryColor};
+    color: #fff;
+    border-radius: 32px;
+    margin-top: 300px;
+    cursor: pointer;
+  }
+  .register-button.false {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .mail-code-error-msg {
+    background-color: ${({ theme }) => theme.primaryColor};
+    text-align: center;
+    width: 150px;
+    padding: 14px 0px;
+    border-radius: 6px;
+    color: #fff;
+    position: absolute;
+    right: 0;
+    bottom: 90px;
+    left: 0;
+    margin: auto;
+  }
+`;
+
+export const Step3 = styled.div`
+  padding: 12px 80px 0 80px;
+
+  .step3-title {
+    font-size: 32px;
+  }
+  p {
+    color: ${({ theme }) => theme.textSecondaryColor};
+    font-size: ${({ theme }) => theme.fontSize.sm};
+  }
+
+  .password {
+    margin-top: 15px;
+    width: 100%;
+  }
+  .error-msg {
+    margin-top: 5px;
+    color: red;
+    font-size: 10px;
+  }
+
+  .submit-register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: ${({ theme }) => theme.primaryColor};
+    color: #fff;
+    border-radius: 32px;
+    margin-top: 300px;
+    cursor: pointer;
+  }
+  .submit-register.false {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .none {
+    display: none;
+  }
+`;
