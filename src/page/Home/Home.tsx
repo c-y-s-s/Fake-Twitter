@@ -155,6 +155,7 @@ const Home: FC<HomeProps> = ({ name }) => {
       registerModalOpen={registerModalOpen}
     >
       <LeftSideBar name={name} />
+
       {userLogin ? (
         <>
           <div className="home-content">

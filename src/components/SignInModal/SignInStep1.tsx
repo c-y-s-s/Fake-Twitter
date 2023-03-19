@@ -26,6 +26,7 @@ const SignInStep1 = ({ mailValue }: SignStep1Props) => {
       .signInWithEmailAndPassword(mailValue, passwordValue)
       .then(() => {
         navigate("/");
+        window.location.reload();
         dispatch(setLoginModalOpen(false));
         dispatch(setRegisterModalOpen(false));
       })

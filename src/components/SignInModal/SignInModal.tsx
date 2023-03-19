@@ -14,6 +14,10 @@ interface SignInModalPropsType {
   setLoginModalOpen?: boolean;
 }
 const SignInModal: FC = () => {
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
+
   const loginModalOpen = useSelector(
     (state: RootState) => state.controllerSliceReducer.loginModalOpen
   );

@@ -12,11 +12,12 @@ import { setRegisterModalOpen } from "../../reducers/controller";
 const RegisterModal: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [step, setStep] = useState<Number>(0);
-
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
+
+  const [step, setStep] = useState<Number>(0);
+
   return (
     <Styles.Register>
       <div className="modal-container">
@@ -25,7 +26,7 @@ const RegisterModal: FC = () => {
             className="close-button"
             onClick={() => {
               navigate("/");
-              dispatch(setRegisterModalOpen(false))
+              dispatch(setRegisterModalOpen(false));
             }}
           >
             <CrossSVG />
