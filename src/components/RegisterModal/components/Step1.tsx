@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +13,14 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { useDispatch } from "react-redux";
 import { setRegisterModalOpen } from "../../../reducers/controller";
+import emailjs from "@emailjs/browser";
+import { setMailVerifyText, setRegisterData } from "../../../reducers/register";
 
-const Step1: FC = () => {
+interface Step1Props {
+  setStep: Dispatch<SetStateAction<Number>>;
+}
+
+const Step1: FC<Step1Props> = ({ setStep }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
@@ -24,6 +30,7 @@ const Step1: FC = () => {
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
   const [registerValid, setRegisterValid] = useState<boolean>(false);
+
   const yearOption = (): string[] => {
     let yearData = [];
     for (let i = 1923; i <= 2023; i++) {
@@ -117,52 +124,51 @@ const Step1: FC = () => {
     }
   };
 
-  function generateRandomString() {
-    const length = 10;
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+  const handlePostMailVerification = (): void => {
+    // 把這邊的資料先存到 redux 其他元件要用
+    dispatch(
+      setRegisterData({
+        name,
+        mail,
+        year,
+        month,
+        day,
+      })
+    );
+    // 驗證碼邏輯
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    let characters = letters + numbers;
+    let randomString: string = "";
+    for (let i = 0; i < 5; i++) {
+      let randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
     }
 
-    return result;
-  }
-
-  const handlePostRegister = (): void => {
-    if (!registerValid) return;
-    // 取到寫入資料必要物件
-    const documentRef = firebase?.firestore()?.collection("users")?.doc();
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(mail, "aaaaaa")
-      .then(() => {
-        //傳入寫入資料的物件
-        documentRef
-          .set({
-            mail: mail, 
-            name: name,
-            membershipNumber: generateRandomString(),
-            birthday: `${year}-${month}-${day}`,
-            // firebase 提供 time-stamp 函式可用
-            created_time: firebase.firestore.Timestamp.now(),
-          })
-          .then(() => {
-            //註冊成功資料有寫入資料庫導回首頁
-            navigate("/");
-            dispatch(setRegisterModalOpen(false));
-          })
-          .catch(() => {
-            console.log("寫入資料庫失敗");
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(setMailVerifyText(randomString));
+    //發 mail 邏輯
+    if (
+      process.env.REACT_APP_FIREBASE_SERVICE_ID &&
+      process.env.REACT_APP_FIREBASE_TEMPLATE_ID &&
+      process.env.REACT_APP_FIREBASE_PUBLIC_KEY
+    ) {
+      emailjs
+        .send(
+          process.env.REACT_APP_FIREBASE_SERVICE_ID,
+          process.env.REACT_APP_FIREBASE_TEMPLATE_ID,
+          {
+            to_name: name,
+            to_email: mail,
+            from_name: "Leo Chang",
+            message: randomString,
+          },
+          process.env.REACT_APP_FIREBASE_PUBLIC_KEY
+        )
+        .then((res) => {
+          setStep(2);
+        })
+        .catch((rej) => {});
+    }
   };
 
   // 監聽每個 input 是否都有填入正確值
@@ -174,6 +180,7 @@ const Step1: FC = () => {
       setRegisterValid(false);
     }
   }, [day, mail, mailErrorMsg, month, name, year]);
+
   return (
     <Styles.Step1>
       <h1>建立你的帳戶</h1>
@@ -264,7 +271,7 @@ const Step1: FC = () => {
       </div>
       <div
         className={registerValid ? "register-button " : "register-button false"}
-        onClick={handlePostRegister}
+        onClick={handlePostMailVerification}
       >
         註冊
       </div>
