@@ -11,7 +11,7 @@ import { setUserLogin } from "./reducers/controller";
 import { RootState } from "./reducers";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FC, useEffect } from "react";
-import { constants } from "buffer";
+import Profile from "./page/Profile/Profile";
 
 interface appProps {
   user: any;
@@ -49,6 +49,7 @@ const App: FC<appProps> = (props) => {
         }
       />
       <Route path="/explore" element={<Explore />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/user/:userId" element={<User />} />
       <Route path="*" element={<div>error</div>} />
     </Routes>

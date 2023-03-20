@@ -16,8 +16,8 @@ const RegisterModal: FC = () => {
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-
   const [step, setStep] = useState<Number>(0);
+
 
   return (
     <Styles.Register>
