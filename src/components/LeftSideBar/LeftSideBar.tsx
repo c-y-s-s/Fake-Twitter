@@ -14,6 +14,8 @@ interface LeftSideBarProps {
 
 const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const dispatch = useDispatch();
+  const user: any = firebase?.auth()?.currentUser || {};
+
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
@@ -67,13 +69,13 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
             </div>
           )}
           <GlobalClientImg
-            src={userData?.photoURL}
+            src={user?.photoURL}
             alt=""
             Location="leftSideBar"
           ></GlobalClientImg>
 
           <div className="client-data-container">
-            <div className="client-data-name">{userData?.displayName}</div>
+            <div className="client-data-name">{user?.displayName}</div>
             <div className="client-data-serial-number">@fcdc102d9f60407</div>
           </div>
         </div>

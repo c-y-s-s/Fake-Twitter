@@ -21,9 +21,6 @@ interface appProps {
 const App: FC<appProps> = (props) => {
   const user = props;
   const dispatch = useDispatch();
-  const userLogin = useSelector(
-    (state: RootState) => state.controllerSliceReducer.userLogin
-  );
 
   // 監聽登入中 || 登出
   useEffect(() => {
@@ -41,7 +38,7 @@ const App: FC<appProps> = (props) => {
     } else {
       dispatch(setUserLogin("null"));
     }
-  }, []);
+  }, [dispatch, user]);
 
   return (
     <Routes>

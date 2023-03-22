@@ -26,12 +26,13 @@ const Profile = styled.div`
       align-items: end;
       justify-content: space-between;
       padding: 0 16px 0 16px;
-      object-fit: cover;
+
       .picture {
         width: 133px;
         height: 133px;
         border: 3px solid #fff;
         border-radius: 50%;
+        object-fit: cover;
       }
       .edit-profile {
         font-size: ${({ theme }) => theme.fontSize.sm};
@@ -288,6 +289,7 @@ const UserEditDataModal = styled.div`
           height: 133px;
           border: 3px solid black;
           border-radius: 50%;
+          object-fit: cover;
         }
         .change-image {
           background-color: ${({ theme }) => theme.primaryColor};

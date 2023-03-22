@@ -24,21 +24,22 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
 
   const handleEditUserData = (): void => {
     if (!auth) return;
-    console.log("a");
+
     // 圖片
     if (file) {
       // 上傳會員圖片邏輯
-      const fireRef = firebase?.storage()?.ref("user-photos/" + user.uid);
+      const fireRef = firebase?.storage()?.ref("user-photos/" + user?.uid);
       const metadata = {
         contentType: file?.type,
       };
 
       fireRef.put(file, metadata).then(() => {
         fireRef.getDownloadURL().then((imageUrl) => {
-          user.updateProfile({
+          user?.updateProfile({
             photoURL: imageUrl,
           });
           setIsOpenModal(false);
+          window.location.reload();
         });
       });
     }

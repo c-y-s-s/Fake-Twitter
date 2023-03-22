@@ -17,6 +17,9 @@ const Profile = () => {
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
 
+  const userData = useSelector(
+    (state: RootState) => state.userSliceReducer.userData
+  );
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const tabListData = [
     { text: "Article", active: tabListSwitch === "Article" ? true : false },
@@ -39,12 +42,12 @@ const Profile = () => {
     <Styles.Profile>
       <LeftSideBar name={"Profile"} />
       <div className="profile-content">
-        <div className="font-bold title-name">{user?.displayName}</div>
+        <div className="font-bold title-name">{userData?.displayName}</div>
         <div className="post-number">2 Article</div>
         <div>
           <div className="user-background-img"></div>
           <div className="user-photo-data-edit">
-            <img className="picture" src={user?.photoURL} alt="" />
+            <img className="picture" src={userData?.photoURL} alt="user" />
             <div
               className="edit-profile font-bold"
               onClick={() => {
