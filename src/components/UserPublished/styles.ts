@@ -8,7 +8,7 @@ export const UserPublished = styled.div`
     .client-textarea-block {
       display: flex;
 
-      .textarea {
+      .text-container {
         padding: 0 0 0 10px;
         align-items: center;
         width: 100%;
@@ -26,6 +26,13 @@ export const UserPublished = styled.div`
             font-size: ${({ theme }) => `${theme.fontSize.xl}`};
           }
         }
+      }
+    }
+    .img-container {
+      .post-img {
+        width: 100%;
+        max-width: 488px;
+        margin-left: 48px;
       }
     }
 

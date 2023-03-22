@@ -1,7 +1,7 @@
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import * as Styles from "./styles";
 import userImg from "../../img/userImg.jpg";
-import OtherUser from "./components/OtherUser";
+
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import { RootState } from "../../reducers";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../reducers/controller";
 import { useSelector, useDispatch } from "react-redux";
 import { FC, useEffect, useState } from "react";
-import { addArticle } from "../../reducers/otherUserData";
+
 import UserPublished from "../../components/UserPublished/UserPublished";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,8 @@ import RegisterModal from "../../components/RegisterModal/RegisterModal";
 import firebase from "../../utils/firebase";
 import "firebase/compat/storage";
 import Explore from "../Explore/Explore";
+import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
+
 interface HomeProps {
   name: string;
 }
@@ -197,7 +199,7 @@ const Home: FC<HomeProps> = ({ name }) => {
                 imgFile={imgFile}
               />
 
-              <OtherUser />
+              <ArticleBlock useBlocks="home" />
             </div>
           </div>
           <RightSideBar />

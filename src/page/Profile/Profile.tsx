@@ -2,17 +2,24 @@ import React, { useEffect, useState } from "react";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import * as Styles from "./styles";
-import UserProfile from "./components/UserProfile";
 import UserEditDataModal from "./components/UserEditDataModal";
 import firebase from "../../utils/firebase";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { setProFileTabSwitch } from "../../reducers/controller";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../reducers";
+import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
 
 const Profile = () => {
-  const [tabListSwitch, setTabListSwitch] = useState("Tweets");
+  const dispatch = useDispatch();
+  const tabListSwitch = useSelector(
+    (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
+  );
+
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const tabListData = [
-    { text: "Tweets", active: tabListSwitch === "Tweets" ? true : false },
+    { text: "Article", active: tabListSwitch === "Article" ? true : false },
     { text: "Likes", active: tabListSwitch === "Likes" ? true : false },
   ];
 
@@ -28,13 +35,12 @@ const Profile = () => {
     }
   }, [body, isOpenModal]);
 
-  console.log("user?.photoURL", user?.photoURL);
   return (
     <Styles.Profile>
       <LeftSideBar name={"Profile"} />
       <div className="profile-content">
-        <div className="font-bold title-name">Leo</div>
-        <div className="post-number">2 Tweets</div>
+        <div className="font-bold title-name">{user?.displayName}</div>
+        <div className="post-number">2 Article</div>
         <div>
           <div className="user-background-img"></div>
           <div className="user-photo-data-edit">
@@ -65,9 +71,9 @@ const Profile = () => {
                   className="tab-list-item"
                   key={index}
                   onClick={() => {
-                    tabListSwitch === "Tweets"
-                      ? setTabListSwitch("Likes")
-                      : setTabListSwitch("Tweets");
+                    tabListSwitch === "Article"
+                      ? dispatch(setProFileTabSwitch("Likes"))
+                      : dispatch(setProFileTabSwitch("Article"));
                   }}
                 >
                   <div
@@ -85,7 +91,7 @@ const Profile = () => {
             })}
           </div>
         </div>
-        <UserProfile tabListSwitch={tabListSwitch} />
+        <ArticleBlock useBlocks={"profile"} />
       </div>
       {isOpenModal && <UserEditDataModal setIsOpenModal={setIsOpenModal} />}
 

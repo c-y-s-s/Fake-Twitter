@@ -61,7 +61,7 @@ const UserPublished: FC<UserPublishedProps> = ({
       <div className="client-content-block">
         <div className="client-textarea-block">
           <GlobalClientImg src={userImg} alt="user" Location="userPublished" />
-          <div className="textarea">
+          <div className="text-container">
             <textarea
               placeholder="What's happening?"
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -71,14 +71,8 @@ const UserPublished: FC<UserPublishedProps> = ({
             />
           </div>
         </div>
-        <div>
-          {imgFile && (
-            <img
-              src={previewUrl}
-              alt=""
-              style={{ width: "200px", height: "200px" }}
-            />
-          )}
+        <div className="img-container">
+          {imgFile && <img src={previewUrl} alt="" className="post-img" />}
         </div>
         <div className="client-textarea-bottom">
           <div className="client-textarea-icon">
@@ -96,7 +90,8 @@ const UserPublished: FC<UserPublishedProps> = ({
                 <AddMedia />
               </label>
             </div>
-
+            {/* 
+            尚未新增的功能
             <div className="icon-item">
               <AddGif />
             </div>
@@ -112,7 +107,7 @@ const UserPublished: FC<UserPublishedProps> = ({
             </div>
             <div className="icon-item">
               <AddLocation />
-            </div>
+            </div> */}
           </div>
           <div
             className={`client-textarea-tweet ${
@@ -120,7 +115,7 @@ const UserPublished: FC<UserPublishedProps> = ({
             }`}
             onClick={handleTweetClick}
           >
-            Tweet
+            Send
           </div>
         </div>
       </div>
