@@ -29,7 +29,7 @@ const Profile = styled.div`
       .picture {
         width: 133px;
         height: 133px;
-        border: 3px solid red;
+        border: 3px solid #fff;
         border-radius: 50%;
       }
       .edit-profile {
@@ -225,4 +225,87 @@ const UserProfile = styled.div`
   }
 `;
 
-export { Profile, UserProfile };
+const UserEditDataModal = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+
+  .modal-container {
+    box-sizing: border-box;
+    width: 600px;
+    height: 627px;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 12px;
+
+    .top-container {
+      width: 100%;
+      height: 53px;
+      display: flex;
+      justify-content: space-between;
+
+      .left {
+        display: flex;
+        font-size: ${({ theme }) => theme.fontSize.xl};
+        .close-button {
+          border: none;
+          background-color: rgba(0, 0, 0, 0);
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+        }
+      }
+
+      .save-button {
+        background-color: black;
+        height: 20px;
+        color: #fff;
+        padding: 6px 20px;
+        border-radius: 18px;
+      }
+    }
+
+    .center-block {
+      .user-photo-data-edit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 16px 0 16px;
+        .picture {
+          width: 133px;
+          height: 133px;
+          border: 3px solid black;
+          border-radius: 50%;
+        }
+        .change-image {
+          background-color: ${({ theme }) => theme.primaryColor};
+          height: 20px;
+          color: #fff;
+          padding: 6px 20px;
+          border-radius: 18px;
+          margin-left: 16px;
+          cursor: pointer;
+        }
+      }
+
+      .name {
+        margin-top: 18px;
+        width: 100%;
+      }
+      .password {
+        width: 100%;
+        margin-top: 18px;
+      }
+    }
+  }
+`;
+
+export { Profile, UserProfile, UserEditDataModal };

@@ -85,19 +85,21 @@ const UserProfile: FC<UserProfileProps> = ({ tabListSwitch }) => {
 
   // 拿 database data
   useEffect(() => {
+    if (firebase?.auth()?.currentUser?.uid === null) return;
+
     let query: any;
     if (tabListSwitch === "Tweets") {
       query = firebase
-        .firestore()
-        .collection("posts_article")
-        .where("author.uid", "==", firebase?.auth()?.currentUser?.uid);
+        ?.firestore()
+        ?.collection("posts_article")
+        ?.where("author.uid", "==", firebase?.auth()?.currentUser?.uid);
     } else {
       query = firebase
-        .firestore()
-        .collection("posts_article")
-        .where("likeBy", "array-contains", firebase?.auth()?.currentUser?.uid);
+        ?.firestore()
+        ?.collection("posts_article")
+        ?.where("likeBy", "array-contains", firebase?.auth()?.currentUser?.uid);
     }
-    query.get().then((docSnapshot: any) => {
+    query?.get()?.then((docSnapshot: any) => {
       const data = docSnapshot?.docs?.map((doc: any) => {
         const id = doc?.id;
         return { id, ...doc?.data() };
@@ -112,10 +114,10 @@ const UserProfile: FC<UserProfileProps> = ({ tabListSwitch }) => {
 
     firebase
       .firestore()
-      .collection("posts_article")
-      .doc(articleId)
-      .get()
-      .then((collectionSnapshot) => {
+      ?.collection("posts_article")
+      ?.doc(articleId)
+      ?.get()
+      ?.then((collectionSnapshot) => {
         if (collectionSnapshot?.data()?.transferBy?.includes(uid)) {
           firebase
             .firestore()

@@ -49,7 +49,12 @@ const App: FC<appProps> = (props) => {
         }
       />
       <Route path="/explore" element={<Explore />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={
+          user?.user === null ? <Navigate to="/login" replace /> : <Profile />
+        }
+      />
       <Route path="/user/:userId" element={<User />} />
       <Route path="*" element={<div>error</div>} />
     </Routes>
