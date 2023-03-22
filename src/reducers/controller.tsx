@@ -8,6 +8,7 @@ export interface controllerState {
   userLogin: any;
   loginModalOpen: boolean;
   registerModalOpen: boolean;
+  proFileTabSwitch: string;
 }
 
 const initialState: controllerState = {
@@ -17,6 +18,7 @@ const initialState: controllerState = {
   userLogin: null,
   loginModalOpen: false,
   registerModalOpen: false,
+  proFileTabSwitch: "Article",
 };
 
 export const controllerSlice = createSlice({
@@ -41,6 +43,9 @@ export const controllerSlice = createSlice({
     setRegisterModalOpen: (state, action) => {
       state.registerModalOpen = action.payload;
     },
+    setProFileTabSwitch: (state, action) => {
+      state.proFileTabSwitch = action.payload;
+    },
   },
 });
 
@@ -51,6 +56,7 @@ export const {
   setUserLogin,
   setLoginModalOpen,
   setRegisterModalOpen,
+  setProFileTabSwitch,
 } = controllerSlice.actions;
 
 const controllerSliceReducer = controllerSlice.reducer;

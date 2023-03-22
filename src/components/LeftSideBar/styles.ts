@@ -73,7 +73,7 @@ export const LeftSideBar = styled.div`
       }
     }
 
-    .tweet {
+    .send {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,12 +94,12 @@ export const LeftSideBar = styled.div`
         padding: 12px 0;
         text-align: center;
       }
-      .tweet-text {
+      .send-text {
         @media (max-width: 1300px) {
           display: none;
         }
       }
-      .tweet-rwd-svg {
+      .send-rwd-svg {
         width: 50px;
 
         svg {

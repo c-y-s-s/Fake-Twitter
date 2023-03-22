@@ -26,6 +26,7 @@ const Profile = styled.div`
       align-items: end;
       justify-content: space-between;
       padding: 0 16px 0 16px;
+      object-fit: cover;
       .picture {
         width: 133px;
         height: 133px;
@@ -152,10 +153,13 @@ const UserProfile = styled.div`
       .other-user-image {
         margin: 14px 0 0 0;
         padding: 0 12px 0 0;
+
         img {
           width: 100%;
-          height: 370px;
+          max-width: 506px;
+          max-height: 510px;
           border-radius: 16px;
+          object-fit: cover;
         }
       }
       .other-user-icon {

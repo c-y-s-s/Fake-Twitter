@@ -19,6 +19,7 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
 
+  // 註解起來的是還沒新增的功能
   const LinkData =
     userLogin !== null
       ? [
@@ -40,30 +41,30 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
             link: "explore",
             className: "explore",
           },
-          {
-            text: "Notifications",
-            svg: <NotificationsSVG />,
-            link: "notifications",
-            className: "notifications",
-          },
-          {
-            text: "Messages",
-            svg: <MessagesSVG />,
-            link: "messages",
-            className: "messages",
-          },
-          {
-            text: "Bookmarks",
-            svg: <BookMarksSVG />,
-            link: "bookmarks",
-            className: "bookmarks",
-          },
-          {
-            text: "Lists",
-            svg: <ListsSVG />,
-            link: "lists",
-            className: "lists",
-          },
+          // {
+          //   text: "Notifications",
+          //   svg: <NotificationsSVG />,
+          //   link: "notifications",
+          //   className: "notifications",
+          // },
+          // {
+          //   text: "Messages",
+          //   svg: <MessagesSVG />,
+          //   link: "messages",
+          //   className: "messages",
+          // },
+          // {
+          //   text: "Bookmarks",
+          //   svg: <BookMarksSVG />,
+          //   link: "bookmarks",
+          //   className: "bookmarks",
+          // },
+          // {
+          //   text: "Lists",
+          //   svg: <ListsSVG />,
+          //   link: "lists",
+          //   className: "lists",
+          // },
           {
             text: "Profile",
             svg: <ProfileSVG />,

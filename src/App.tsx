@@ -12,6 +12,7 @@ import { RootState } from "./reducers";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FC, useEffect } from "react";
 import Profile from "./page/Profile/Profile";
+import { setUserData } from "./reducers/user";
 
 interface appProps {
   user: any;
@@ -28,6 +29,15 @@ const App: FC<appProps> = (props) => {
   useEffect(() => {
     if (user) {
       dispatch(setUserLogin(user?.user));
+      dispatch(
+        setUserData({
+          displayName: user?.user?.displayName,
+          email: user?.user?.email,
+          photoURL: user?.user?.photoURL,
+          uid: user?.user?.uid,
+          creationTime: user?.user?.metadata?.creationTime,
+        })
+      );
     } else {
       dispatch(setUserLogin("null"));
     }
