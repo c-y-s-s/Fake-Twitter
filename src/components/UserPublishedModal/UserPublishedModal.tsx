@@ -24,6 +24,8 @@ const UserPublishedModal: FC<UserPublishedProps> = ({
   );
 
   const [modalLineSwitch, setModalLineSwitch] = useState(false);
+
+  
   const body: HTMLBodyElement | null = document.querySelector("body");
 
   useEffect(() => {
