@@ -7,9 +7,10 @@ import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
 import { ReactComponent as AddPoll } from "../../img/home/addPoll.svg";
 import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Styles from "./styles";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
+import { RootState } from "../../reducers";
 
 interface UserPublishedProps {
   userImg: string;
@@ -33,7 +34,9 @@ const UserPublished: FC<UserPublishedProps> = ({
   imgFile,
 }) => {
   const dispatch = useDispatch();
-
+ const userData = useSelector(
+   (state: RootState) => state.userSliceReducer.userData
+ );
   const handleTweetClick = () => {
     if (inputValue) {
       setTimeout(() => {
@@ -60,7 +63,7 @@ const UserPublished: FC<UserPublishedProps> = ({
     <Styles.UserPublished>
       <div className="client-content-block">
         <div className="client-textarea-block">
-          <GlobalClientImg src={userImg} alt="user" Location="userPublished" />
+          <GlobalClientImg src={userData.photoURL} alt="user" Location="userPublished" />
           <div className="text-container">
             <textarea
               placeholder="What's happening?"

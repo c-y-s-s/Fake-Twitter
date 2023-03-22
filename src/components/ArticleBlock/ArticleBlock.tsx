@@ -43,6 +43,10 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
 
+  const userData = useSelector(
+    (state: RootState) => state.userSliceReducer.userData
+  );
+
   const [sortIdOtherUserData, setSortIdOtherUserData] = useState<any[]>([]);
   const [articleData, setArticleData] = useState<articleDataProps[]>([]);
   const [dataPageNumber, setDataPageNumber] = useState<number>(4);
@@ -99,7 +103,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
               firebase?.auth()?.currentUser?.uid
             );
         }
-        query?.orderBy("createdAt", "desc").onSnapshot((docSnapshot: any) => {
+        query?.onSnapshot((docSnapshot: any) => {
           const data = docSnapshot?.docs?.map((doc: any) => {
             const id = doc?.id;
             return { id, ...doc?.data() };
@@ -146,7 +150,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
           return (
             <div className="other-user-content" key={item.id}>
               <GlobalClientImg
-                src="https://picsum.photos/50/50?grayscale"
+                src={userData.photoURL}
                 alt=""
                 className="client-data-img"
                 Location={"otherUser"}
@@ -157,7 +161,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
                     {item?.author?.userName}
                   </div>
                   <div className="other-user-account">
-                    .@{item?.author?.membershipNumber}
+                    @{item?.author?.membershipNumber}
                   </div>
                   ·<div className="other-user-date">31m</div>
                 </div>
