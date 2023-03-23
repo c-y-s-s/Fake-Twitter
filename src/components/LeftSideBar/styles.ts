@@ -9,17 +9,28 @@ export const LeftSideBar = styled.div`
   position: sticky;
   top: 0;
   left: 0;
+
   @media (max-width: 1300px) {
-    width: 50px;
-    padding: 0px 16px;
+    max-width: 75px;
     justify-content: space-between;
   }
 
+  @media (max-width: 721px) {
+    position: fixed;
+    flex-direction: row;
+    bottom: 0;
+  }
   .top-container {
     @media (max-width: 1300px) {
       display: flex;
       flex-direction: column;
       align-items: center;
+      max-width: 50px;
+    }
+    @media (max-width: 721px) {
+      position: fixed;
+      flex-direction: row;
+      bottom: 0px;
     }
     .twitter-logo {
       width: 38px;
@@ -28,6 +39,10 @@ export const LeftSideBar = styled.div`
       justify-content: center;
       align-items: center;
       padding: 12px 0 0 0;
+
+      @media (max-width: 721px) {
+        display: none;
+      }
       svg {
         path {
           width: 28px;
@@ -38,10 +53,21 @@ export const LeftSideBar = styled.div`
 
     .link-container {
       margin: 10px 0 0 0;
+      @media (max-width: 721px) {
+        margin: 0;
+        background-color: #fff;
+        min-width: 100vw;
+        display: flex;
+        justify-content: space-around;
+        height: 55px;
+      }
       .link-item {
         display: flex;
         align-items: center;
         padding: 16px 0px;
+        .icon {
+          cursor: pointer;
+        }
         svg {
           min-width: 26.5px;
           height: 26.5px;
@@ -68,7 +94,7 @@ export const LeftSideBar = styled.div`
       }
       .explore {
         @media (max-width: 1300px) {
-          display: none;
+          /* display: none; */
         }
       }
     }
@@ -93,6 +119,12 @@ export const LeftSideBar = styled.div`
         max-height: 50px;
         padding: 12px 0;
         text-align: center;
+      }
+
+      @media (max-width: 721px) {
+        position: fixed;
+        right: 25px;
+        bottom: 70px;
       }
       .send-text {
         @media (max-width: 1300px) {
@@ -119,6 +151,11 @@ export const LeftSideBar = styled.div`
     padding: 12px;
     font-size: 15px;
 
+    @media (max-width: 721px) {
+      position: fixed;
+      left: 10px;
+      bottom: 55px;
+    }
     .client-data-modal {
       position: absolute;
       bottom: 75px;
@@ -126,6 +163,10 @@ export const LeftSideBar = styled.div`
       border-radius: 12px;
       background-color: #fff;
       box-shadow: 0px 0px 10px #ccc;
+      @media (max-width: 721px) {
+        width: 140px;
+        left: 8px;
+      }
       .modal-item {
         padding: 6px 18px;
         height: 30px;

@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import ReactLoading from "react-loading";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import firebase from "../../../utils/firebase";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -17,6 +17,7 @@ const Step3: FC = () => {
   );
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMsgRender, setErrorMsgRender] = useState<boolean>(false);
   //註冊邏輯
   const handlePostRegister = (): void => {
     if (passwordValue.length < 8) return;
@@ -71,6 +72,15 @@ const Step3: FC = () => {
       });
   };
 
+  console.log(passwordValue.length < 8, "aa");
+
+  useEffect(() => {
+    if (passwordValue.length < 8 || passwordValue.length === 0) {
+      setErrorMsgRender(true);
+    } else {
+      setErrorMsgRender(false);
+    }
+  }, [passwordValue.length]);
   return (
     <Styles.Step3>
       <div className="step3-title font-bold">你將需要密碼</div>
@@ -88,12 +98,10 @@ const Step3: FC = () => {
         }}
       />
 
-      <div
-        className={`error-msg font-bold  ${
-          passwordValue.length >= 8 || passwordValue.length === 0 ? "none" : ""
-        }`}
-      >
-        你的密碼必須至少 8 個字元。請輸入較長的密碼。
+      <div className={`error-msg font-bold`}>
+        <p>
+          {errorMsgRender && "你的密碼必須至少 8 個字元。請輸入較長的密碼。"}
+        </p>
       </div>
 
       <div

@@ -14,6 +14,12 @@ export const UserPublishedModal = styled.div`
     border-radius: 12px;
     margin: 50px auto 0 auto;
     padding: 0 16px 16px 16px;
+
+    @media (max-width: 721px) {
+      width: 85%;
+      margin: 10px;
+    }
+
     .modal-line {
       width: 0%;
       height: 3px;
@@ -41,6 +47,7 @@ export const UserPublishedModal = styled.div`
       height: 100%;
       padding: 16px 0;
       border: none;
+
       .client-textarea-block {
         textarea {
           padding: 0 0 50px 0;

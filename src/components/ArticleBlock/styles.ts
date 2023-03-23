@@ -4,6 +4,10 @@ import { GlobalClientImg } from "../../styles/GlobalStyle";
 export const OtherUser = styled.div`
   padding: 0 0 8px 0;
 
+  @media (max-width: 722px) {
+    width: 100%;
+  }
+
   .infinite-scroll-component__outerdiv {
     .infinite-scroll-component {
       overflow: hidden;
@@ -21,8 +25,17 @@ export const OtherUser = styled.div`
       transition: 0.3s;
     }
 
+    .client-data-img {
+      @media (max-width: 722px) {
+        width: 100%;
+        height: 100%;
+      }
+    }
     .other-data-container {
       padding: 0 0 0 10px;
+      @media (max-width: 722px) {
+        width: 100%;
+      }
       .other-user-block {
         color: ${({ theme }) => theme.textSecondaryColor};
         display: flex;
@@ -46,12 +59,21 @@ export const OtherUser = styled.div`
       .other-user-image {
         margin: 14px 0 0 0;
         padding: 0 12px 0 0;
+
+        @media (max-width: 722px) {
+          width: 85%;
+        }
         img {
           width: 100%;
           max-width: 506px;
           max-height: 510px;
           border-radius: 16px;
           object-fit: cover;
+          @media (max-width: 722px) {
+            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+          }
         }
       }
       .other-user-icon {

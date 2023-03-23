@@ -10,6 +10,7 @@ import { ReactComponent as ProfileSVG } from "../../img/leftSideBar/profile.svg"
 import { ReactComponent as SearchSVG } from "../../img/leftSideBar/search.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";
+import { Link, useNavigate } from "react-router-dom";
 
 interface LinkBarBarProps {
   name: string;
@@ -18,7 +19,7 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-
+  const navigator = useNavigate();
   // 註解起來的是還沒新增的功能
   const LinkData =
     userLogin !== null
@@ -32,13 +33,13 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
           {
             text: "Search",
             svg: <SearchSVG />,
-            link: "/",
+            link: "/explore",
             className: "search",
           },
           {
             text: "Explore",
             svg: <Explore />,
-            link: "explore",
+            link: "/explore",
             className: "explore",
           },
           // {
@@ -68,7 +69,7 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
           {
             text: "Profile",
             svg: <ProfileSVG />,
-            link: "profile",
+            link: "/profile",
             className: "profile",
           },
         ]
@@ -76,7 +77,7 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
           {
             text: "Explore",
             svg: <Explore />,
-            link: "explore",
+            link: "/explore",
             className: "explore",
           },
         ];
@@ -91,8 +92,15 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
             }`}
             key={index}
           >
-            {item.svg}
-            <a href={item.link}>{item.text}</a>
+            <div
+            className="icon"
+              onClick={() => {
+                navigator(item.link);
+              }}
+            >
+              {item.svg}
+            </div>
+            <Link to={item.link}>{item.text}</Link>
           </div>
         );
       })}

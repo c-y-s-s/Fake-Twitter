@@ -183,7 +183,7 @@ const Step1: FC<Step1Props> = ({ setStep }) => {
 
   return (
     <Styles.Step1>
-      <h1>建立你的帳戶</h1>
+      <h1 className="step1-title">建立你的帳戶</h1>
       <div>
         <TextField
           label="name"

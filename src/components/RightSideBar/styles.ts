@@ -7,6 +7,11 @@ export const RightSideBar = styled.div`
   @media (max-width: 1020px) {
     display: none;
   }
+
+  @media (max-width: 722px) {
+    width: 100%;
+    padding-right: 0px;
+  }
   .search {
     display: flex;
     align-items: center;

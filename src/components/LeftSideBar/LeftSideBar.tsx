@@ -19,9 +19,7 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-  const userData = useSelector(
-    (state: RootState) => state.userSliceReducer.userData
-  );
+
   const [toggleModalOpen, setToggleModalOpen] = useState<boolean>(false);
 
   // 登出邏輯
@@ -36,7 +34,7 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
   return (
     <Styles.LeftSideBar>
       <div className="top-container">
-        <div className="twitter-logo">{/* <TwitterSVG /> */}</div>
+        <div className="twitter-logo">{<TwitterSVG />}</div>
         <div className="link-container">
           <LinkBar name={name} />
         </div>
