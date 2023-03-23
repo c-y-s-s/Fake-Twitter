@@ -19,6 +19,10 @@ export const Register = styled.div`
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
+    @media (max-width: 722px) {
+      margin: 10px;
+      padding: 6px;
+    }
     .top {
       display: flex;
       justify-content: space-between;
@@ -35,6 +39,9 @@ export const Register = styled.div`
 `;
 
 export const BuildMethod = styled.div`
+  @media (max-width: 721px) {
+    text-align: center;
+  }
   .top {
     display: flex;
     justify-content: space-between;
@@ -92,7 +99,14 @@ export const BuildMethod = styled.div`
 
 export const Step1 = styled.div`
   padding: 0px 80px;
-
+  @media (max-width: 722px) {
+    padding: 6px;
+  }
+  .step1-title {
+    @media (max-width: 722px) {
+      font-size: 26px;
+    }
+  }
   .name {
     width: 100%;
     height: 56px;
@@ -109,15 +123,25 @@ export const Step1 = styled.div`
   }
   .date-container {
     padding: 16px 0 0 0;
+    margin: auto;
     .day-select {
       margin: 0 12px 0 12px;
       width: 110px;
+      @media (max-width: 722px) {
+        width: 100px;
+      }
     }
     .month-select {
       width: 140px;
+      @media (max-width: 722px) {
+        width: 100px;
+      }
     }
     .year-select {
       width: 130px;
+      @media (max-width: 722px) {
+        width: 100px;
+      }
     }
   }
   .register-button {
@@ -140,7 +164,9 @@ export const Step1 = styled.div`
 
 export const Step2 = styled.div`
   padding: 12px 80px 0 80px;
-
+  @media (max-width: 722px) {
+    padding: 12px;
+  }
   .step2-title {
     font-size: 32px;
   }
@@ -186,7 +212,9 @@ export const Step2 = styled.div`
 
 export const Step3 = styled.div`
   padding: 12px 80px 0 80px;
-
+  @media (max-width: 722px) {
+    padding: 12px;
+  }
   .step3-title {
     font-size: 32px;
   }
@@ -201,8 +229,12 @@ export const Step3 = styled.div`
   }
   .error-msg {
     margin-top: 5px;
-    color: red;
+
     font-size: 10px;
+    height: 15px;
+    p {
+      color: red;
+    }
   }
 
   .submit-register {

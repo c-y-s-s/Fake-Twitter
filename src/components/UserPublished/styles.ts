@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
 export const UserPublished = styled.div`
+  @media (max-width: 722px) {
+    width: 90%;
+  }
   .client-content-block {
     border-top: 1px solid rgb(239, 243, 244);
     border-bottom: 1px solid rgb(239, 243, 244);
     padding: 10px 16px;
+
     .client-textarea-block {
       display: flex;
 

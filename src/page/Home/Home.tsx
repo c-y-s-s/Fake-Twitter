@@ -140,8 +140,11 @@ const Home: FC<HomeProps> = ({ name }) => {
     }
   };
 
+  const body: HTMLBodyElement | null = document.querySelector("body");
+
   const handleOpenModal = (type: string) => {
-    if (type === "login") {
+    if (type === "login" && body) {
+      body.style.overflow = "hidden";
       dispatch(setLoginModalOpen(true));
       dispatch(setRegisterModalOpen(false));
     } else if (type === "register") {

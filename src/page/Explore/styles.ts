@@ -2,13 +2,30 @@ import styled from "styled-components";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
 
 const Explore = styled.div`
+  box-sizing: border-box;
   width: 552px;
-  padding: 0 12px;
-  .explore-item {
-    color: ${({ theme }) => theme.textSecondaryColor};
-    font-size: 13px;
-    line-height: 20px;
-    margin: 18px 0px;
+  padding: 0 16px;
+
+  @media (max-width: 722px) {
+    width: 100%;
+    padding-right: 0px;
+  }
+  .explore-list {
+    @media (max-width: 722px) {
+      width: 100%;
+      padding-right: 0px;
+    }
+    .explore-item {
+      color: ${({ theme }) => theme.textSecondaryColor};
+      font-size: 13px;
+      line-height: 20px;
+      margin: 18px 0px;
+
+      @media (max-width: 722px) {
+        width: 100%;
+        padding-right: 0px;
+      }
+    }
   }
 
   .search {
@@ -21,6 +38,11 @@ const Explore = styled.div`
     position: sticky;
     top: 0;
     z-index: 1;
+
+    @media (max-width: 722px) {
+      width: 96%;
+    }
+
     .search-icon {
       padding: 4px 8px 0 16px;
       width: 18.75px;

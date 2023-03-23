@@ -51,6 +51,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
       })
         .then(() => {
           setIsOpenModal(false);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -61,6 +62,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
     if (passwordValue.length >= 8) {
       user.updatePassword(passwordValue).then(() => {
         setIsOpenModal(false);
+        window.location.reload();
       });
     }
   };

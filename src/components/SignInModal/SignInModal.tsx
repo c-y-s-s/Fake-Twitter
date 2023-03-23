@@ -33,6 +33,7 @@ const SignInModal: FC = () => {
   const handleMailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setMail(e.target.value);
   };
+  const body: HTMLBodyElement | null = document.querySelector("body");
 
   const handleConfirmMail = () => {
     firebase
@@ -125,6 +126,10 @@ const SignInModal: FC = () => {
   const handleCloseModal = () => {
     dispatch(setLoginModalOpen(false));
     navigator("/");
+    if (body) {
+      body.style.overflow = "auto";
+      return null;
+    }
   };
 
   return (
