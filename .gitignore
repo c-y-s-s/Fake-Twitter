@@ -12,7 +12,8 @@
 algolia.ts
 firebase.ts
 .env
-
+.firebaserc
+/build
 /utils
 # misc
 .DS_Store
