@@ -1,14 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
+import {
+  setLoginModalOpen,
+  setRegisterModalOpen,
+} from "../../reducers/controller";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import Search from "./Search";
 import * as Styles from "./styles";
 
 const RightSideBar: React.FC = () => {
+  const dispatch = useDispatch();
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-
+  const registerModalOpen = useSelector(
+    (state: RootState) => state.controllerSliceReducer.registerModalOpen
+  );
   const tendingData = [
     {
       name: "$500 Binance",
@@ -83,7 +91,25 @@ const RightSideBar: React.FC = () => {
           </div>
         </>
       ) : (
-        <></>
+        <div>
+          <div className="no-login-style">
+            <div className="title font-bold">你是 Twitter 新手嗎?</div>
+            <p className="text">立即註冊，取得你個人專屬的時間軸!</p>
+            <div
+              className="add-account font-bold"
+              onClick={() => {
+                dispatch(setLoginModalOpen(false));
+                dispatch(setRegisterModalOpen(true));
+              }}
+            >
+              建立帳戶
+            </div>
+            <p className="text">
+              如果註冊，即表示你同意服務條款和隱私政策，包括 Cookie 使用政策。
+            </p>
+          </div>
+          {registerModalOpen && <RegisterModal />}
+        </div>
       )}
     </Styles.RightSideBar>
   );

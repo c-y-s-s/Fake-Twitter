@@ -8,10 +8,6 @@ const User: FC = () => {
   const getUserData = useGetSearchUserDataQuery(userId ?? "");
   const userData = getUserData.data;
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   return (
     <div style={{ textAlign: "center", padding: "16px 0 0 0" }}>
       尚未製作個人頁面 這邊透過 useParams 的 userId 重新打一次 api

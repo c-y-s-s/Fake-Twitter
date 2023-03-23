@@ -12,6 +12,7 @@ export const SignInModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 5;
+
   .modal-container {
     box-sizing: border-box;
     width: 600px;
@@ -19,6 +20,10 @@ export const SignInModal = styled.div`
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
+
+    @media (max-width: 722px) {
+      margin: 10px;
+    }
     .top {
       display: flex;
       justify-content: space-between;
@@ -109,6 +114,10 @@ export const SignInStep1 = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 90%;
+
+  @media (max-width: 722px) {
+    padding: 0;
+  }
   .step1-mail {
     width: 100%;
   }

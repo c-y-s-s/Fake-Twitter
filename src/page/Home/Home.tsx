@@ -1,7 +1,6 @@
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import * as Styles from "./styles";
-import userImg from "../../img/userImg.jpg";
-import OtherUser from "./components/OtherUser";
+
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import { RootState } from "../../reducers";
 import {
@@ -11,20 +10,21 @@ import {
   tabListToggle,
 } from "../../reducers/controller";
 import { useSelector, useDispatch } from "react-redux";
-import { FC, useState } from "react";
-import { addArticle } from "../../reducers/otherUserData";
+import { FC } from "react";
 import UserPublished from "../../components/UserPublished/UserPublished";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
-import { useNavigate } from "react-router-dom";
 import SignInModal from "../../components/SignInModal/SignInModal";
 import RegisterModal from "../../components/RegisterModal/RegisterModal";
+import "firebase/compat/storage";
+import Explore from "../Explore/Explore";
+import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
 
 interface HomeProps {
   name: string;
 }
 const Home: FC<HomeProps> = ({ name }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const loginModalOpen = useSelector(
     (state: RootState) => state.controllerSliceReducer.loginModalOpen
   );
@@ -38,13 +38,7 @@ const Home: FC<HomeProps> = ({ name }) => {
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-  const otherUserData = useSelector(
-    (state: RootState) => state.otherUserDataSliceReducer.otherUserData
-  );
-  const [inputValue, setInputValue] = useState<string>("");
-  // const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 
-  let articleId = Number(otherUserData[otherUserData.length - 1].id);
   const tabListData = [
     {
       text: "For You",
@@ -55,24 +49,6 @@ const Home: FC<HomeProps> = ({ name }) => {
       active: tabList === "Following" ? true : false,
     },
   ];
-
-  // 送發表文章的物件
-  const handleTweet = () => {
-    dispatch(
-      addArticle({
-        id: (articleId += 1).toString(),
-        userName: "user01",
-        userSerialNumber: "@fcdc102d9f60407",
-        postingTime: "31m",
-        text: inputValue,
-        message: 0,
-        transfer: 0,
-        view: 1,
-        like: { number: 0, userClick: false },
-      })
-    );
-    setInputValue("");
-  };
 
   // search list 透過 className 判斷要不要關閉視窗
   // 篩選出點到不關閉的 className 去做判斷
@@ -100,8 +76,11 @@ const Home: FC<HomeProps> = ({ name }) => {
     }
   };
 
+  const body: HTMLBodyElement | null = document.querySelector("body");
+
   const handleOpenModal = (type: string) => {
-    if (type === "login") {
+    if (type === "login" && body) {
+      body.style.overflow = "hidden";
       dispatch(setLoginModalOpen(true));
       dispatch(setRegisterModalOpen(false));
     } else if (type === "register") {
@@ -116,9 +95,9 @@ const Home: FC<HomeProps> = ({ name }) => {
       loginModalOpen={loginModalOpen}
       registerModalOpen={registerModalOpen}
     >
-      <LeftSideBar name={name} />
       {userLogin ? (
         <>
+          <LeftSideBar name={name} />
           <div className="home-content">
             <div className="home-content-top">
               <div className="link-title">Home</div>
@@ -149,73 +128,19 @@ const Home: FC<HomeProps> = ({ name }) => {
             </div>
 
             <div className="client-textarea-container">
-              <UserPublished
-                userImg={userImg}
-                setInputValue={setInputValue}
-                inputValue={inputValue}
-                handleTweet={handleTweet}
-              />
+              <UserPublished />
 
-              <OtherUser />
+              <ArticleBlock useBlocks="home" />
             </div>
           </div>
           <RightSideBar />
-          <UserPublishedModal
-            userImg={userImg}
-            setInputValue={setInputValue}
-            inputValue={inputValue}
-            handleTweet={handleTweet}
-          />
+          <UserPublishedModal />
         </>
       ) : (
         <>
           <div className="home-content">
-            <div className="home-content-top">
-              <div className="link-title">Home</div>
-              <div className="tab-list">
-                {tabListData.map((item, index) => {
-                  return (
-                    <div
-                      className="tab-list-item"
-                      onClick={() => {
-                        dispatch(tabListToggle(item.text));
-                      }}
-                      key={index}
-                    >
-                      <div
-                        className={`tab-list-item-text ${
-                          item.active ? "font-bold active" : ""
-                        }`}
-                      >
-                        {item.text}
-                        <div
-                          className={`line ${item.active ? "active" : ""}`}
-                        ></div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="client-textarea-container">
-              <UserPublished
-                userImg={userImg}
-                setInputValue={setInputValue}
-                inputValue={inputValue}
-                handleTweet={handleTweet}
-              />
-
-              <OtherUser />
-            </div>
+            <Explore />
           </div>
-          <RightSideBar />
-          <UserPublishedModal
-            userImg={userImg}
-            setInputValue={setInputValue}
-            inputValue={inputValue}
-            handleTweet={handleTweet}
-          />
         </>
       )}
 

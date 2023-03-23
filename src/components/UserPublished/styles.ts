@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 export const UserPublished = styled.div`
+  @media (max-width: 722px) {
+    width: 90%;
+  }
   .client-content-block {
     border-top: 1px solid rgb(239, 243, 244);
     border-bottom: 1px solid rgb(239, 243, 244);
     padding: 10px 16px;
+
     .client-textarea-block {
       display: flex;
 
-      .textarea {
+      .text-container {
         padding: 0 0 0 10px;
         align-items: center;
         width: 100%;
@@ -26,6 +30,13 @@ export const UserPublished = styled.div`
             font-size: ${({ theme }) => `${theme.fontSize.xl}`};
           }
         }
+      }
+    }
+    .img-container {
+      .post-img {
+        width: 100%;
+        max-width: 488px;
+        margin-left: 48px;
       }
     }
 

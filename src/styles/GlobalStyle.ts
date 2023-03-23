@@ -22,7 +22,7 @@ export const GlobalClientImg = styled.img<StyledClientImg>`
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
-
+  object-fit: cover;
   ${(props) =>
     props.Location === "otherUser" &&
     css`

@@ -1,38 +1,34 @@
 import React, { FC, useEffect } from "react";
-
-import { ReactComponent as AddEmoji } from "../../img/home/addEmoji.svg";
-import { ReactComponent as AddGif } from "../../img/home/addGif.svg";
-import { ReactComponent as AddLocation } from "../../img/home/addLocation.svg";
 import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
-import { ReactComponent as AddPoll } from "../../img/home/addPoll.svg";
-import { ReactComponent as AddSchedule } from "../../img/home/addSchedule.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Styles from "./styles";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
+import { RootState } from "../../reducers";
+import { setImgFile, setInputValue } from "../../reducers/postPublished";
+import UsePostArticle from "../../hook/UsePostArticle";
 
 interface UserPublishedProps {
-  userImg: string;
-  setInputValue: (value: string) => void;
-  inputValue: string;
-  handleTweet: () => void;
   setModalLineSwitch?: (value: boolean) => void;
-  modalLineSwitch?: boolean;
 }
 
-const UserPublished: FC<UserPublishedProps> = ({
-  userImg,
-  setInputValue,
-  inputValue,
-  handleTweet,
-  setModalLineSwitch,
-  modalLineSwitch,
-}) => {
+const UserPublished: FC<UserPublishedProps> = ({ setModalLineSwitch }) => {
   const dispatch = useDispatch();
+  const userData = useSelector(
+    (state: RootState) => state.userSliceReducer.userData
+  );
+
+  const imgFile = useSelector(
+    (state: RootState) => state.postPublishedSliceReducer.imgFile
+  );
+  const inputValue = useSelector(
+    (state: RootState) => state.postPublishedSliceReducer.inputValue
+  );
+  const postArticle = UsePostArticle();
   const handleTweetClick = () => {
     if (inputValue) {
       setTimeout(() => {
-        handleTweet();
+        postArticle();
         dispatch(userPublishedModalToggle(false));
       }, 650);
       if (setModalLineSwitch) {
@@ -47,43 +43,51 @@ const UserPublished: FC<UserPublishedProps> = ({
         setModalLineSwitch(false);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 取得上傳圖片的路徑
+  const previewUrl = imgFile ? URL.createObjectURL(imgFile) : "";
+
   return (
     <Styles.UserPublished>
       <div className="client-content-block">
         <div className="client-textarea-block">
-          <GlobalClientImg src={userImg} alt="user" Location="userPublished" />
-          <div className="textarea">
+          <GlobalClientImg
+            src={userData.photoURL}
+            alt="user"
+            Location="userPublished"
+          />
+          <div className="text-container">
             <textarea
               placeholder="What's happening?"
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-                setInputValue(e.target.value);
+                dispatch(setInputValue(e.target.value));
               }}
               value={inputValue}
             />
           </div>
         </div>
+        <div className="img-container">
+          {imgFile && <img src={previewUrl} alt="" className="post-img" />}
+        </div>
         <div className="client-textarea-bottom">
           <div className="client-textarea-icon">
             <div className="icon-item">
-              <AddMedia />
-            </div>
+              <input
+                type="file"
+                id="post-image"
+                style={{ display: "none" }}
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  dispatch(
+                    setImgFile((e.target as HTMLInputElement)?.files?.[0])
+                  );
+                }}
+              />
 
-            <div className="icon-item">
-              <AddGif />
-            </div>
-            <div className="icon-item">
-              <AddPoll />
-            </div>
-            <div className="icon-item">
-              <AddEmoji />
-            </div>
-
-            <div className="icon-item">
-              <AddSchedule />
-            </div>
-            <div className="icon-item">
-              <AddLocation />
+              <label htmlFor="post-image">
+                <AddMedia />
+              </label>
             </div>
           </div>
           <div
@@ -92,7 +96,7 @@ const UserPublished: FC<UserPublishedProps> = ({
             }`}
             onClick={handleTweetClick}
           >
-            Tweet
+            Send
           </div>
         </div>
       </div>

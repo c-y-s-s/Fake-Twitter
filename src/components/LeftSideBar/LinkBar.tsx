@@ -10,6 +10,7 @@ import { ReactComponent as ProfileSVG } from "../../img/leftSideBar/profile.svg"
 import { ReactComponent as SearchSVG } from "../../img/leftSideBar/search.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";
+import { Link, useNavigate } from "react-router-dom";
 
 interface LinkBarBarProps {
   name: string;
@@ -18,66 +19,68 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
-
-  const LinkData = userLogin
-    ? [
-        {
-          text: "Home",
-          svg: <HomeSVG />,
-          link: "/",
-          className: "home",
-        },
-        {
-          text: "Search",
-          svg: <SearchSVG />,
-          link: "/",
-          className: "search",
-        },
-        {
-          text: "Explore",
-          svg: <Explore />,
-          link: "explore",
-          className: "explore",
-        },
-        {
-          text: "Notifications",
-          svg: <NotificationsSVG />,
-          link: "notifications",
-          className: "notifications",
-        },
-        {
-          text: "Messages",
-          svg: <MessagesSVG />,
-          link: "messages",
-          className: "messages",
-        },
-        {
-          text: "Bookmarks",
-          svg: <BookMarksSVG />,
-          link: "bookmarks",
-          className: "bookmarks",
-        },
-        {
-          text: "Lists",
-          svg: <ListsSVG />,
-          link: "lists",
-          className: "lists",
-        },
-        {
-          text: "Profile",
-          svg: <ProfileSVG />,
-          link: "profile",
-          className: "profile",
-        },
-      ]
-    : [
-        {
-          text: "Explore",
-          svg: <Explore />,
-          link: "explore",
-          className: "explore",
-        },
-      ];
+  const navigator = useNavigate();
+  // 註解起來的是還沒新增的功能
+  const LinkData =
+    userLogin !== null
+      ? [
+          {
+            text: "Home",
+            svg: <HomeSVG />,
+            link: "/",
+            className: "home",
+          },
+          {
+            text: "Search",
+            svg: <SearchSVG />,
+            link: "/explore",
+            className: "search",
+          },
+          {
+            text: "Explore",
+            svg: <Explore />,
+            link: "/explore",
+            className: "explore",
+          },
+          // {
+          //   text: "Notifications",
+          //   svg: <NotificationsSVG />,
+          //   link: "notifications",
+          //   className: "notifications",
+          // },
+          // {
+          //   text: "Messages",
+          //   svg: <MessagesSVG />,
+          //   link: "messages",
+          //   className: "messages",
+          // },
+          // {
+          //   text: "Bookmarks",
+          //   svg: <BookMarksSVG />,
+          //   link: "bookmarks",
+          //   className: "bookmarks",
+          // },
+          // {
+          //   text: "Lists",
+          //   svg: <ListsSVG />,
+          //   link: "lists",
+          //   className: "lists",
+          // },
+          {
+            text: "Profile",
+            svg: <ProfileSVG />,
+            link: "/profile",
+            className: "profile",
+          },
+        ]
+      : [
+          {
+            text: "Explore",
+            svg: <Explore />,
+            link: "/explore",
+            className: "explore",
+          },
+        ];
 
   return (
     <div className="link-container">
@@ -89,8 +92,15 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
             }`}
             key={index}
           >
-            {item.svg}
-            <a href={item.link}>{item.text}</a>
+            <div
+            className="icon"
+              onClick={() => {
+                navigator(item.link);
+              }}
+            >
+              {item.svg}
+            </div>
+            <Link to={item.link}>{item.text}</Link>
           </div>
         );
       })}

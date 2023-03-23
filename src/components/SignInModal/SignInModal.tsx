@@ -9,14 +9,21 @@ import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 import { setLoginModalOpen } from "../../reducers/controller";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 interface SignInModalPropsType {
   setLoginModalOpen?: boolean;
 }
 const SignInModal: FC = () => {
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
+
   const loginModalOpen = useSelector(
     (state: RootState) => state.controllerSliceReducer.loginModalOpen
   );
+  const user: any = firebase?.auth();
+
   // 判斷切換哪個元件
   const [signInComponent, setSignInComponent] = useState("0");
   const [mailValue, setMail] = useState<string>("");
@@ -26,6 +33,7 @@ const SignInModal: FC = () => {
   const handleMailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setMail(e.target.value);
   };
+  const body: HTMLBodyElement | null = document.querySelector("body");
 
   const handleConfirmMail = () => {
     firebase
@@ -51,6 +59,12 @@ const SignInModal: FC = () => {
         }
       })
       .catch((error) => {});
+  };
+
+  const handleSendPasswordResetEmail = () => {
+    sendPasswordResetEmail(user, mailValue).then((a) => {
+      alert("Password reset email sent");
+    });
   };
 
   const signInComponentJSX = (): JSX.Element => {
@@ -86,7 +100,12 @@ const SignInModal: FC = () => {
               >
                 下一步
               </div>
-              <div className="sign-in-button  forget-password">忘記密碼</div>
+              <div
+                className="sign-in-button  forget-password"
+                onClick={handleSendPasswordResetEmail}
+              >
+                忘記密碼
+              </div>
               <div className="bottom">
                 還沒有帳戶嗎?
                 <Link to="/register" className="register-text">
@@ -107,6 +126,10 @@ const SignInModal: FC = () => {
   const handleCloseModal = () => {
     dispatch(setLoginModalOpen(false));
     navigator("/");
+    if (body) {
+      body.style.overflow = "auto";
+      return null;
+    }
   };
 
   return (
