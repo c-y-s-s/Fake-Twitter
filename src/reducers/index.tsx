@@ -2,8 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { searchApi } from "../api/searchApi";
 import controllerSliceReducer from "./controller";
 import otherUserDataSliceReducer from "./otherUserData";
+import postPublishedSliceReducer from "./postPublished";
 import registerSliceReducer from "./register";
 import userSliceReducer from "./user";
+
 export const store = configureStore({
   reducer: {
     [searchApi.reducerPath]: searchApi.reducer,
@@ -11,6 +13,7 @@ export const store = configureStore({
     otherUserDataSliceReducer,
     registerSliceReducer,
     userSliceReducer,
+    postPublishedSliceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(

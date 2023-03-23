@@ -10,6 +10,7 @@ import { setProFileTabSwitch } from "../../reducers/controller";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
+import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -97,7 +98,7 @@ const Profile = () => {
         <ArticleBlock useBlocks={"profile"} />
       </div>
       {isOpenModal && <UserEditDataModal setIsOpenModal={setIsOpenModal} />}
-
+      <UserPublishedModal />
       <RightSideBar />
     </Styles.Profile>
   );

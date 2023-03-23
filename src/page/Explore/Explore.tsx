@@ -1,9 +1,11 @@
 import * as Styles from "./styles";
 import Search from "../../components/RightSideBar/Search";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
+import RightSideBar from "../../components/RightSideBar/RightSideBar";
+
 const Explore = () => {
   return (
-    <>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <LeftSideBar name={"Explore"} />
       <Styles.Explore>
         <Search />
@@ -31,7 +33,8 @@ const Explore = () => {
           </div>
         </div>
       </Styles.Explore>
-    </>
+      <RightSideBar />
+    </div>
   );
 };
 
