@@ -7,9 +7,11 @@ export const UserPublishedModal = styled.div`
   z-index: 2;
   overflow: hidden;
   position: fixed;
+
   .modal-container {
     width: 550px;
-    height: 240px;
+    min-height: 240px;
+
     background-color: #fff;
     border-radius: 12px;
     margin: 50px auto 0 auto;

@@ -18,13 +18,20 @@ const Step3: FC = () => {
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMsgRender, setErrorMsgRender] = useState<boolean>(false);
+
   //註冊邏輯
   const handlePostRegister = (): void => {
     if (passwordValue.length < 8) return;
+    let userDataLength = 0;
     setLoading(true);
     // 取到寫入資料必要物件
-    const documentRef = firebase?.firestore()?.collection("users")?.doc();
+    const db = firebase?.firestore();
 
+    db.collection("users")
+      .get()
+      .then((res) => {
+        userDataLength = res.docs.length;
+      });
     function generateRandomString() {
       const length = 10;
       const characters =
@@ -45,8 +52,10 @@ const Step3: FC = () => {
       .createUserWithEmailAndPassword(registerData.mail, passwordValue)
       .then(() => {
         //傳入寫入資料的物件
-        documentRef
+        db.collection("users")
+          ?.doc(`user${(userDataLength += 1)}`)
           .set({
+            id: userDataLength,
             mail: registerData.mail,
             name: registerData.name,
             membershipNumber: generateRandomString(),
@@ -71,8 +80,6 @@ const Step3: FC = () => {
         setLoading(false);
       });
   };
-
-  console.log(passwordValue.length < 8, "aa");
 
   useEffect(() => {
     if (passwordValue.length < 8 || passwordValue.length === 0) {

@@ -24,7 +24,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
 
   const handleEditUserData = (): void => {
     if (!auth) return;
-
+    const db = firebase.firestore();
     // 圖片
     if (file) {
       // 上傳會員圖片邏輯
@@ -46,12 +46,28 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
 
     //名字
     if (nameValue.length > 1) {
+      db.collection("users")
+        .where("mail", "==", user?.email)
+        .get()
+        .then((collectionSnapshot) => {
+          collectionSnapshot.docs.map((item) => {
+            let userId = item.data().id;
+
+            db.collection("users")
+              .doc(`user${userId}`)
+              .update({
+                name: nameValue,
+              })
+              .then(() => window.location.reload());
+          });
+        });
+
       updateProfile(auth?.currentUser, {
         displayName: nameValue ? nameValue : user?.displayName,
       })
         .then(() => {
           setIsOpenModal(false);
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           console.log(error);
