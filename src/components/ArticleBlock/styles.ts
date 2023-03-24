@@ -11,6 +11,9 @@ export const OtherUser = styled.div`
   .infinite-scroll-component__outerdiv {
     .infinite-scroll-component {
       overflow: hidden;
+      @media (max-width: 722px) {
+        margin-bottom: 55px;
+      }
     }
   }
   .other-user-content {

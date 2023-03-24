@@ -18,6 +18,7 @@ import { RootState } from "../../reducers";
 
 interface ArticleBlockProps {
   useBlocks: string;
+  setArticlesTotalNumber?: React.Dispatch<React.SetStateAction<string>>;
 }
 interface articleDataProps {
   id: string;
@@ -38,7 +39,10 @@ interface articleDataProps {
   };
 }
 
-const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
+const ArticleBlock: FC<ArticleBlockProps> = ({
+  useBlocks,
+  setArticlesTotalNumber,
+}) => {
   const tabListSwitch = useSelector(
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
@@ -108,7 +112,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
             const id = doc?.id;
             return { id, ...doc?.data() };
           });
-
+          if (setArticlesTotalNumber) setArticlesTotalNumber(data.length);
           setArticleData(data as []);
         });
 
