@@ -37,6 +37,7 @@ const Chatroom = () => {
           : resultSecond.getMinutes(),
     };
   };
+
   const handlePostMessage = async () => {
     if (inputValue.length === 0) return;
     let queryMessageSnapshot = await db
@@ -60,12 +61,12 @@ const Chatroom = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"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"}`,
+            Authorization: `Bearer ${process.env.REACT_APP_OPEN_AI_API_KEY}`,
           },
         }
       );
-
-      db.collection(`message`)
+      console.log("b");
+      db.collection("message")
         ?.doc(`user${userId.current[0]}`)
         .update({
           data: firebase.firestore.FieldValue.arrayUnion({
@@ -88,9 +89,10 @@ const Chatroom = () => {
         .collection(`message`)
         ?.doc(`user${userId.current[0]}`)
         .update({
-          data: firebase.firestore.FieldValue.arrayUnion({
+          id: userId?.current[0],
+          data: firebase?.firestore?.FieldValue?.arrayUnion({
             text: inputValue,
-            created_time: firebase.firestore.Timestamp.now(),
+            created_time: firebase?.firestore?.Timestamp.now(),
             isUser: true,
           }),
         })
@@ -104,9 +106,10 @@ const Chatroom = () => {
         .collection(`message`)
         ?.doc(`user${userId.current[0]}`)
         .set({
-          data: firebase.firestore.FieldValue.arrayUnion({
+          id: userId?.current[0],
+          data: firebase?.firestore?.FieldValue?.arrayUnion({
             text: inputValue,
-            created_time: firebase.firestore.Timestamp.now(),
+            created_time: firebase?.firestore?.Timestamp?.now(),
             isUser: true,
           }),
         })
@@ -132,7 +135,7 @@ const Chatroom = () => {
     async function getUserId() {
       const queryUserSnapshot: any = await db
         .collection("users")
-        .where("mail", "==", user.email)
+        .where("mail", "==", user?.email)
         .get();
 
       userId.current = queryUserSnapshot?.docs?.map((docSnapShot: any) => {
@@ -144,9 +147,13 @@ const Chatroom = () => {
     function getMessageData() {
       db?.collection("message").onSnapshot((docSnapshot) => {
         const data = docSnapshot?.docs?.map((doc) => {
-          return doc?.data();
+          if (userId?.current)
+            if (doc?.data()?.id === userId?.current[0]) return doc?.data();
         });
-        if (data[0]) setMessageData(data[0]?.data as []);
+
+        const resultData = data.filter((item) => item !== undefined);
+
+        if (resultData) setMessageData(resultData[0]?.data as []);
         // setArticleData(data);
       });
       // const data = queryMassageSnapshot?.docs?.map((item: any): void => {
