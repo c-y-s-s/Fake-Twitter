@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
+import Chatroom from "../../components/Chatroom/Chatroom";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -123,6 +124,9 @@ const Profile = () => {
       {isOpenModal && <UserEditDataModal setIsOpenModal={setIsOpenModal} />}
       <UserPublishedModal />
       <RightSideBar />
+      <div className="home-chart-room">
+        <Chatroom />
+      </div>
     </Styles.Profile>
   );
 };

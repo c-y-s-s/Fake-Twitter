@@ -16,6 +16,13 @@ font-family: 'Open Sans', sans-serif;
 .font-bold{
     font-weight: 900;
 }
+
+  .home-chart-room {
+    @media (max-width: 1300px) {
+      display: none;
+    }
+  }
+  
 `;
 
 export const GlobalClientImg = styled.img<StyledClientImg>`

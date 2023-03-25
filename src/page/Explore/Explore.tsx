@@ -2,6 +2,7 @@ import * as Styles from "./styles";
 import Search from "../../components/RightSideBar/Search";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
+import Chatroom from "../../components/Chatroom/Chatroom";
 
 const Explore = () => {
   return (
@@ -34,6 +35,9 @@ const Explore = () => {
         </div>
       </Styles.Explore>
       <RightSideBar />
+      <div className="home-chart-room">
+        <Chatroom />
+      </div>
     </div>
   );
 };
