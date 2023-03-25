@@ -122,13 +122,11 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
       case "profile":
         let query: any;
         if (tabListSwitch === "Article") {
-          console.log("a");
           query = firebase
             ?.firestore()
             ?.collection("posts_article")
             ?.where("author.uid", "==", firebase?.auth()?.currentUser?.uid);
         } else {
-          console.log("b");
           query = firebase
             ?.firestore()
             ?.collection("posts_article")
@@ -186,6 +184,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
 
           // 計算發布時間距離現在時間多久
           let resultTime: string = "";
+          // 現在時間距離發布時間過去幾秒
           let resultSecond: number =
             (new Date().getTime() - item?.createdAt?.seconds * 1000) / 1000;
 
@@ -193,10 +192,10 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
             resultTime = resultSecond.toFixed(0) + "秒前發佈";
           } else if (resultSecond / 60 < 60) {
             resultTime = (resultSecond / 60).toFixed(0) + "分鐘前發佈";
-          } else if (resultSecond / 60 > 60 && resultSecond / 60 < 1800) {
+          } else if (resultSecond / 60 > 60 && resultSecond < 86400) {
             resultTime = (resultSecond / 60 / 60).toFixed(0) + "小時前發佈";
-          } else if (resultSecond / 60 > 1800) {
-            resultTime = resultSecond / 60 / 24 + "小時前發佈";
+          } else if (resultSecond > 86400) {
+            resultTime = (resultSecond / 86400).toFixed(0) + "天前發佈";
           }
 
           return (

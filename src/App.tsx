@@ -8,11 +8,10 @@ import RegisterModal from "./components/RegisterModal/RegisterModal";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setUserLogin } from "./reducers/controller";
-import { RootState } from "./reducers";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FC, useEffect } from "react";
 import Profile from "./page/Profile/Profile";
 import { setUserData } from "./reducers/user";
+import Chatroom from "./components/Chatroom/Chatroom";
 
 interface appProps {
   user: any;
@@ -41,30 +40,37 @@ const App: FC<appProps> = (props) => {
   }, [dispatch, user]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home name="Home" />} />
-      <Route
-        path="/login"
-        element={
-          user?.user !== null ? <Navigate to="/" replace /> : <SignInModal />
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          user?.user !== null ? <Navigate to="/" replace /> : <RegisterModal />
-        }
-      />
-      <Route path="/explore" element={<Explore />} />
-      <Route
-        path="/profile"
-        element={
-          user?.user === null ? <Navigate to="/login" replace /> : <Profile />
-        }
-      />
-      <Route path="/user/:userId" element={<User />} />
-      <Route path="*" element={<div>error</div>} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Home name="Home" />} />
+        <Route
+          path="/login"
+          element={
+            user?.user !== null ? <Navigate to="/" replace /> : <SignInModal />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            user?.user !== null ? (
+              <Navigate to="/" replace />
+            ) : (
+              <RegisterModal />
+            )
+          }
+        />
+        <Route path="/explore" element={<Explore />} />
+        <Route
+          path="/profile"
+          element={
+            user?.user === null ? <Navigate to="/login" replace /> : <Profile />
+          }
+        />
+        <Route path="/user/:userId" element={<User />} />
+        <Route path="/chartroom" element={<Chatroom />} />
+        <Route path="*" element={<div>error</div>} />
+      </Routes>
+    </>
   );
 };
 

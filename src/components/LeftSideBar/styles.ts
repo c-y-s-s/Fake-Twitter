@@ -87,6 +87,11 @@ export const LeftSideBar = styled.div`
           }
         }
       }
+      .link-item.messages-none {
+        @media (min-width: 1300px) {
+          display: none;
+        }
+      }
       .search {
         @media (min-width: 1300px) {
           display: none;

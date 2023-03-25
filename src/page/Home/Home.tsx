@@ -18,6 +18,7 @@ import RegisterModal from "../../components/RegisterModal/RegisterModal";
 import "firebase/compat/storage";
 import Explore from "../Explore/Explore";
 import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
+import Chatroom from "../../components/Chatroom/Chatroom";
 
 interface HomeProps {
   name: string;
@@ -173,6 +174,9 @@ const Home: FC<HomeProps> = ({ name }) => {
 
       {loginModalOpen && <SignInModal />}
       {registerModalOpen && <RegisterModal />}
+      <div className="home-chart-room">
+        <Chatroom />
+      </div>
     </Styles.Home>
   );
 };

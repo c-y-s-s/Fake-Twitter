@@ -48,12 +48,12 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
           //   link: "notifications",
           //   className: "notifications",
           // },
-          // {
-          //   text: "Messages",
-          //   svg: <MessagesSVG />,
-          //   link: "messages",
-          //   className: "messages",
-          // },
+          {
+            text: "Messages",
+            svg: <MessagesSVG />,
+            link: "/chartroom",
+            className: "messages",
+          },
           // {
           //   text: "Bookmarks",
           //   svg: <BookMarksSVG />,
@@ -87,13 +87,13 @@ export const LinkBar: FC<LinkBarBarProps> = ({ name }) => {
       {LinkData.map((item, index) => {
         return (
           <div
-            className={`link-item ${item.className} ${
+            className={`link-item  ${item.className}  ${
               name === item.text ? "font-bold" : ""
-            }`}
+            }   ${item.className === "messages" && "messages-none"}`}
             key={index}
           >
             <div
-            className="icon"
+              className="icon"
               onClick={() => {
                 navigator(item.link);
               }}
