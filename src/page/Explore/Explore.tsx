@@ -3,8 +3,13 @@ import Search from "../../components/RightSideBar/Search";
 import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
 import RightSideBar from "../../components/RightSideBar/RightSideBar";
 import Chatroom from "../../components/Chatroom/Chatroom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducers";
 
 const Explore = () => {
+  const userLogin = useSelector(
+    (state: RootState) => state.controllerSliceReducer.userLogin
+  );
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <LeftSideBar name={"Explore"} />
@@ -35,9 +40,11 @@ const Explore = () => {
         </div>
       </Styles.Explore>
       <RightSideBar />
-      <div className="home-chart-room">
-        <Chatroom />
-      </div>
+      {userLogin && (
+        <div className="home-chart-room">
+          <Chatroom />
+        </div>
+      )}
     </div>
   );
 };
