@@ -54,7 +54,9 @@ const UsePostArticle = () => {
             author: {
               userName:
                 firebase?.auth()?.currentUser?.displayName || userData[0].name,
-              photoURL: firebase?.auth()?.currentUser?.photoURL || "",
+              photoURL:
+                firebase?.auth()?.currentUser?.photoURL ||
+                "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/5wtqshRu_400x400.jpg?alt=media&token=585c49af-3ac3-48e1-ad25-c70570926760",
               uid: firebase?.auth()?.currentUser?.uid || "",
               email: firebase?.auth()?.currentUser?.email || "",
               membershipNumber: userData[0].membershipNumber,

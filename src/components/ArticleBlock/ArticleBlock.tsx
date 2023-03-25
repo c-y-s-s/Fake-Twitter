@@ -18,6 +18,7 @@ import { RootState } from "../../reducers";
 
 interface ArticleBlockProps {
   useBlocks: string;
+  setArticlesTotalNumber?: React.Dispatch<React.SetStateAction<string>>;
 }
 interface articleDataProps {
   id: string;
@@ -38,7 +39,10 @@ interface articleDataProps {
   };
 }
 
-const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
+const ArticleBlock: FC<ArticleBlockProps> = ({
+  useBlocks,
+  setArticlesTotalNumber,
+}) => {
   const tabListSwitch = useSelector(
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
@@ -51,6 +55,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
   const [articleData, setArticleData] = useState<articleDataProps[]>([]);
   const [dataPageNumber, setDataPageNumber] = useState<number>(4);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [currentUserName, setCurrentUserName] = useState<any>({});
   const uid = firebase?.auth()?.currentUser?.uid;
 
   const fetchMoreData = () => {
@@ -64,13 +69,41 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
   };
 
   useEffect(() => {
-    setSortIdOtherUserData(articleData.slice(0, dataPageNumber));
-  }, [dataPageNumber, articleData]);
+    const resultData = articleData.map((item: articleDataProps) => {
+      if (item?.author?.email === currentUserName?.mail) {
+        return {
+          ...item,
+          resultName: currentUserName.name,
+        };
+      }
+    });
+    setSortIdOtherUserData(resultData.slice(0, dataPageNumber));
+  }, [
+    dataPageNumber,
+    articleData,
+    currentUserName?.mail,
+    currentUserName.name,
+  ]);
 
   // 拿 database data
   // 判斷哪邊使用到這個元件去各別拿取要的資料
   useEffect(() => {
     if (firebase?.auth()?.currentUser?.uid === null) return;
+
+    // userData
+    firebase
+      .firestore()
+      .collection("users")
+      .get()
+      .then((res) => {
+        res.docs.map((item) => {
+          setCurrentUserName({
+            mail: item?.data().mail,
+            name: item?.data().name,
+          });
+        });
+      });
+
     switch (useBlocks) {
       case "home":
         firebase
@@ -109,6 +142,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
             return { id, ...doc?.data() };
           });
 
+          if (setArticlesTotalNumber) setArticlesTotalNumber(data.length);
           setArticleData(data as []);
         });
 
@@ -116,7 +150,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
       default:
         break;
     }
-  }, [tabListSwitch, useBlocks]);
+  }, [setArticlesTotalNumber, tabListSwitch, useBlocks]);
 
   return (
     <Styles.OtherUser>
@@ -147,64 +181,80 @@ const ArticleBlock: FC<ArticleBlockProps> = ({ useBlocks }) => {
           if (uid) {
             isItemLikeL = item?.likeBy?.includes(uid);
           }
-          return (
-            <div className="other-user-content" key={item.id}>
-              <GlobalClientImg
-                src={userData.photoURL}
-                alt=""
-                className="client-data-img"
-                Location={"otherUser"}
-              />
-              <div className="other-data-container">
-                <div className="other-user-block">
-                  <div className="other-user-name">
-                    {item?.author?.userName}
-                  </div>
-                  <div className="other-user-account">
-                    @{item?.author?.membershipNumber}
-                  </div>
-                  ·<div className="other-user-date">31m</div>
-                </div>
 
-                <div className="other-user-text">{item.text}</div>
-                {item.imageUrl ? (
-                  <div className="other-user-image">
-                    <img src={item.imageUrl} alt=""></img>
+          // 計算發布時間距離現在時間多久
+          let resultTime: string = "";
+          // 現在時間距離發布時間過去幾秒
+          let resultSecond: number =
+            (new Date().getTime() - item?.createdAt?.seconds * 1000) / 1000;
+
+          if (resultSecond < 60) {
+            resultTime = resultSecond.toFixed(0) + "秒前發佈";
+          } else if (resultSecond / 60 < 60) {
+            resultTime = (resultSecond / 60).toFixed(0) + "分鐘前發佈";
+          } else if (resultSecond / 60 > 60 && resultSecond < 86400) {
+            resultTime = (resultSecond / 60 / 60).toFixed(0) + "小時前發佈";
+          } else if (resultSecond > 86400) {
+            resultTime = (resultSecond / 86400).toFixed(0) + "天前發佈";
+          }
+
+          return (
+            item?.id && (
+              <div className="other-user-content" key={item?.id}>
+                <GlobalClientImg
+                  src={userData.photoURL}
+                  alt=""
+                  className="client-data-img"
+                  Location={"otherUser"}
+                />
+                <div className="other-data-container">
+                  <div className="other-user-block">
+                    <div className="other-user-name">{item?.resultName}</div>
+                    <div className="other-user-account">
+                      @{item?.author?.membershipNumber}
+                    </div>
+                    ·<div className="other-user-date">{resultTime}</div>
                   </div>
-                ) : (
-                  <></>
-                )}
-                <div className="other-user-icon">
-                  <div className="other-user-icon-item">
-                    <Message />
-                    12
-                  </div>
-                  <div
-                    className="other-user-icon-item transfer"
-                    onClick={() => {
-                      UseToggleCollected(item.id);
-                    }}
-                  >
-                    <Transfer />
-                    {item?.transferBy?.length ? item.transferBy?.length : 0}
-                  </div>
-                  <div className="other-user-icon-item">
-                    <View /> 12
-                  </div>
-                  <div
-                    className={`other-user-icon-item like ${
-                      isItemLikeL ? "active" : ""
-                    }`}
-                    onClick={() => {
-                      UseToggleLike(item.id);
-                    }}
-                  >
-                    {isItemLikeL ? <LikeActive /> : <Like />}
-                    {item?.likeBy?.length ? item.likeBy?.length : 0}
+                  <div className="other-user-text">{item?.text}</div>
+                  {item?.imageUrl ? (
+                    <div className="other-user-image">
+                      <img src={item?.imageUrl} alt=""></img>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <div className="other-user-icon">
+                    <div className="other-user-icon-item">
+                      <Message />
+                      12
+                    </div>
+                    <div
+                      className="other-user-icon-item transfer"
+                      onClick={() => {
+                        UseToggleCollected(item?.id);
+                      }}
+                    >
+                      <Transfer />
+                      {item?.transferBy?.length ? item.transferBy?.length : 0}
+                    </div>
+                    <div className="other-user-icon-item">
+                      <View /> 12
+                    </div>
+                    <div
+                      className={`other-user-icon-item like ${
+                        isItemLikeL ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        UseToggleLike(item?.id);
+                      }}
+                    >
+                      {isItemLikeL ? <LikeActive /> : <Like />}
+                      {item?.likeBy?.length ? item.likeBy?.length : 0}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           );
         })}
       </InfiniteScroll>

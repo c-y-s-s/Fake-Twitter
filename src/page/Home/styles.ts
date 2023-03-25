@@ -142,4 +142,9 @@ export const Home = styled.div<HomeProps>`
       }
     }
   }
+  .home-chart-room {
+    @media (max-width: 1300px) {
+      display: none;
+    }
+  }
 `;

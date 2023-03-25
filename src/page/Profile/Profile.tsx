@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 import ArticleBlock from "../../components/ArticleBlock/ArticleBlock";
 import UserPublishedModal from "../../components/UserPublishedModal/UserPublishedModal";
+import Chatroom from "../../components/Chatroom/Chatroom";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -22,15 +23,18 @@ const Profile = () => {
     (state: RootState) => state.userSliceReducer.userData
   );
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [articlesTotalNumber, setArticlesTotalNumber] = useState<string>("0");
+  const [userMembershipNumber, setUserMemberShipNumber] = useState("");
+  const [userName, setUserName] = useState<string>("");
   const tabListData = [
     { text: "Article", active: tabListSwitch === "Article" ? true : false },
     { text: "Likes", active: tabListSwitch === "Likes" ? true : false },
   ];
 
   const user: any = firebase?.auth()?.currentUser || {};
+  const accountCreatedData = user?.metadata?.creationTime.split(" ");
 
   const body: HTMLBodyElement | null = document.querySelector("body");
-
   useEffect(() => {
     if (body && isOpenModal) {
       body.style.overflow = "hidden";
@@ -39,12 +43,26 @@ const Profile = () => {
     }
   }, [body, isOpenModal]);
 
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("users")
+      .where("mail", "==", user?.email)
+      .get()
+      .then((collectionSnapshot) => {
+        collectionSnapshot.docs.map((item) => {
+          setUserMemberShipNumber(item.data().membershipNumber);
+          setUserName(item.data().name);
+        });
+      });
+  }, [user?.email]);
+
   return (
     <Styles.Profile>
       <LeftSideBar name={"Profile"} />
       <div className="profile-content">
-        <div className="font-bold title-name">{userData?.displayName}</div>
-        <div className="post-number">2 Article</div>
+        <div className="font-bold title-name">{userName}</div>
+        <div className="post-number">{articlesTotalNumber} Article</div>
         <div>
           <div className="user-background-img"></div>
           <div className="user-photo-data-edit">
@@ -59,11 +77,16 @@ const Profile = () => {
             </div>
           </div>
           <div className="data-container">
-            <div className="center-name font-bold">{user?.displayName}</div>
-            <div className="serial-number">@12345689</div>
-            <div className="register-date">Joined February 2015</div>
+            <div className="center-name font-bold">{userName}</div>
+            <div className="serial-number">@{userMembershipNumber}</div>
+            <div className="register-date">
+              Joined
+              <span> {accountCreatedData[1]}</span>
+              <span> {accountCreatedData[2]}</span>
+              <span> {accountCreatedData[3]}</span>
+            </div>
             <div className="fans-container">
-              <span>62</span>Following <span>3</span>Followers
+              <span>0</span>Following <span>0</span>Followers
             </div>
           </div>
         </div>
@@ -75,9 +98,7 @@ const Profile = () => {
                   className="tab-list-item"
                   key={index}
                   onClick={() => {
-                    tabListSwitch === "Article"
-                      ? dispatch(setProFileTabSwitch("Likes"))
-                      : dispatch(setProFileTabSwitch("Article"));
+                    dispatch(setProFileTabSwitch(item.text));
                   }}
                 >
                   <div
@@ -95,11 +116,17 @@ const Profile = () => {
             })}
           </div>
         </div>
-        <ArticleBlock useBlocks={"profile"} />
+        <ArticleBlock
+          useBlocks={"profile"}
+          setArticlesTotalNumber={setArticlesTotalNumber}
+        />
       </div>
       {isOpenModal && <UserEditDataModal setIsOpenModal={setIsOpenModal} />}
       <UserPublishedModal />
       <RightSideBar />
+      <div className="home-chart-room">
+        <Chatroom />
+      </div>
     </Styles.Profile>
   );
 };

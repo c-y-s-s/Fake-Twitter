@@ -15,7 +15,8 @@ const initialState: userData = {
   userData: {
     displayName: "",
     email: "",
-    photoURL: "",
+    photoURL:
+      "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/5wtqshRu_400x400.jpg?alt=media&token=585c49af-3ac3-48e1-ad25-c70570926760",
     uid: "",
     creationTime: "",
   },
@@ -26,7 +27,15 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserData: (state, action) => {
-      state.userData = action.payload;
+      if (action.payload.photoURL === null) {
+        state.userData = {
+          ...action.payload,
+          photoURL:
+            "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/5wtqshRu_400x400.jpg?alt=media&token=585c49af-3ac3-48e1-ad25-c70570926760",
+        };
+      } else {
+        state.userData = action.payload;
+      }
     },
   },
 });

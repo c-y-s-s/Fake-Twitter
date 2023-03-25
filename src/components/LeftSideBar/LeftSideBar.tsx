@@ -15,7 +15,7 @@ interface LeftSideBarProps {
 const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const dispatch = useDispatch();
   const user: any = firebase?.auth()?.currentUser || {};
-
+  const locationPathname = window.location.pathname;
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
   );
@@ -38,7 +38,7 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
         <div className="link-container">
           <LinkBar name={name} />
         </div>
-        {userLogin && (
+        {userLogin && locationPathname !== "/chartroom" && (
           <div
             className="send"
             onClick={() => {
@@ -52,7 +52,7 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
           </div>
         )}
       </div>
-      {userLogin && (
+      {userLogin && locationPathname !== "/chartroom" && (
         <div
           className="client-data"
           onClick={() => {

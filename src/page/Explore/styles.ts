@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { GlobalClientImg } from "../../styles/GlobalStyle";
 
 const Explore = styled.div`
   box-sizing: border-box;
-  width: 552px;
+  width: 586px;
   padding: 0 16px;
 
   @media (max-width: 722px) {
