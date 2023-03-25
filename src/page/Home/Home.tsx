@@ -174,9 +174,11 @@ const Home: FC<HomeProps> = ({ name }) => {
 
       {loginModalOpen && <SignInModal />}
       {registerModalOpen && <RegisterModal />}
-      <div className="home-chart-room">
-        <Chatroom />
-      </div>
+      {userLogin && (
+        <div className="home-chart-room">
+          <Chatroom />
+        </div>
+      )}
     </Styles.Home>
   );
 };
