@@ -47,10 +47,6 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
 
-  const userData = useSelector(
-    (state: RootState) => state.userSliceReducer.userData
-  );
-
   const [sortIdOtherUserData, setSortIdOtherUserData] = useState<any[]>([]);
   const [articleData, setArticleData] = useState<articleDataProps[]>([]);
   const [dataPageNumber, setDataPageNumber] = useState<number>(4);
@@ -70,14 +66,12 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
 
   useEffect(() => {
     const resultData = articleData.map((item: articleDataProps) => {
-      if (item?.author?.email === currentUserName?.mail) {
-        return {
-          ...item,
-          resultName: currentUserName.name,
-        };
-      }
+      return {
+        ...item,
+        resultName: currentUserName.name,
+      };
     });
-    setSortIdOtherUserData(resultData.slice(0, dataPageNumber));
+    setSortIdOtherUserData(articleData.slice(0, dataPageNumber));
   }, [
     dataPageNumber,
     articleData,
@@ -202,14 +196,16 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
             item?.id && (
               <div className="other-user-content" key={item?.id}>
                 <GlobalClientImg
-                  src={userData.photoURL}
+                  src={item.author.photoURL}
                   alt=""
                   className="client-data-img"
                   Location={"otherUser"}
                 />
                 <div className="other-data-container">
                   <div className="other-user-block">
-                    <div className="other-user-name">{item?.resultName}</div>
+                    <div className="other-user-name">
+                      {item?.author.userName}
+                    </div>
                     <div className="other-user-account">
                       @{item?.author?.membershipNumber}
                     </div>
