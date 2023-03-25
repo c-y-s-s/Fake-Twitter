@@ -67,7 +67,10 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
             </div>
           )}
           <GlobalClientImg
-            src={user?.photoURL}
+            src={
+              user?.photoURL ||
+              "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/5wtqshRu_400x400.jpg?alt=media&token=585c49af-3ac3-48e1-ad25-c70570926760"
+            }
             alt=""
             Location="leftSideBar"
           ></GlobalClientImg>
