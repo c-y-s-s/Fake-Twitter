@@ -6,7 +6,6 @@ import "firebase/compat/firestore";
 import firebase from "../../utils/firebase";
 import LeftSideBar from "../LeftSideBar/LeftSideBar";
 import RightSideBar from "../RightSideBar/RightSideBar";
-import { useParams } from "react-router-dom";
 
 const Chatroom = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -65,7 +64,7 @@ const Chatroom = () => {
           },
         }
       );
-      console.log("b");
+
       db.collection("message")
         ?.doc(`user${userId.current[0]}`)
         .update({
@@ -141,25 +140,20 @@ const Chatroom = () => {
       userId.current = queryUserSnapshot?.docs?.map((docSnapShot: any) => {
         return docSnapShot.data().id;
       });
-    }
-    getUserId();
 
-    function getMessageData() {
       db?.collection("message").onSnapshot((docSnapshot) => {
         const data = docSnapshot?.docs?.map((doc) => {
-          if (userId?.current)
+          if (userId?.current) {
             if (doc?.data()?.id === userId?.current[0]) return doc?.data();
+          }
         });
 
         const resultData = data.filter((item) => item !== undefined);
 
-        if (resultData) setMessageData(resultData[0]?.data as []);
-        // setArticleData(data);
+        if (resultData) setMessageData(resultData[0]?.data);
       });
-      // const data = queryMassageSnapshot?.docs?.map((item: any): void => {
-      //   return item.data().data;
     }
-    getMessageData();
+    getUserId();
   }, [db, user.email]);
 
   useEffect(() => {
@@ -175,6 +169,7 @@ const Chatroom = () => {
       setIsOpen(false);
     };
   }, [locationPathname]);
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       {locationPathname === "/chartroom" && <LeftSideBar name="chatroom" />}
