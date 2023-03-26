@@ -1,4 +1,11 @@
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as Styles from "../styles";
 import { ReactComponent as CrossSVG } from "../../../img/cross.svg";
 import TextField from "@mui/material/TextField";
@@ -19,6 +26,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const user: any = firebase?.auth()?.currentUser || {};
   const auth: any = getAuth();
+  const db = firebase.firestore();
 
   // 取得圖片路徑
   const previewImageUrl = file ? URL.createObjectURL(file) : user?.photoURL;
@@ -26,7 +34,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
   const handleEditUserData = (): void => {
     if (!auth) return;
     setLoading(true);
-    const db = firebase.firestore();
+
     // 圖片
     if (file) {
       // 上傳會員圖片邏輯
@@ -40,9 +48,29 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
           user?.updateProfile({
             photoURL: imageUrl,
           });
+
+          db.collection("users")
+            .where("mail", "==", user?.email)
+            .get()
+            .then((collectionSnapshot) => {
+              collectionSnapshot.docs.map((item) => {
+                let userId = item.data().id;
+
+                db.collection("users")
+                  .doc(`user${userId}`)
+                  .update({
+                    photoURL: imageUrl,
+                  })
+                  .then(() => {
+                    setLoading(false);
+                    window.location.reload();
+                  });
+              });
+            });
+
           setIsOpenModal(false);
           setLoading(false);
-          window.location.reload();
+          // window.location.reload();
         });
       });
     }
