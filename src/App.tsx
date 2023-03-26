@@ -1,16 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserLogin } from "./reducers/controller";
+import { setUserData } from "./reducers/user";
+import { FC, useEffect } from "react";
 
+import Profile from "./page/Profile/Profile";
 import Home from "./page/Home/Home";
 import Explore from "./page/Explore/Explore";
 import User from "./page/User/User";
 import SignInModal from "./components/SignInModal/SignInModal";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setUserLogin } from "./reducers/controller";
-import { FC, useEffect } from "react";
-import Profile from "./page/Profile/Profile";
-import { setUserData } from "./reducers/user";
 import Chatroom from "./components/Chatroom/Chatroom";
 
 interface appProps {
@@ -59,7 +58,12 @@ const App: FC<appProps> = (props) => {
             )
           }
         />
-        <Route path="/explore" element={<Explore />} />
+        <Route
+          path="/explore"
+          element={
+            user?.user === null ? <Navigate to="/" replace /> : <Explore />
+          }
+        />
         <Route
           path="/profile"
           element={
@@ -67,7 +71,12 @@ const App: FC<appProps> = (props) => {
           }
         />
         <Route path="/user/:userId" element={<User />} />
-        <Route path="/chartroom" element={<Chatroom />} />
+        <Route
+          path="/chartroom"
+          element={
+            user?.user === null ? <Navigate to="/" replace /> : <Chatroom />
+          }
+        />
         <Route path="*" element={<div>error</div>} />
       </Routes>
     </>
