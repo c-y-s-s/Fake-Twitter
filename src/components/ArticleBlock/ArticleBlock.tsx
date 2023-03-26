@@ -51,7 +51,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
   const [articleData, setArticleData] = useState<articleDataProps[]>([]);
   const [dataPageNumber, setDataPageNumber] = useState<number>(4);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [currentUserName, setCurrentUserName] = useState<any>({});
+  const [currentUserName, setCurrentUserName] = useState<any>([{}]);
   const uid = firebase?.auth()?.currentUser?.uid;
 
   const fetchMoreData = () => {
@@ -64,19 +64,47 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     }
   };
 
+  const getCreatedTime = (createdSecond: any): string => {
+    // 計算發布時間距離現在時間多久
+    let resultTime: string = "";
+    // 現在時間距離發布時間過去幾秒
+    let resultSecond: number =
+      (new Date().getTime() - createdSecond * 1000) / 1000;
+
+    if (resultSecond < 60) {
+      resultTime = resultSecond.toFixed(0) + "秒前發佈";
+    } else if (resultSecond / 60 < 60) {
+      resultTime = (resultSecond / 60).toFixed(0) + "分鐘前發佈";
+    } else if (resultSecond / 60 > 60 && resultSecond < 86400) {
+      resultTime = (resultSecond / 60 / 60).toFixed(0) + "小時前發佈";
+    } else if (resultSecond > 86400) {
+      resultTime = (resultSecond / 86400).toFixed(0) + "天前發佈";
+    }
+    return resultTime;
+  };
+
   useEffect(() => {
     const resultData = articleData.map((item: articleDataProps) => {
+      // 透過文章 email 去取到更改過後的名字
+
+      const currentUserNameResult = currentUserName?.map((userItem: any) => {
+        if (userItem.mail === item.author.email) {
+          return userItem.name;
+        }
+      });
       return {
         ...item,
-        resultName: currentUserName.name,
+        resultName: currentUserNameResult,
       };
     });
-    setSortIdOtherUserData(articleData.slice(0, dataPageNumber));
+
+    setSortIdOtherUserData(resultData.slice(0, dataPageNumber));
   }, [
     dataPageNumber,
     articleData,
     currentUserName?.mail,
-    currentUserName.name,
+    currentUserName?.name,
+    currentUserName,
   ]);
 
   // 拿 database data
@@ -90,12 +118,13 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
       .collection("users")
       .get()
       .then((res) => {
-        res.docs.map((item) => {
-          setCurrentUserName({
+        const userData = res.docs.map((item) => {
+          return {
             mail: item?.data().mail,
             name: item?.data().name,
-          });
+          };
         });
+        setCurrentUserName(userData);
       });
 
     switch (useBlocks) {
@@ -171,25 +200,9 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
         style={{ overflow: "hidden" }}
       >
         {sortIdOtherUserData?.map((item) => {
-          let isItemLikeL: boolean | undefined;
+          let isItemLike: boolean | undefined;
           if (uid) {
-            isItemLikeL = item?.likeBy?.includes(uid);
-          }
-
-          // 計算發布時間距離現在時間多久
-          let resultTime: string = "";
-          // 現在時間距離發布時間過去幾秒
-          let resultSecond: number =
-            (new Date().getTime() - item?.createdAt?.seconds * 1000) / 1000;
-
-          if (resultSecond < 60) {
-            resultTime = resultSecond.toFixed(0) + "秒前發佈";
-          } else if (resultSecond / 60 < 60) {
-            resultTime = (resultSecond / 60).toFixed(0) + "分鐘前發佈";
-          } else if (resultSecond / 60 > 60 && resultSecond < 86400) {
-            resultTime = (resultSecond / 60 / 60).toFixed(0) + "小時前發佈";
-          } else if (resultSecond > 86400) {
-            resultTime = (resultSecond / 86400).toFixed(0) + "天前發佈";
+            isItemLike = item?.likeBy?.includes(uid);
           }
 
           return (
@@ -204,12 +217,17 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
                 <div className="other-data-container">
                   <div className="other-user-block">
                     <div className="other-user-name">
-                      {item?.author.userName}
+                      {item?.resultName
+                        ? item?.resultName
+                        : item?.author.userName}
                     </div>
                     <div className="other-user-account">
                       @{item?.author?.membershipNumber}
                     </div>
-                    ·<div className="other-user-date">{resultTime}</div>
+                    ·
+                    <div className="other-user-date">
+                      {getCreatedTime(item?.createdAt?.seconds)}
+                    </div>
                   </div>
                   <div className="other-user-text">{item?.text}</div>
                   {item?.imageUrl ? (
@@ -238,13 +256,13 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
                     </div>
                     <div
                       className={`other-user-icon-item like ${
-                        isItemLikeL ? "active" : ""
+                        isItemLike ? "active" : ""
                       }`}
                       onClick={() => {
                         UseToggleLike(item?.id);
                       }}
                     >
-                      {isItemLikeL ? <LikeActive /> : <Like />}
+                      {isItemLike ? <LikeActive /> : <Like />}
                       {item?.likeBy?.length ? item.likeBy?.length : 0}
                     </div>
                   </div>

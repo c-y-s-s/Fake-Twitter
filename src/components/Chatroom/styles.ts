@@ -28,18 +28,18 @@ const ChartRoom = styled.div<ChartRoomProps>`
     width: 586px;
   }
   .content {
-    min-height: 400px;
     box-sizing: border-box;
     padding: 30px 0 0 0;
+    min-height: 400px;
     max-height: 400px;
     overflow: auto;
 
     @media (max-width: 1300px) {
-      min-height: 100vh;
+      min-height: calc(100vh - 100px);
     }
 
     @media (max-width: 722px) {
-      min-height: 84vh;
+      min-height: calc(100vh - 150px);
     }
     ::-webkit-scrollbar {
       width: 3px;
