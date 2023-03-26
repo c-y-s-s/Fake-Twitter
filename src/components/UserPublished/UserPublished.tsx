@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { GlobalClientImg } from "../../styles/GlobalStyle";
 import { RootState } from "../../reducers";
 import { setImgFile, setInputValue } from "../../reducers/postPublished";
 import UsePostArticle from "../../hook/UsePostArticle";
+import ReactLoading from "react-loading";
 
 interface UserPublishedProps {
   setModalLineSwitch?: (value: boolean) => void;
@@ -24,11 +25,12 @@ const UserPublished: FC<UserPublishedProps> = ({ setModalLineSwitch }) => {
   const inputValue = useSelector(
     (state: RootState) => state.postPublishedSliceReducer.inputValue
   );
-  const postArticle = UsePostArticle();
+
+  const { onSubmit, loading } = UsePostArticle();
   const handleTweetClick = () => {
     if (inputValue) {
       setTimeout(() => {
-        postArticle();
+        onSubmit();
         dispatch(userPublishedModalToggle(false));
       }, 650);
       if (setModalLineSwitch) {
@@ -96,7 +98,16 @@ const UserPublished: FC<UserPublishedProps> = ({ setModalLineSwitch }) => {
             }`}
             onClick={handleTweetClick}
           >
-            Send
+            {loading ? (
+              <ReactLoading
+                type={"spin"}
+                color="#fff"
+                height={"15px"}
+                width={"20px"}
+              />
+            ) : (
+              "Send"
+            )}
           </div>
         </div>
       </div>
