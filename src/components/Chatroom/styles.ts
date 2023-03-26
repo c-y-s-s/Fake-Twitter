@@ -18,7 +18,7 @@ const ChartRoom = styled.div<ChartRoomProps>`
   flex-direction: column;
   justify-content: start;
   font-size: ${({ theme }) => theme.fontSize.xl};
-  padding: 12px 12px;
+  padding: 0px 12px;
   border-radius: 16px 16px 0 0;
   transition: 0.5s;
 
@@ -122,8 +122,9 @@ const ChartRoom = styled.div<ChartRoomProps>`
       width: 100%;
       background-color: #ddd;
       border-radius: 10px;
-      height: 50px;
+      height: 35px;
       border: none;
+      padding: 0px 4px;
       &:focus {
         outline: none;
       }

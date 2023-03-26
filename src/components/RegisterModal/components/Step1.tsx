@@ -1,18 +1,15 @@
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-
-import Box from "@mui/material/Box";
+import ReactLoading from "react-loading";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import * as Styles from "../style";
-import firebase from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
 import { useDispatch } from "react-redux";
-import { setRegisterModalOpen } from "../../../reducers/controller";
 import emailjs from "@emailjs/browser";
 import { setMailVerifyText, setRegisterData } from "../../../reducers/register";
 
@@ -30,7 +27,7 @@ const Step1: FC<Step1Props> = ({ setStep }) => {
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
   const [registerValid, setRegisterValid] = useState<boolean>(false);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const yearOption = (): string[] => {
     let yearData = [];
     for (let i = 1923; i <= 2023; i++) {
@@ -125,6 +122,7 @@ const Step1: FC<Step1Props> = ({ setStep }) => {
   };
 
   const handlePostMailVerification = (): void => {
+    setIsLoading(true);
     // 把這邊的資料先存到 redux 其他元件要用
     dispatch(
       setRegisterData({
@@ -164,10 +162,14 @@ const Step1: FC<Step1Props> = ({ setStep }) => {
           },
           process.env.REACT_APP_FIREBASE_PUBLIC_KEY
         )
-        .then((res) => {
+        .then(() => {
           setStep(2);
+          setIsLoading(false);
         })
-        .catch((rej) => {});
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     }
   };
 
@@ -273,7 +275,16 @@ const Step1: FC<Step1Props> = ({ setStep }) => {
         className={registerValid ? "register-button " : "register-button false"}
         onClick={handlePostMailVerification}
       >
-        註冊
+        {isLoading ? (
+          <ReactLoading
+            type={"spokes"}
+            color="#fff"
+            width="25px"
+            height="25px"
+          />
+        ) : (
+          " 註冊"
+        )}
       </div>
     </Styles.Step1>
   );
