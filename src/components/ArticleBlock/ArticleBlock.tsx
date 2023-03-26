@@ -89,12 +89,12 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
 
       const currentUserNameResult = currentUserName?.map((userItem: any) => {
         if (userItem.mail === item.author.email) {
-          return userItem.name;
+          return userItem;
         }
       });
       return {
         ...item,
-        resultName: currentUserNameResult,
+        resultData: currentUserNameResult,
       };
     });
 
@@ -122,8 +122,10 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
           return {
             mail: item?.data().mail,
             name: item?.data().name,
+            photoURL: item?.data().photoURL,
           };
         });
+
         setCurrentUserName(userData);
       });
 
@@ -213,11 +215,21 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
               isItemLike = item?.likeBy?.includes(uid);
             }
 
+            const resultPhotoAndName = item.resultData.filter((item: any) => {
+              if (item?.mall === item?.author?.email) {
+                return item;
+              }
+            });
+
+            console.log(resultPhotoAndName);
             return (
               item?.id && (
                 <div className="other-user-content" key={item?.id}>
                   <GlobalClientImg
-                    src={item.author.photoURL}
+                    src={
+                      resultPhotoAndName[0]?.photoURL ||
+                      "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/5wtqshRu_400x400.jpg?alt=media&token=585c49af-3ac3-48e1-ad25-c70570926760"
+                    }
                     alt=""
                     className="client-data-img"
                     Location={"otherUser"}
@@ -225,9 +237,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
                   <div className="other-data-container">
                     <div className="other-user-block">
                       <div className="other-user-name">
-                        {item?.resultName
-                          ? item?.resultName
-                          : item?.author.userName}
+                        {resultPhotoAndName[0]?.name || item?.author.userName}
                       </div>
                       <div className="other-user-account">
                         @{item?.author?.membershipNumber}
