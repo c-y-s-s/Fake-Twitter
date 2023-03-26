@@ -49,7 +49,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
 
   const [sortIdOtherUserData, setSortIdOtherUserData] = useState<any[]>([]);
   const [articleData, setArticleData] = useState<articleDataProps[]>([]);
-  const [dataPageNumber, setDataPageNumber] = useState<number>(4);
+  const [dataPageNumber, setDataPageNumber] = useState<number>(3);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<any>([{}]);
   const uid = firebase?.auth()?.currentUser?.uid;
@@ -175,6 +175,13 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     }
   }, [setArticlesTotalNumber, tabListSwitch, useBlocks]);
 
+  useEffect(() => {
+    if (sortIdOtherUserData.length) {
+      setHasMore(true);
+    } else {
+      setHasMore(false);
+    }
+  }, [sortIdOtherUserData]);
   return (
     <Styles.OtherUser>
       <InfiniteScroll
@@ -199,78 +206,82 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
         dataLength={sortIdOtherUserData.length}
         style={{ overflow: "hidden" }}
       >
-        {sortIdOtherUserData?.map((item) => {
-          let isItemLike: boolean | undefined;
-          if (uid) {
-            isItemLike = item?.likeBy?.includes(uid);
-          }
+        {sortIdOtherUserData ? (
+          sortIdOtherUserData?.map((item) => {
+            let isItemLike: boolean | undefined;
+            if (uid) {
+              isItemLike = item?.likeBy?.includes(uid);
+            }
 
-          return (
-            item?.id && (
-              <div className="other-user-content" key={item?.id}>
-                <GlobalClientImg
-                  src={item.author.photoURL}
-                  alt=""
-                  className="client-data-img"
-                  Location={"otherUser"}
-                />
-                <div className="other-data-container">
-                  <div className="other-user-block">
-                    <div className="other-user-name">
-                      {item?.resultName
-                        ? item?.resultName
-                        : item?.author.userName}
+            return (
+              item?.id && (
+                <div className="other-user-content" key={item?.id}>
+                  <GlobalClientImg
+                    src={item.author.photoURL}
+                    alt=""
+                    className="client-data-img"
+                    Location={"otherUser"}
+                  />
+                  <div className="other-data-container">
+                    <div className="other-user-block">
+                      <div className="other-user-name">
+                        {item?.resultName
+                          ? item?.resultName
+                          : item?.author.userName}
+                      </div>
+                      <div className="other-user-account">
+                        @{item?.author?.membershipNumber}
+                      </div>
+                      ·
+                      <div className="other-user-date">
+                        {getCreatedTime(item?.createdAt?.seconds)}
+                      </div>
                     </div>
-                    <div className="other-user-account">
-                      @{item?.author?.membershipNumber}
-                    </div>
-                    ·
-                    <div className="other-user-date">
-                      {getCreatedTime(item?.createdAt?.seconds)}
-                    </div>
-                  </div>
-                  <div className="other-user-text">{item?.text}</div>
-                  {item?.imageUrl ? (
-                    <div className="other-user-image">
-                      <img src={item?.imageUrl} alt=""></img>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  <div className="other-user-icon">
-                    <div className="other-user-icon-item">
-                      <Message />
-                      12
-                    </div>
-                    <div
-                      className="other-user-icon-item transfer"
-                      onClick={() => {
-                        UseToggleCollected(item?.id);
-                      }}
-                    >
-                      <Transfer />
-                      {item?.transferBy?.length ? item.transferBy?.length : 0}
-                    </div>
-                    <div className="other-user-icon-item">
-                      <View /> 12
-                    </div>
-                    <div
-                      className={`other-user-icon-item like ${
-                        isItemLike ? "active" : ""
-                      }`}
-                      onClick={() => {
-                        UseToggleLike(item?.id);
-                      }}
-                    >
-                      {isItemLike ? <LikeActive /> : <Like />}
-                      {item?.likeBy?.length ? item.likeBy?.length : 0}
+                    <div className="other-user-text">{item?.text}</div>
+                    {item?.imageUrl ? (
+                      <div className="other-user-image">
+                        <img src={item?.imageUrl} alt=""></img>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    <div className="other-user-icon">
+                      <div className="other-user-icon-item">
+                        <Message />
+                        12
+                      </div>
+                      <div
+                        className="other-user-icon-item transfer"
+                        onClick={() => {
+                          UseToggleCollected(item?.id);
+                        }}
+                      >
+                        <Transfer />
+                        {item?.transferBy?.length ? item.transferBy?.length : 0}
+                      </div>
+                      <div className="other-user-icon-item">
+                        <View /> 12
+                      </div>
+                      <div
+                        className={`other-user-icon-item like ${
+                          isItemLike ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          UseToggleLike(item?.id);
+                        }}
+                      >
+                        {isItemLike ? <LikeActive /> : <Like />}
+                        {item?.likeBy?.length ? item.likeBy?.length : 0}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )
-          );
-        })}
+              )
+            );
+          })
+        ) : (
+          <div>No Data</div>
+        )}
       </InfiniteScroll>
     </Styles.OtherUser>
   );

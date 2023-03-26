@@ -84,7 +84,8 @@ const Home: FC<HomeProps> = ({ name }) => {
       body.style.overflow = "hidden";
       dispatch(setLoginModalOpen(true));
       dispatch(setRegisterModalOpen(false));
-    } else if (type === "register") {
+    } else if (type === "register" && body) {
+      body.style.overflow = "hidden";
       dispatch(setLoginModalOpen(false));
       dispatch(setRegisterModalOpen(true));
     }

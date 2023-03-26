@@ -3,7 +3,7 @@ import "firebase/compat/storage";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import { setImgFile, setInputValue } from "../reducers/postPublished";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const UsePostArticle = () => {
   const dispatch = useDispatch();
@@ -13,8 +13,10 @@ const UsePostArticle = () => {
   const inputValue = useSelector(
     (state: RootState) => state.postPublishedSliceReducer.inputValue
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = () => {
+    setLoading(true);
     // 送發表文章的物件 , 因發文功能有兩個部分,所以邏輯寫在這層
     // 之後可以考慮寫到 reducer 裡面
     //! 先存圖片 取到圖片網址後 , 資料整包寫進 database
@@ -65,11 +67,12 @@ const UsePostArticle = () => {
           .then(() => {
             dispatch(setInputValue(""));
             dispatch(setImgFile(""));
+            setLoading(false);
           });
       });
     });
   };
-  return onSubmit;
+  return { onSubmit, loading };
 };
 
 export default UsePostArticle;
