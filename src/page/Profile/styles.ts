@@ -199,6 +199,10 @@ const UserEditDataModal = styled.div`
         width: 100%;
         margin-top: 18px;
       }
+      .error-msg {
+        color: red;
+        font-size: 12px;
+      }
     }
   }
 `;

@@ -13,7 +13,7 @@ const ChartRoom = styled.div<ChartRoomProps>`
   width: 350px;
   height: ${(props) => (props.isOpen ? "500px" : "53px")};
   right: 50px;
-  z-index: 5;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -27,19 +27,25 @@ const ChartRoom = styled.div<ChartRoomProps>`
     box-shadow: none;
     width: 586px;
   }
+
+  .chatroom-title {
+    padding: 12px 0px;
+    /* box-shadow: 0 15px 15px #ccc; */
+  }
+
   .content {
     box-sizing: border-box;
-    padding: 30px 0 0 0;
+
     min-height: 400px;
     max-height: 400px;
     overflow: auto;
 
     @media (max-width: 1300px) {
-      min-height: calc(100vh - 100px);
+      min-height: calc(100vh - 150px);
     }
 
     @media (max-width: 722px) {
-      min-height: calc(100vh - 150px);
+      min-height: calc(100vh - 180px);
     }
     ::-webkit-scrollbar {
       width: 3px;
@@ -101,6 +107,16 @@ const ChartRoom = styled.div<ChartRoomProps>`
   .input-container {
     display: flex;
     align-items: center;
+
+    @media (max-width: 722px) {
+      box-sizing: border-box;
+      position: fixed;
+      bottom: 60px;
+      right: 0;
+      width: 100%;
+      padding: 0px 10px;
+    }
+
     .message-input {
       font-size: 16px;
       width: 100%;

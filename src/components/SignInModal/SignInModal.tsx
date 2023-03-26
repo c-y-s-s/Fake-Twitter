@@ -11,17 +11,8 @@ import { RootState } from "../../reducers";
 import { setLoginModalOpen } from "../../reducers/controller";
 import { sendPasswordResetEmail } from "firebase/auth";
 
-interface SignInModalPropsType {
-  setLoginModalOpen?: boolean;
-}
 const SignInModal: FC = () => {
-  const userLogin = useSelector(
-    (state: RootState) => state.controllerSliceReducer.userLogin
-  );
-
-  const loginModalOpen = useSelector(
-    (state: RootState) => state.controllerSliceReducer.loginModalOpen
-  );
+ 
   const user: any = firebase?.auth();
 
   // 判斷切換哪個元件

@@ -6,6 +6,7 @@ import { getAuth, updateProfile } from "firebase/auth";
 import firebase from "../../../utils/firebase";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import ReactLoading from "react-loading";
 
 interface UserEditDataModalProps {
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +16,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
   const [nameValue, setNameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [file, setFile] = useState<any>(null);
-
+  const [isLoading, setLoading] = useState<boolean>(false);
   const user: any = firebase?.auth()?.currentUser || {};
   const auth: any = getAuth();
 
@@ -24,6 +25,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
 
   const handleEditUserData = (): void => {
     if (!auth) return;
+    setLoading(true);
     const db = firebase.firestore();
     // 圖片
     if (file) {
@@ -39,6 +41,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
             photoURL: imageUrl,
           });
           setIsOpenModal(false);
+          setLoading(false);
           window.location.reload();
         });
       });
@@ -58,7 +61,10 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
               .update({
                 name: nameValue,
               })
-              .then(() => window.location.reload());
+              .then(() => {
+                setLoading(false);
+                window.location.reload();
+              });
           });
         });
 
@@ -78,6 +84,7 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
     if (passwordValue.length >= 8) {
       user.updatePassword(passwordValue).then(() => {
         setIsOpenModal(false);
+        setLoading(false);
         window.location.reload();
       });
     }
@@ -100,7 +107,16 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
           </div>
 
           <div className="save-button" onClick={handleEditUserData}>
-            Save
+            {isLoading ? (
+              <ReactLoading
+                type={"spin"}
+                color="#fff"
+                height={"15px"}
+                width={"20px"}
+              />
+            ) : (
+              "Save"
+            )}
           </div>
         </div>
 
@@ -143,6 +159,13 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
                 setPasswordValue(e.target.value);
               }}
             />
+
+            {passwordValue.length >= 8 ||
+              (passwordValue.length !== 0 && (
+                <p className="error-msg">
+                  你的密碼必須至少 8 個字元。請輸入較長的密碼。
+                </p>
+              ))}
           </div>
         </div>
       </div>

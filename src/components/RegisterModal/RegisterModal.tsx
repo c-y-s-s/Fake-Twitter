@@ -13,11 +13,10 @@ import Step3 from "./components/Step3";
 const RegisterModal: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userLogin = useSelector(
-    (state: RootState) => state.controllerSliceReducer.userLogin
-  );
-  const [step, setStep] = useState<Number>(0);
 
+  const body: HTMLBodyElement | null = document.querySelector("body");
+
+  const [step, setStep] = useState<Number>(0);
 
   return (
     <Styles.Register>
@@ -28,6 +27,11 @@ const RegisterModal: FC = () => {
             onClick={() => {
               navigate("/");
               dispatch(setRegisterModalOpen(false));
+
+              if (body) {
+                body.style.overflow = "auto";
+                return null;
+              }
             }}
           >
             <CrossSVG />

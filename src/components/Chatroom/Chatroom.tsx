@@ -171,7 +171,13 @@ const Chatroom = () => {
   }, [locationPathname]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        height: window.innerHeight - 60 + "px",
+      }}
+    >
       {locationPathname === "/chartroom" && <LeftSideBar name="chatroom" />}
 
       <Styles.ChartRoom
@@ -184,7 +190,8 @@ const Chatroom = () => {
           }, 100);
         }}
       >
-        Message (Ai對話)
+        <div className="chatroom-title"> Message (Ai對話)</div>
+
         {isOpen && (
           <div
             onClick={(e) => {
