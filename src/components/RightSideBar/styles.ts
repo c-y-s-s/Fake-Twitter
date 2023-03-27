@@ -138,7 +138,7 @@ export const RightSideBar = styled.div`
       .show-more {
         padding: 0 16px;
         margin-top: 24px;
-        color: ${({ theme }) => theme.secondaryColor};
+        color: ${({ theme }) => theme.primaryColor};
         font-size: ${({ theme }) => theme.secondaryFontSize};
       }
     }

@@ -110,10 +110,12 @@ const UserEditDataModal: FC<UserEditDataModalProps> = ({ setIsOpenModal }) => {
 
     // 密碼
     if (passwordValue.length >= 8) {
-      user.updatePassword(passwordValue).then(() => {
+      user?.updatePassword(passwordValue).then(() => {
         setIsOpenModal(false);
         setLoading(false);
         window.location.reload();
+      }).catch((error:any)=>{
+        console.log(error)
       });
     }
   };

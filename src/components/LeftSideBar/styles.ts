@@ -32,22 +32,17 @@ export const LeftSideBar = styled.div`
       flex-direction: row;
       bottom: 0px;
     }
-    .twitter-logo {
-      width: 38px;
-      height: 38px;
+    .logo {
       display: flex;
-      justify-content: center;
+      justify-content: left;
       align-items: center;
       padding: 12px 0 0 0;
-
       @media (max-width: 721px) {
         display: none;
       }
-      svg {
-        path {
-          width: 28px;
-          height: 23px;
-        }
+      img {
+        width: 38px;
+        height: 38px;
       }
     }
 

@@ -176,7 +176,7 @@ const UserEditDataModal = styled.div`
         .picture {
           width: 133px;
           height: 133px;
-          border: 3px solid black;
+          border: ${({ theme }) => `3px solid ${theme.primaryColor}`};
           border-radius: 50%;
           object-fit: cover;
         }

@@ -150,7 +150,7 @@ const Home: FC<HomeProps> = ({ name }) => {
         <div className="login-prompt">
           <div className="login-prompt-text">
             <div className="big-text font-bold">別錯過正在發生的新鮮事</div>
-            <div>Twitter 使用者總是搶先掌握新知。</div>
+            <div>使用者總是搶先掌握新知。</div>
           </div>
           <div className="login-prompt-button">
             <div

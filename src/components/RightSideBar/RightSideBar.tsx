@@ -86,14 +86,14 @@ const RightSideBar: React.FC = () => {
               <br />
               Accessibility Ads info
               <br />
-              More © 2023 Twitter, Inc.
+              More © 2023 leo, Inc.
             </div>
           </div>
         </>
       ) : (
         <div>
           <div className="no-login-style">
-            <div className="title font-bold">你是 Twitter 新手嗎?</div>
+            <div className="title font-bold">你是新手嗎?</div>
             <p className="text">立即註冊，取得你個人專屬的時間軸!</p>
             <div
               className="add-account font-bold"
