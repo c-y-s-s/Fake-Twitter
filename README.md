@@ -1,46 +1,18 @@
-# Getting Started with Create React App
+使用 React + TypeScript + styled-components + Firebase 所開發的社群網站
+依照 Twitter 去製作相關功能
+ 
+此作品功能如下
+1.註冊:多段式驗證串接 emailjs 達成註冊發送驗證信功能 
+2.登入
+3.用戶新增貼文:文字+相片
+4.貼文點讚,收藏
+5.用戶頁面 : 顯示用戶點讚貼圖跟自己所發的貼文
+6.會員可編輯自己的大頭照,名稱,密碼
+7.忘記密碼
+8. RWD : 手機+平板皆可操作
+9.串接 openAI API 製作聊天室功能
+10.styled-components theme 應用 , 可輕易修改網站色調
+11.遵循 Git Flow 原則開發
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+如進網頁測試收不到認證信,需要到垃圾郵件查看
+iphone 手機部分有些操作會導致頁面的跑版但不影響程式運作
