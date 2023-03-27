@@ -9,7 +9,7 @@ const theme = {
     xl: "20px",
   },
   secondaryFontSize: "15px",
-  primaryColor: "#1d9bf0",
+  primaryColor: "#518fb2",
   secondaryColor: "rgb(29, 155, 240)",
   textColor: "#0f1419",
   textSecondaryColor: "#536471",

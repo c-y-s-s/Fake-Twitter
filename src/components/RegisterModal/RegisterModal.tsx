@@ -36,7 +36,7 @@ const RegisterModal: FC = () => {
           >
             <CrossSVG />
           </button>
-          <TwitterSVG />
+
           <div></div>
         </div>
 
