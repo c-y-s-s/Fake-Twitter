@@ -221,7 +221,6 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
               }
             });
 
-            console.log(resultPhotoAndName);
             return (
               item?.id && (
                 <div className="other-user-content" key={item?.id}>

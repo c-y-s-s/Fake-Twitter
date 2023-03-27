@@ -12,7 +12,6 @@ import { setLoginModalOpen } from "../../reducers/controller";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 const SignInModal: FC = () => {
- 
   const user: any = firebase?.auth();
 
   // 判斷切換哪個元件
@@ -64,7 +63,7 @@ const SignInModal: FC = () => {
         return (
           <>
             <div className="center">
-              <h2 className="sign-in-title">登入 Twitter</h2>
+              <h2 className="sign-in-title">登入社群</h2>
               {/* <div>使用 Google 帳戶登入</div> */}
               {/* <div className="second-text">
             <div className="second-text-line"></div>
@@ -130,7 +129,7 @@ const SignInModal: FC = () => {
           <button className="close-button" onClick={handleCloseModal}>
             <CrossSVG />
           </button>
-          <TwitterSVG />
+
           <div></div>
         </div>
         {signInComponentJSX()}

@@ -34,7 +34,14 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
   return (
     <Styles.LeftSideBar>
       <div className="top-container">
-        <div className="twitter-logo">{<TwitterSVG />}</div>
+        <div className="logo">
+          <img
+            src={
+              "https://firebasestorage.googleapis.com/v0/b/leo-project-2feea.appspot.com/o/newLogo.png?alt=media&token=4ad6269d-875b-4f05-b815-5a47591e2c61"
+            }
+            alt=""
+          />
+        </div>
         <div className="link-container">
           <LinkBar name={name} />
         </div>
