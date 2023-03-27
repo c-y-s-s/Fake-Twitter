@@ -14,6 +14,9 @@
 * styled-components theme 應用 , 可輕易修改網站色調
 * 遵循 Git Flow 原則開發
 
-
-* 如進網頁測試收不到認證信,需要到垃圾郵件查看
-* iphone 手機部分有些操作會導致頁面的跑版尚未修正但不影響程式運作
+<br/>
+如進網頁測試收不到認證信,需要到垃圾郵件查看
+<br/>
+iphone 手機部分有些操作會導致頁面的跑版尚未修正但不影響程式運作
+<br/>
+作品連結:https://leo-project-2feea.firebaseapp.com/
