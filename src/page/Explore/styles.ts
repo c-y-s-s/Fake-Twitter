@@ -1,16 +1,17 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 const Explore = styled.div`
   box-sizing: border-box;
   width: 586px;
   padding: 0 16px;
 
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     width: 100%;
     padding-right: 0px;
   }
   .explore-list {
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       width: 100%;
       padding-right: 0px;
     }
@@ -20,7 +21,7 @@ const Explore = styled.div`
       line-height: 20px;
       margin: 18px 0px;
 
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100%;
         padding-right: 0px;
       }
@@ -38,7 +39,7 @@ const Explore = styled.div`
     top: 0;
     z-index: 1;
 
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       width: 96%;
     }
 

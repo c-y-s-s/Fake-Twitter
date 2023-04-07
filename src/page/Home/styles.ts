@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
+import { devices } from "../../styles/device";
 
 interface HomeProps {
   loginModalOpen: boolean;
@@ -15,7 +16,7 @@ export const Home = styled.div<HomeProps>`
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     width: 100%;
   }
   .home-content {
@@ -24,7 +25,7 @@ export const Home = styled.div<HomeProps>`
     border: 1px solid rgb(239, 243, 244);
     padding: 0px 0px 0 0;
 
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       width: 98%;
     }
     .home-content-top {
@@ -46,7 +47,7 @@ export const Home = styled.div<HomeProps>`
       font-size: ${({ theme }) => theme.secondaryFontSize};
       margin-top: 16px;
 
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100%;
       }
       .tab-list-item {
@@ -103,7 +104,7 @@ export const Home = styled.div<HomeProps>`
       color: #fff;
       font-size: ${({ theme }) => theme.fontSize.sm};
 
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         display: none;
       }
       .big-text {
@@ -115,7 +116,7 @@ export const Home = styled.div<HomeProps>`
       color: #fff;
       font-size: ${({ theme }) => theme.fontSize.sm};
 
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100%;
         text-align: center;
         padding: 0 16px;
@@ -125,7 +126,7 @@ export const Home = styled.div<HomeProps>`
         border: 1px solid #fff;
         border-radius: 20px;
         margin-right: 12px;
-        @media (max-width: 722px) {
+        @media ${devices.mobile} {
           width: 100%;
           border: 1px solid #fff;
         }
@@ -136,14 +137,14 @@ export const Home = styled.div<HomeProps>`
         border-radius: 20px;
         color: black;
         background-color: #fff;
-        @media (max-width: 722px) {
+        @media ${devices.mobile} {
           width: 100%;
         }
       }
     }
   }
   .home-chart-room {
-    @media (max-width: 1300px) {
+    @media ${devices.laptop} {
       display: none;
     }
   }

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle, css } from "styled-components";
+import { devices } from "./device";
 
 interface StyledClientImg {
   Location: "otherUser" | "leftSideBar" | "userPublished" | "rightSideBar";
@@ -8,9 +9,6 @@ interface StyledClientImg {
 const GlobalStyle = createGlobalStyle`
 *{
 font-family: 'Open Sans', sans-serif;
-/* overflow-y:hidden; */
-/* overflow-x:hidden; */
-
 }
 
 .font-bold{
@@ -18,7 +16,7 @@ font-family: 'Open Sans', sans-serif;
 }
 
   .home-chart-room {
-    @media (max-width: 1300px) {
+    @media ${devices.laptop} {
       display: none;
     }
   }
@@ -42,7 +40,7 @@ export const GlobalClientImg = styled.img<StyledClientImg>`
       min-width: 50px;
       height: 50px;
       object-fit: cover;
-      @media (max-width: 1300px) {
+      @media ${devices.laptop} {
         margin: 0 0 16px 0;
         min-width: 40px;
         max-width: 40px;

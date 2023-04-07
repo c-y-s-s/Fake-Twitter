@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { ReactComponent as AddMedia } from "../../img/home/addMedia.svg";
 import { userPublishedModalToggle } from "../../reducers/controller";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const LeftSideBar = styled.div`
   width: 251px;
@@ -10,24 +11,24 @@ export const LeftSideBar = styled.div`
   top: 0;
   left: 0;
 
-  @media (max-width: 1300px) {
+  @media ${devices.laptop} {
     max-width: 75px;
     justify-content: space-between;
   }
 
-  @media (max-width: 721px) {
+  @media ${devices.mobile} {
     position: fixed;
     flex-direction: row;
     bottom: 0;
   }
   .top-container {
-    @media (max-width: 1300px) {
+    @media ${devices.laptop} {
       display: flex;
       flex-direction: column;
       align-items: center;
       max-width: 50px;
     }
-    @media (max-width: 721px) {
+    @media ${devices.mobile} {
       position: fixed;
       flex-direction: row;
       bottom: 0px;
@@ -37,7 +38,7 @@ export const LeftSideBar = styled.div`
       justify-content: left;
       align-items: center;
       padding: 12px 0 0 0;
-      @media (max-width: 721px) {
+      @media ${devices.mobile} {
         display: none;
       }
       img {
@@ -48,7 +49,7 @@ export const LeftSideBar = styled.div`
 
     .link-container {
       margin: 10px 0 0 0;
-      @media (max-width: 721px) {
+      @media ${devices.mobile} {
         margin: 0;
         background-color: #fff;
         min-width: 100vw;
@@ -77,24 +78,19 @@ export const LeftSideBar = styled.div`
           display: flex;
           align-items: center;
 
-          @media (max-width: 1300px) {
+          @media ${devices.laptop} {
             display: none;
           }
         }
       }
       .link-item.messages-none {
-        @media (min-width: 1300px) {
+        @media ${devices.desktop} {
           display: none;
         }
       }
       .search {
-        @media (min-width: 1300px) {
+        @media ${devices.desktop} {
           display: none;
-        }
-      }
-      .explore {
-        @media (max-width: 1300px) {
-          /* display: none; */
         }
       }
     }
@@ -112,7 +108,7 @@ export const LeftSideBar = styled.div`
       letter-spacing: 0.25px;
       font-weight: ${({ theme }) => theme.primaryFontWeight};
       cursor: pointer;
-      @media (max-width: 1300px) {
+      @media ${devices.laptop} {
         max-width: 100%;
         border-radius: 50%;
         max-width: 50px;
@@ -121,13 +117,13 @@ export const LeftSideBar = styled.div`
         text-align: center;
       }
 
-      @media (max-width: 721px) {
+      @media ${devices.mobile} {
         position: fixed;
         right: 25px;
         bottom: 70px;
       }
       .send-text {
-        @media (max-width: 1300px) {
+        @media ${devices.laptop} {
           display: none;
         }
       }
@@ -139,7 +135,7 @@ export const LeftSideBar = styled.div`
           height: 24px;
           fill: #fff;
         }
-        @media (min-width: 1300px) {
+        @media ${devices.desktop} {
           display: none;
         }
       }
@@ -151,7 +147,7 @@ export const LeftSideBar = styled.div`
     padding: 12px;
     font-size: 15px;
 
-    @media (max-width: 721px) {
+    @media ${devices.mobile} {
       position: fixed;
       left: 10px;
       bottom: 55px;
@@ -163,7 +159,7 @@ export const LeftSideBar = styled.div`
       border-radius: 12px;
       background-color: #fff;
       box-shadow: 0px 0px 10px #ccc;
-      @media (max-width: 721px) {
+      @media ${devices.mobile} {
         width: 140px;
         left: 8px;
       }
@@ -175,7 +171,7 @@ export const LeftSideBar = styled.div`
         justify-content: center;
       }
     }
-    @media (max-width: 1300px) {
+    @media ${devices.laptop} {
       padding: 0;
       justify-content: center;
     }
@@ -183,7 +179,7 @@ export const LeftSideBar = styled.div`
     .client-data-container {
       width: 100%;
       padding: 0 0 0 10px;
-      @media (max-width: 1300px) {
+      @media ${devices.laptop} {
         display: none;
       }
       .client-data-name {

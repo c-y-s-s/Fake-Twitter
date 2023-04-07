@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const SignInModal = styled.div`
   width: 100vw;
@@ -21,7 +22,7 @@ export const SignInModal = styled.div`
     padding: 16px;
     border-radius: 12px;
 
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       margin: 10px;
     }
     .top {
@@ -115,7 +116,7 @@ export const SignInStep1 = styled.div`
   justify-content: space-between;
   height: 90%;
 
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     padding: 0;
   }
   .step1-mail {

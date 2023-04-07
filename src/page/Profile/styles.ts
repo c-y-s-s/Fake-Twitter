@@ -1,17 +1,18 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 const Profile = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 721px) {
+  @media ${devices.mobile} {
     width: 100vw;
   }
 
   .profile-content {
     border: 1px solid rgb(239, 243, 244);
     width: 584px;
-    @media (max-width: 721px) {
+    @media ${devices.mobile} {
       width: 98%;
     }
 
@@ -137,7 +138,7 @@ const UserEditDataModal = styled.div`
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
-    @media (max-width: 721px) {
+    @media ${devices.mobile} {
       margin: 8px;
     }
     .top-container {
