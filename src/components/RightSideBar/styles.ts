@@ -1,14 +1,15 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const RightSideBar = styled.div`
   margin: 0 0 0 30px;
   width: 348px;
 
-  @media (max-width: 1020px) {
+  @media ${devices.laptop} {
     display: none;
   }
 
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     width: 100%;
     padding-right: 0px;
   }

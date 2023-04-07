@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const UserPublishedModal = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -17,7 +18,7 @@ export const UserPublishedModal = styled.div`
     margin: 50px auto 0 auto;
     padding: 0 16px 16px 16px;
 
-    @media (max-width: 721px) {
+    @media ${devices.mobile} {
       width: 85%;
       margin: 10px;
     }

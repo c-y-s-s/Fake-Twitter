@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const UserPublished = styled.div`
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     width: 90%;
   }
   .client-content-block {
