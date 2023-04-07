@@ -1,17 +1,18 @@
 import styled from "styled-components";
-import { GlobalClientImg } from "../../styles/GlobalStyle";
+import { devices } from "../../styles/device";
+
 
 export const OtherUser = styled.div`
   padding: 0 0 8px 0;
 
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     width: 100%;
   }
 
   .infinite-scroll-component__outerdiv {
     .infinite-scroll-component {
       overflow: hidden;
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         margin-bottom: 55px;
       }
     }
@@ -29,14 +30,14 @@ export const OtherUser = styled.div`
     }
 
     .client-data-img {
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100%;
         height: 100%;
       }
     }
     .other-data-container {
       padding: 0 0 0 10px;
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100%;
       }
       .other-user-block {
@@ -63,7 +64,7 @@ export const OtherUser = styled.div`
         margin: 14px 0 0 0;
         padding: 0 12px 0 0;
 
-        @media (max-width: 722px) {
+        @media ${devices.mobile} {
           width: 85%;
         }
         img {
@@ -72,7 +73,7 @@ export const OtherUser = styled.div`
           max-height: 510px;
           border-radius: 16px;
           object-fit: cover;
-          @media (max-width: 722px) {
+          @media ${devices.mobile} {
             width: 100%;
             max-width: 100%;
             max-height: 100%;

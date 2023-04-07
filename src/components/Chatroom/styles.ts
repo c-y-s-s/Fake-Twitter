@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 interface ChartRoomProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ const ChartRoom = styled.div<ChartRoomProps>`
       min-height: calc(100vh - 150px);
     }
 
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       min-height: calc(100vh - 180px);
     }
     ::-webkit-scrollbar {
@@ -108,7 +109,7 @@ const ChartRoom = styled.div<ChartRoomProps>`
     display: flex;
     align-items: center;
 
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       box-sizing: border-box;
       position: fixed;
       bottom: 60px;

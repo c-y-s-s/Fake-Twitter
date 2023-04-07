@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/device";
 
 export const Register = styled.div`
   width: 100vw;
@@ -19,7 +20,7 @@ export const Register = styled.div`
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       margin: 10px;
       padding: 6px;
     }
@@ -39,7 +40,7 @@ export const Register = styled.div`
 `;
 
 export const BuildMethod = styled.div`
-  @media (max-width: 721px) {
+  @media ${devices.mobile} {
     text-align: center;
   }
   .top {
@@ -99,11 +100,11 @@ export const BuildMethod = styled.div`
 
 export const Step1 = styled.div`
   padding: 0px 80px;
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     padding: 6px;
   }
   .step1-title {
-    @media (max-width: 722px) {
+    @media ${devices.mobile} {
       font-size: 26px;
     }
   }
@@ -127,19 +128,19 @@ export const Step1 = styled.div`
     .day-select {
       margin: 0 12px 0 12px;
       width: 110px;
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100px;
       }
     }
     .month-select {
       width: 140px;
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100px;
       }
     }
     .year-select {
       width: 130px;
-      @media (max-width: 722px) {
+      @media ${devices.mobile} {
         width: 100px;
       }
     }
@@ -164,7 +165,7 @@ export const Step1 = styled.div`
 
 export const Step2 = styled.div`
   padding: 12px 80px 0 80px;
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     padding: 12px;
   }
   .step2-title {
@@ -212,7 +213,7 @@ export const Step2 = styled.div`
 
 export const Step3 = styled.div`
   padding: 12px 80px 0 80px;
-  @media (max-width: 722px) {
+  @media ${devices.mobile} {
     padding: 12px;
   }
   .step3-title {
