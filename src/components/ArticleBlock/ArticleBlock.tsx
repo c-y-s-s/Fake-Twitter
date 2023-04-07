@@ -15,29 +15,13 @@ import UseToggleCollected from "../../hook/UseToggleCollected";
 import UseToggleLike from "../../hook/UseToggleLike";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";
-
-interface ArticleBlockProps {
-  useBlocks: string;
-  setArticlesTotalNumber?: React.Dispatch<React.SetStateAction<string>>;
-}
-interface articleDataProps {
-  id: string;
-  transferBy?: string[];
-  likeBy?: string[];
-  imageUrl?: string;
-  text: string;
-  author: {
-    email: string;
-    photoURL: string;
-    uid: string;
-    userName: string;
-    membershipNumber: string;
-  };
-  createAt: {
-    seconds: number;
-    nanoseconds: number;
-  };
-}
+import { DocumentData } from "firebase/firestore";
+import {
+  ArticleBlockProps,
+  ResultData,
+  ArticleData,
+  SortIdOtherUserDataProps,
+} from "./types";
 
 const ArticleBlock: FC<ArticleBlockProps> = ({
   useBlocks,
@@ -47,11 +31,13 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     (state: RootState) => state.controllerSliceReducer.proFileTabSwitch
   );
 
-  const [sortIdOtherUserData, setSortIdOtherUserData] = useState<any[]>([]);
-  const [articleData, setArticleData] = useState<articleDataProps[]>([]);
+  const [sortIdOtherUserData, setSortIdOtherUserData] = useState<
+    SortIdOtherUserDataProps[]
+  >([]);
+  const [articleData, setArticleData] = useState<ArticleData[]>([]);
   const [dataPageNumber, setDataPageNumber] = useState<number>(3);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [currentUserName, setCurrentUserName] = useState<any>([{}]);
+  const [currentUserName, setCurrentUserName] = useState<ResultData[]>([]);
   const uid = firebase?.auth()?.currentUser?.uid;
 
   const fetchMoreData = () => {
@@ -64,7 +50,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     }
   };
 
-  const getCreatedTime = (createdSecond: any): string => {
+  const getCreatedTime = (createdSecond: number): string => {
     // 計算發布時間距離現在時間多久
     let resultTime: string = "";
     // 現在時間距離發布時間過去幾秒
@@ -84,28 +70,27 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
   };
 
   useEffect(() => {
-    const resultData = articleData.map((item: articleDataProps) => {
-      // 透過文章 email 去取到更改過後的名字
+    const resultData = articleData.map(
+      (item: ArticleData): SortIdOtherUserDataProps => {
+        // 透過文章 email 去取到更改過後的名字
 
-      const currentUserNameResult = currentUserName?.map((userItem: any) => {
-        if (userItem.mail === item.author.email) {
-          return userItem;
-        }
-      });
-      return {
-        ...item,
-        resultData: currentUserNameResult,
-      };
-    });
+        const currentUserNameResult = currentUserName?.map(
+          (userItem: ResultData | undefined) => {
+            if (userItem?.mail === item?.author?.email) {
+              return userItem;
+            }
+          }
+        );
+
+        return {
+          ...item,
+          resultData: currentUserNameResult,
+        };
+      }
+    );
 
     setSortIdOtherUserData(resultData.slice(0, dataPageNumber));
-  }, [
-    dataPageNumber,
-    articleData,
-    currentUserName?.mail,
-    currentUserName?.name,
-    currentUserName,
-  ]);
+  }, [dataPageNumber, articleData, currentUserName]);
 
   // 拿 database data
   // 判斷哪邊使用到這個元件去各別拿取要的資料
@@ -161,8 +146,8 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
               firebase?.auth()?.currentUser?.uid
             );
         }
-        query?.onSnapshot((docSnapshot: any) => {
-          const data = docSnapshot?.docs?.map((doc: any) => {
+        query?.onSnapshot((docSnapshot: DocumentData) => {
+          const data = docSnapshot?.docs?.map((doc: DocumentData) => {
             const id = doc?.id;
             return { id, ...doc?.data() };
           });
@@ -209,17 +194,19 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
         style={{ overflow: "hidden" }}
       >
         {sortIdOtherUserData ? (
-          sortIdOtherUserData?.map((item) => {
+          sortIdOtherUserData?.map((item: SortIdOtherUserDataProps) => {
             let isItemLike: boolean | undefined;
             if (uid) {
               isItemLike = item?.likeBy?.includes(uid);
             }
 
-            const resultPhotoAndName = item.resultData.filter((item: any) => {
-              if (item?.mall === item?.author?.email) {
-                return item;
+            const resultPhotoAndName = item?.resultData.filter(
+              (resultItem: ResultData | undefined) => {
+                if (resultItem?.mail === item?.author?.email) {
+                  return item;
+                }
               }
-            });
+            );
 
             return (
               item?.id && (
@@ -236,7 +223,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
                   <div className="other-data-container">
                     <div className="other-user-block">
                       <div className="other-user-name">
-                        {resultPhotoAndName[0]?.name || item?.author.userName}
+                        {resultPhotoAndName[0]?.name || item?.author?.userName}
                       </div>
                       <div className="other-user-account">
                         @{item?.author?.membershipNumber}

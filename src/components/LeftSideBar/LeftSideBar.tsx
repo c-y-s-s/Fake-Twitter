@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as Styles from "./styles";
 import { ReactComponent as TweetRWDSVG } from "../../img/leftSideBar/tweetRWD.svg";
-import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
+import { User } from "@firebase/auth-types";
 import { useDispatch, useSelector } from "react-redux";
 import { userPublishedModalToggle } from "../../reducers/controller";
 import { GlobalClientImg } from "../../styles/GlobalStyle";
@@ -14,7 +14,7 @@ interface LeftSideBarProps {
 
 const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const dispatch = useDispatch();
-  const user: any = firebase?.auth()?.currentUser || {};
+  const user: User | null = firebase?.auth()?.currentUser || null;
   const locationPathname = window.location.pathname;
   const userLogin = useSelector(
     (state: RootState) => state.controllerSliceReducer.userLogin
