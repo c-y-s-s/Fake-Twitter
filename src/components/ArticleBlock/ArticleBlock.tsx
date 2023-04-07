@@ -15,7 +15,14 @@ import UseToggleCollected from "../../hook/UseToggleCollected";
 import UseToggleLike from "../../hook/UseToggleLike";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";
-import { DocumentData } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import {
   ArticleBlockProps,
   ResultData,
@@ -35,7 +42,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     SortIdOtherUserDataProps[]
   >([]);
   const [articleData, setArticleData] = useState<ArticleData[]>([]);
-  const [dataPageNumber, setDataPageNumber] = useState<number>(3);
+  const [dataPageNumber, setDataPageNumber] = useState<number>(6);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<ResultData[]>([]);
   const uid = firebase?.auth()?.currentUser?.uid;
@@ -92,74 +99,93 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
     setSortIdOtherUserData(resultData.slice(0, dataPageNumber));
   }, [dataPageNumber, articleData, currentUserName]);
 
-  // 拿 database data
-  // 判斷哪邊使用到這個元件去各別拿取要的資料
+  // get userData
   useEffect(() => {
-    if (firebase?.auth()?.currentUser?.uid === null) return;
+    const getUserData = async () => {
+      try {
+        if (firebase?.auth()?.currentUser?.uid === null) return;
+        const usersData = await getDocs(
+          collection(firebase?.firestore(), "users")
+        );
 
-    // userData
-    firebase
-      .firestore()
-      .collection("users")
-      .get()
-      .then((res) => {
-        const userData = res.docs.map((item) => {
+        const tendingUsersData = usersData.docs.map((item) => {
           return {
             mail: item?.data().mail,
             name: item?.data().name,
             photoURL: item?.data().photoURL,
           };
         });
+        setCurrentUserName(tendingUsersData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserData();
+  }, []);
 
-        setCurrentUserName(userData);
-      });
+  // 拿 database data
+  // 判斷哪邊使用到這個元件去各別拿取要的資料
+  useEffect(() => {
+    const getArticleData = async () => {
+      try {
+        if (firebase?.auth()?.currentUser?.uid === null) return;
 
-    switch (useBlocks) {
-      case "home":
-        firebase
-          .firestore()
-          .collection("posts_article")
-          .orderBy("createdAt", "desc")
-          .onSnapshot((docSnapshot) => {
-            const data = docSnapshot?.docs?.map((doc) => {
-              const id = doc?.id;
-              return { id, ...doc?.data() };
+        const q = query(
+          collection(firebase?.firestore(), "posts_article"),
+          orderBy("createdAt", "desc")
+        );
+
+        switch (useBlocks) {
+          case "home":
+            onSnapshot(q, (snapshot) => {
+              const articleData = snapshot.docs.map((doc) => {
+                const id = doc?.id;
+                return {
+                  id,
+                  ...doc?.data(),
+                } as ArticleData;
+              });
+
+              setArticleData(articleData);
+            });
+            break;
+          case "profile":
+            let query: any;
+            if (tabListSwitch === "Article") {
+              query = firebase
+                ?.firestore()
+                ?.collection("posts_article")
+                ?.where("author.uid", "==", firebase?.auth()?.currentUser?.uid);
+            } else {
+              query = firebase
+                ?.firestore()
+                ?.collection("posts_article")
+                ?.where(
+                  "likeBy",
+                  "array-contains",
+                  firebase?.auth()?.currentUser?.uid
+                );
+            }
+            query?.onSnapshot((docSnapshot: DocumentData) => {
+              const data = docSnapshot?.docs?.map((doc: DocumentData) => {
+                const id = doc?.id;
+                return { id, ...doc?.data() };
+              });
+
+              if (setArticlesTotalNumber) setArticlesTotalNumber(data.length);
+              setArticleData(data as []);
             });
 
-            setArticleData(data as []);
-          });
-        break;
-      case "profile":
-        let query: any;
-        if (tabListSwitch === "Article") {
-          query = firebase
-            ?.firestore()
-            ?.collection("posts_article")
-            ?.where("author.uid", "==", firebase?.auth()?.currentUser?.uid);
-        } else {
-          query = firebase
-            ?.firestore()
-            ?.collection("posts_article")
-            ?.where(
-              "likeBy",
-              "array-contains",
-              firebase?.auth()?.currentUser?.uid
-            );
+            break;
+          default:
+            break;
         }
-        query?.onSnapshot((docSnapshot: DocumentData) => {
-          const data = docSnapshot?.docs?.map((doc: DocumentData) => {
-            const id = doc?.id;
-            return { id, ...doc?.data() };
-          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-          if (setArticlesTotalNumber) setArticlesTotalNumber(data.length);
-          setArticleData(data as []);
-        });
-
-        break;
-      default:
-        break;
-    }
+    getArticleData();
   }, [setArticlesTotalNumber, tabListSwitch, useBlocks]);
 
   useEffect(() => {
@@ -169,6 +195,7 @@ const ArticleBlock: FC<ArticleBlockProps> = ({
       setHasMore(false);
     }
   }, [sortIdOtherUserData]);
+
   return (
     <Styles.OtherUser>
       <InfiniteScroll
