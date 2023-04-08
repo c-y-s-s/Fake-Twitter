@@ -1,13 +1,11 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Styles from "./style";
 import firebase from "../../utils/firebase";
 import SignInStep1 from "./SignInStep1";
-import { ReactComponent as TwitterSVG } from "../../img/leftSideBar/twitterLogo.svg";
 import { ReactComponent as CrossSVG } from "../../img/cross.svg";
 import { TextField } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../reducers";
+import { useDispatch } from "react-redux";
 import { setLoginModalOpen } from "../../reducers/controller";
 import { sendPasswordResetEmail } from "firebase/auth";
 

@@ -3,6 +3,7 @@ import { devices } from "../../styles/device";
 
 interface ChartRoomProps {
   isOpen: boolean;
+  WindowHeight: number;
 }
 
 const ChartRoom = styled.div<ChartRoomProps>`
@@ -12,9 +13,9 @@ const ChartRoom = styled.div<ChartRoomProps>`
   bottom: 0;
   box-shadow: 0px 0px 10px #ccc;
   width: 350px;
-  height: ${(props) => (props.isOpen ? "500px" : "53px")};
+  height: ${(props) => (props.isOpen ? props.WindowHeight : "53px")};
   right: 50px;
-  z-index: 1;
+
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -28,15 +29,15 @@ const ChartRoom = styled.div<ChartRoomProps>`
     box-shadow: none;
     width: 586px;
   }
-
+  @media ${devices.mobile} {
+    min-height: calc(100vh - 180px);
+  }
   .chatroom-title {
     padding: 12px 0px;
-    /* box-shadow: 0 15px 15px #ccc; */
   }
 
   .content {
     box-sizing: border-box;
-
     min-height: 400px;
     max-height: 400px;
     overflow: auto;
@@ -46,7 +47,7 @@ const ChartRoom = styled.div<ChartRoomProps>`
     }
 
     @media ${devices.mobile} {
-      min-height: calc(100vh - 180px);
+      max-height: ${(props) => props.WindowHeight + "px"};
     }
     ::-webkit-scrollbar {
       width: 3px;
