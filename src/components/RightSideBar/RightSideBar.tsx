@@ -48,6 +48,7 @@ const RightSideBar: React.FC = () => {
     };
 
     getTendingData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Styles.RightSideBar className="search-container">

@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import * as Styles from "../style";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { setMailVerifyText, setRegisterData } from "../../../reducers/register";
@@ -18,7 +18,6 @@ interface Step1Props {
 }
 
 const Step1: FC<Step1Props> = ({ setStep }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [name, setName] = useState<string>("");
   const [mail, setMail] = useState<string>("");

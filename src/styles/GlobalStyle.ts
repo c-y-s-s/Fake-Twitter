@@ -28,6 +28,11 @@ export const GlobalClientImg = styled.img<StyledClientImg>`
   min-height: 40px;
   border-radius: 50%;
   object-fit: cover;
+
+  @media ${devices.mobile} {
+    max-height: 40px;
+    max-width: 40px;
+  }
   ${(props) =>
     props.Location === "otherUser" &&
     css`
@@ -54,6 +59,11 @@ export const GlobalClientImg = styled.img<StyledClientImg>`
       min-width: 48px;
       height: 48px;
       object-fit: cover;
+
+      @media ${devices.mobile} {
+        height: 40px;
+        min-width: 40px;
+      }
     `}
 
       ${(props) =>
