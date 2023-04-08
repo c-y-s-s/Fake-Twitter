@@ -6,14 +6,7 @@ import "firebase/compat/firestore";
 import firebase from "../../utils/firebase";
 import LeftSideBar from "../LeftSideBar/LeftSideBar";
 import RightSideBar from "../RightSideBar/RightSideBar";
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  setDoc,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
 interface TimeConversion {
   nanoseconds: number;
@@ -200,11 +193,10 @@ const Chatroom = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        height: window.innerHeight - 60 + "px",
+        height: window.screen.height - 60 + "px",
       }}
     >
       {locationPathname === "/chartroom" && <LeftSideBar name="chatroom" />}
-
       <Styles.ChartRoom
         isOpen={isOpen}
         className="chatroom-container"
@@ -214,6 +206,7 @@ const Chatroom = () => {
             contentRef.current?.lastElementChild?.scrollIntoView();
           }, 100);
         }}
+        WindowHeight={window.screen.height - 250}
       >
         <div className="chatroom-title"> Message (Ai對話)</div>
 
