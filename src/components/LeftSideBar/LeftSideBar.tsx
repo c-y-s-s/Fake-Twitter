@@ -23,13 +23,13 @@ const LeftSideBar = ({ name }: LeftSideBarProps) => {
   const [toggleModalOpen, setToggleModalOpen] = useState<boolean>(false);
 
   // 登出邏輯
-  const handleSignOut = (): void => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        window.location.reload();
-      });
+  const handleSignOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Styles.LeftSideBar>

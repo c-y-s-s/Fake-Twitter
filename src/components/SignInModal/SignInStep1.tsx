@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import * as Styles from "./style";
 import firebase from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import {
   setRegisterModalOpen,
 } from "../../reducers/controller";
 import { useDispatch } from "react-redux";
-
+import { FirebaseError } from "@firebase/util";
 interface SignStep1Props {
   mailValue: string;
 }
@@ -18,29 +18,31 @@ const SignInStep1 = ({ mailValue }: SignStep1Props) => {
   const [passwordValue, setPasswordValue] = useState<string>("");
 
   const [errorText, setErrorText] = useState<string>("");
-  const handleSignIn = (): void => {
+
+  const handleSignIn = async () => {
     if (passwordValue.length <= 0) return;
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(mailValue, passwordValue)
-      .then(() => {
-        navigate("/");
-        window.location.reload();
-        dispatch(setLoginModalOpen(false));
-        dispatch(setRegisterModalOpen(false));
-      })
-      .catch((error) => {
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(mailValue, passwordValue);
+
+      navigate("/");
+      window.location.reload();
+      dispatch(setLoginModalOpen(false));
+      dispatch(setRegisterModalOpen(false));
+    } catch (error) {
+      if (error instanceof FirebaseError) {
         if (error.code === "auth/wrong-password") {
           setErrorText("密碼錯誤");
-
           setTimeout(() => {
             setErrorText("");
           }, 3000);
         } else {
           console.log("太多的請求");
         }
-      });
+      }
+    }
   };
   return (
     <Styles.SignInStep1>
