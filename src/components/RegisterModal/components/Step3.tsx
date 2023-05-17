@@ -20,7 +20,7 @@ const Step3: FC = () => {
   const [errorMsgRender, setErrorMsgRender] = useState<boolean>(false);
 
   //註冊邏輯
-  const handlePostRegister = (): void => {
+  const handlePostRegister = async () => {
     if (passwordValue.length < 8) return;
     let userDataLength = 0;
     setLoading(true);
@@ -32,6 +32,8 @@ const Step3: FC = () => {
       .then((res) => {
         userDataLength = res.docs.length;
       });
+
+    // 英數雜湊會員編號
     function generateRandomString() {
       const length = 10;
       const characters =
@@ -47,38 +49,33 @@ const Step3: FC = () => {
       return result;
     }
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(registerData.mail, passwordValue)
-      .then(() => {
-        //傳入寫入資料的物件
-        db.collection("users")
-          ?.doc(`user${(userDataLength += 1)}`)
-          .set({
-            id: userDataLength,
-            mail: registerData.mail,
-            name: registerData.name,
-            membershipNumber: generateRandomString(),
-            birthday: `${registerData.year}-${registerData.month}-${registerData.day}`,
-            // firebase 提供 time-stamp 函式可用
-            created_time: firebase.firestore.Timestamp.now(),
-          })
-          .then(() => {
-            //註冊成功資料有寫入資料庫導回首頁
-            navigate("/");
-            dispatch(setRegisterModalOpen(false));
-            window.location.reload();
-            setLoading(false);
-          })
-          .catch(() => {
-            console.log("寫入資料庫失敗");
-            setLoading(false);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+    try {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(registerData.mail, passwordValue);
+
+      await db
+        .collection("users")
+        ?.doc(`user${(userDataLength += 1)}`)
+        .set({
+          id: userDataLength,
+          mail: registerData.mail,
+          name: registerData.name,
+          membershipNumber: generateRandomString(),
+          birthday: `${registerData.year}-${registerData.month}-${registerData.day}`,
+          // firebase 提供 time-stamp 函式可用
+          created_time: firebase.firestore.Timestamp.now(),
+        });
+
+      //註冊成功資料有寫入資料庫導回首頁
+      navigate("/");
+      dispatch(setRegisterModalOpen(false));
+      window.location.reload();
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

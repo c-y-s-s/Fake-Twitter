@@ -23,30 +23,32 @@ const SignInModal: FC = () => {
   };
   const body: HTMLBodyElement | null = document.querySelector("body");
 
-  const handleConfirmMail = () => {
-    firebase
-      .firestore()
-      .collection("users")
-      .where("mail", "==", mailValue)
-      .get()
-      .then((collectionSnapshot) => {
-        const data = collectionSnapshot.docs.map((userItem) => {
-          return userItem.data();
-        });
+  const handleConfirmMail = async () => {
+    try {
+      const UserData = await firebase
+        .firestore()
+        .collection("users")
+        .where("mail", "==", mailValue)
+        .get();
 
-        if (data.length !== 0) {
+      const isUserData = UserData.docs.map((userItem) => {
+        return userItem.data();
+      });
+
+      if (isUserData.length !== 0) {
+        setNoUser(false);
+        setSignInComponent("1");
+      } else {
+        setNoUser(true);
+
+        // 3秒後讓提示字消失
+        setTimeout(() => {
           setNoUser(false);
-          setSignInComponent("1");
-        } else {
-          setNoUser(true);
-
-          // 3秒後讓提示字消失
-          setTimeout(() => {
-            setNoUser(false);
-          }, 3000);
-        }
-      })
-      .catch((error) => {});
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSendPasswordResetEmail = () => {
